@@ -509,16 +509,24 @@ POST SECTION STYLING
     position: absolute;
     right: 0px;
     border: solid 1px white;
-    padding: 1rem;
-    width: fit-content;
+    /* padding: 1rem; */
+    /* width: fit-content; */
     border-radius: .5rem;
 
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
 }
 
 .post-options-dropdown li{
     list-style: none;
     cursor: pointer;
+    width: 100%;
+    text-align: center;
+    /* text-align: center; */
+}
+
+.post-options-dropdown li:hover {
+    background-color: gray;
 }

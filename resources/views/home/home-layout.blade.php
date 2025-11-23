@@ -32,25 +32,31 @@
 
             <ul class="nav-options">
                 <li><a href="{{route('home.section')}}">
-                    <img src="{{ asset('storage/website_images/home1.png') }}" alt="home image" class="nav-bar-icon"></a>
+                    <img src="{{ asset('storage/website_images/home1.png') }}" alt="home image" class="nav-bar-icon"
+                    title="home">
+                </a>
                 </li>
                 <li>
                     <a href="{{route('people.section')}}">
-                        <img src="{{ asset('storage/website_images/people.png') }}" alt="profile image" class="nav-bar-icon">
+                        <img src="{{ asset('storage/website_images/people.png') }}" alt="profile image" class="nav-bar-icon"
+                        title="people">
                     </a>
                 </li>
                 <li>
                     <a href="{{route('profile.section')}}">
-                        <img src="{{ asset('storage/website_images/user.png') }}" alt="profile image" class="nav-bar-icon">
+                        <img src="{{ asset('storage/website_images/user.png') }}" alt="profile image" class="nav-bar-icon" 
+                        title="profile">
                     </a>
                 </li>
                 <li>
                     <a href="#settings">
-                        <img src="{{ asset('storage/website_images/setting.png') }}" alt="profile image" class="nav-bar-icon">
+                        <img src="{{ asset('storage/website_images/setting.png') }}" alt="profile image" class="nav-bar-icon"
+                        title="settings">
                     </a>
                 </li>
                 <li class="logout-btn" style="cursor: pointer;">
-                    <img src="{{ asset('storage/website_images/logout.png') }}" alt="profile image" class="nav-bar-icon">
+                    <img src="{{ asset('storage/website_images/logout.png') }}" alt="profile image" class="nav-bar-icon"
+                    title="logout">
                 </li>
             </ul>
         </nav>
