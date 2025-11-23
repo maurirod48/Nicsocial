@@ -133,7 +133,7 @@ function togglePostFormPopup() {
 ///////////////////////////////
 
 // NOTE!
-// The following functions basically give funcionality to all the buttons that can be found inside a post, like, share, etc.
+// The following functions basically give funcionality to all the buttons that can be found inside a post: like, share, etc.
 
 //////////////////
 // LIKE BUTTON ///

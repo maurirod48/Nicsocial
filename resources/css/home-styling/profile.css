@@ -489,3 +489,36 @@ POST SECTION STYLING
     height: 40px;
     cursor: pointer;
 }
+
+.post-options-image {
+    height: 45px;
+    cursor: pointer;
+}
+
+.user-owns-this-post {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-options-container {
+    position: relative;
+}
+
+.post-options-dropdown {
+    /* display: ; */
+    position: absolute;
+    right: 0px;
+    border: solid 1px white;
+    padding: 1rem;
+    width: fit-content;
+    border-radius: .5rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.post-options-dropdown li{
+    list-style: none;
+    cursor: pointer;
+}

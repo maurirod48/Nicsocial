@@ -77,11 +77,26 @@
 
                     <div class="post-container">
                         <input type="hidden" class="post-id" value="{{ $post->id }}">
-                        <div class="" style="display: flex; gap: .5rem; align-items: center;">
-                            <p class="post-username">{{ auth()->user()->name }}</p>
-                            <p class="post-email">{{ auth()->user()->email }}</p>
 
-                        </div>
+                        @if ($post->user_id === auth()->user()->id)
+                            <div class="post-header user-owns-this-post" style="display: flex; gap: .5rem; align-items: center;">
+                                <div>
+                                    <p class="post-username">{{ auth()->user()->name }}</p>
+                                    <p class="post-email">{{ auth()->user()->email }}</p>
+                                </div>
+                                
+                                <div class="post-options-container">
+                                    <img src="{{ asset('storage/website_images/three_dots.png') }}" alt="post-options-image"
+                                    class="post-options-image">
+
+                                    <ul class="post-options-dropdown">
+                                        <li>Delete</li>
+                                        <li>Edit</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
+                        
 
                         <p class="post-title">{{ $post->title }}</p>
 
