@@ -286,107 +286,53 @@ removePostImagePreviewBtn.addEventListener('click', e => {
 });
 
 
-const check = _('.check-btn');
 
-check.addEventListener('click', e => {
-    if (postPicInput.files[0]) {
-        console.log('file selected');
-    } else {
-        console.log('no file selected');
+//////////////////////////////////
+// CODE FOR POST OPTIONS
+//////////////////////////////////
+
+
+// const postOptionsDropdownMenu = document.querySelector('.post-options-dropdown-wrapper');
+
+// Event listener for when user clicks on the 3 dots of a post.
+document.addEventListener('click',  e => {
+
+    // If they do click the 3 dots of a post, then the "show" class is added to the dropdown element. When 
+    // we add that class, the dropdownmene becomes visible.
+    if (e.target.matches('.post-options-image')) {
+
+        // Whole current post element (the post the user clicked the 3 dots for).
+        const postElement = e.target.closest('.post-container');
+        // This variable grabs the current dropdown that the 3 dots were clicked for.
+        const currentDropdown = postElement.querySelector('.post-options-dropdown-wrapper');
+        // All dropdowns, since there might be many posts, this element grabs them all as an array.
+        const dropdowns = document.querySelectorAll('.post-options-dropdown-wrapper');
+        
+        dropdowns.forEach(dropdown => {
+            if (dropdown === currentDropdown) {
+                dropdown.classList.toggle('show');
+            } else {
+                dropdown.classList.remove('show')
+            }
+        })
+        
+        console.log('three dots clicked');
+    }
+})
+
+// When the user tries to delete a post by clicking the "delete" button, we need to 
+// find out which post by getting its ID.
+document.addEventListener('click', e => {
+
+    // This block of code here kinda follows the same logic as in the previous "if statment"
+    // inside the previous event listener.
+    if (e.target.matches('.delete-post-btn')) {
+        const postElement = e.target.closest('.post-container');
+        const postId = postElement.querySelector('.post-id').value;
+        console.log('post id:', postId);
+
     }
 });
+    
 
-
-
-////////////////////////////////////////////////////////////
-// CODE TO GET CURRENT USER'S POSTS AND THEN DISPLAY THEM.
-
-
-// Function to get all posts for the current logged in user so they can be displayed in their profile page.
-
-function getPostForCurrentUserOnly ()
- {
-    fetch('/get-my-posts')
-    .then(res => {
-        if (!res.ok) {
-            throw new Error(`Network response was not ok: ${res.status}`);
-        } else {
-            return res.json();
-        }
-    })
-    .then(data => {
-        if (data.success) {
-            console.log('Posts:', data.posts);
-            displayPosts(data.posts);
-        } else {
-            console.log(data.errorMessage);
-        }
-        
-    })
-    .catch(error => {
-        console.error(error);
-    });
- };
-
-// getPostForCurrentUserOnly();
-
-
-
-function displayPosts (posts) {
-    console.log('displayPost function called');
-    // Grabbing element containing all posts.
-    const postsContainer = _('.posts-section');
-
-    // Clearing element containing all posts.
-    postsContainer.innerHTML =  ``;
-
-    // username or current logged in user.
-    const usernameElement = _('meta[name="current-loggedIn-username"]');
-    const username = usernameElement ? usernameElement.getAttribute('content') : null;
-
-    console.log('element:', usernameElement);
-
-    // email or current logged in user.
-    const emailElement = _('meta[name="current-loggedIn-email"]');
-    const email = emailElement ? emailElement.getAttribute('content') : null;
-
-    // for each posts, a new element is created and this element contains each information for each post.
-    posts.forEach(post => {
-
-        // new post container element
-        const postCard = document.createElement('div');
-        postCard.classList.add('post-card');
-
-        // populating post container
-        postCard.innerHTML = `
-            <div class="" style="display: flex; gap: .5rem; align-items: center;">
-                <p class="post-username">  ${username}</p>
-                <p class="post-email">${email}</p>
-
-            </div>
-
-            <p class="post-title">${post.title}</p>
-
-            <p class="post-description">${post.description}</p>
-
-            <div class="post-footer">
-                <div class="post-action-buttons" style="display: flex; gap: .5rem;">
-                    <img src="images/default-images/like_btn.png" alt="like button image" class="like-btn-img">
-                    <img src="images/default-images/dislike_btn.png" alt="like button image" class="dislike-btn-img">
-                    <img src="images/default-images/share_btn.png" alt="like button image" class="share-btn-img">
-                </div>
-
-                <div class="post-stats" style="display: flex; gap: .5rem;">
-                    <p>likes ${post.likes}</p>
-                    <p>dislikes ${post.dislikes}</p>
-                    <p>shared ${post.times_shared}</p>
-                </div>
-
-            </div>    
-        `;
-        
-        // inserting post container element into element containing all posts.
-        postsContainer.appendChild(postCard);
-    });
-
-}
+    

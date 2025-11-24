@@ -89,10 +89,13 @@
                                     <img src="{{ asset('storage/website_images/three_dots.png') }}" alt="post-options-image"
                                     class="post-options-image">
 
-                                    <ul class="post-options-dropdown">
-                                        <li>Delete</li>
-                                        <li>Edit</li>
-                                    </ul>
+                                    <div class="post-options-dropdown-wrapper">
+                                        <div class="post-options-dropdown">
+                                            <span class="delete-post-btn">Delete</span>
+                                            <span>Edit</span>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         @endif

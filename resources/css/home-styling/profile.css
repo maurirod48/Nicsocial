@@ -504,29 +504,42 @@ POST SECTION STYLING
     position: relative;
 }
 
-.post-options-dropdown {
-    /* display: ; */
+.post-options-dropdown-wrapper {
     position: absolute;
     right: 0px;
     border: solid 1px white;
     /* padding: 1rem; */
     /* width: fit-content; */
     border-radius: .5rem;
-
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    justify-content: center;
+    /* gap: 1rem; */
+    width: 60px;
+    padding: 1rem;
 }
 
-.post-options-dropdown li{
+.post-options-dropdown-wrapper.show {
+    display: flex;
+}
+
+.post-options-dropdown {
+    width: 100%;
+    
+}
+
+.post-options-dropdown span{
     list-style: none;
     cursor: pointer;
     width: 100%;
-    text-align: center;
-    /* text-align: center; */
+    display: block;
+    /* padding: 1rem; */
+
+
+    font-size: 1.2rem;
 }
 
-.post-options-dropdown li:hover {
+.post-options-dropdown span:hover {
     background-color: gray;
 }
