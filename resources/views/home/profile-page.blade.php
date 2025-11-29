@@ -7,7 +7,7 @@
 <meta name="current-loggedIn-username" content="{{auth()->user()->name}}">
 <meta name="current-loggedIn-email" content="{{auth()->user()->email}}">
 
-<div class="people-section-wrapper">
+<div class="profile-section-wrapper">
     <div class="profile-card-wrapper">
         <div class="banner-img-container">
             <img src="{{ asset("images/default-images/default_banner.jpeg") }}" alt="default banner image"
@@ -183,6 +183,15 @@
         </section>
     </div>
 
+    <div class="popup-delete-post-wrapper">
+        <div class="popup-delete-post-wrap">
+            <h1>Delete this post?</h1>
+            <div class="delete-post-yes-no-btn-wrapper">
+                <button class="delete-post-btn-yes">yes</button>
+                <button class="delete-post-btn-no">No</button>
+            </div>
+        </div>
+    </div>
 
     {{-- Popup for then user wants to change profile picture --}}
     <div class="change-profile-pic-popup-wrapper">
@@ -267,7 +276,7 @@
         </div>
     </div>
 
-    {{-- This popup here will appear when there errors when trying to update profile info --}}
+    {{-- This popup here will appear when there are errors when trying to update profile info --}}
     @if($errors->editProfileErrors->any())
         <div class="edit-profile-errors-popup-wrapper show">
             <div class="edit-profile-errors-popup-wrap">

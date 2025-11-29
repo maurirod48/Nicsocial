@@ -292,8 +292,6 @@ removePostImagePreviewBtn.addEventListener('click', e => {
 //////////////////////////////////
 
 
-// const postOptionsDropdownMenu = document.querySelector('.post-options-dropdown-wrapper');
-
 // Event listener for when user clicks on the 3 dots of a post.
 document.addEventListener('click',  e => {
 
@@ -320,8 +318,17 @@ document.addEventListener('click',  e => {
     }
 })
 
+///////////////////////////////
+// DELETE POST CODE ///////////
+///////////////////////////////
+
+// This variable here is to keep track of the ID of the post that the user wants to delete.
+// It will change everytime the user clicks on the delete button for a post.
+let deletePostId;
+
 // When the user tries to delete a post by clicking the "delete" button, we need to 
-// find out which post by getting its ID.
+// find out which post by getting its ID. Afterwards, we display a message asking the user to confirm whether they
+// want to delete the post or not.
 document.addEventListener('click', e => {
 
     // This block of code here kinda follows the same logic as in the previous "if statment"
@@ -329,10 +336,19 @@ document.addEventListener('click', e => {
     if (e.target.matches('.delete-post-btn')) {
         const postElement = e.target.closest('.post-container');
         const postId = postElement.querySelector('.post-id').value;
-        console.log('post id:', postId);
 
+        deletePostId = postId;
+        console.log('post id:', deletePostId);
+
+        toggleDeletePostPopup();
     }
 });
-    
 
+document.querySelector('.delete-post-btn-no').addEventListener('click', e => {toggleDeletePostPopup()});
+    
+function toggleDeletePostPopup() {
+    const popup = document.querySelector('.popup-delete-post-wrapper');
+    popup.classList.toggle('show');
+
+}
     
