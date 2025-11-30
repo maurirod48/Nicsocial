@@ -70,8 +70,6 @@ class PostController extends Controller
         // number of dislikes this post currently has.
         $postDislikes = $post->dislikes;
 
-
-
         // Checking to see if user has previously disliked the post, if they did, we need to undo that so then a "like"
         // can be added.
         if ($user->dislikedPosts()->where('post_id', $postId)->exists()) {
@@ -158,4 +156,20 @@ class PostController extends Controller
         
         return response()->json(['postId' => $post->title, 'success' => true, 'message' => $message]);
     }
+
+    public function deletePost(Request $request) {
+        // JSON, getting all JSON data being sent from request.
+        $jsonInput = $request->json()->all();
+
+        // post id from request. Grabbing specific piece of info from all the JSON input.
+        $postId = $jsonInput['postId'];
+
+        // Post
+        $post = Post::findOrFail($postId);
+
+        $post->delete();
+
+        return response()->json(['success' => true, 'id' => $postId]);
+    }
 }
+

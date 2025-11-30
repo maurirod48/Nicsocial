@@ -344,11 +344,49 @@ document.addEventListener('click', e => {
     }
 });
 
+// Delete post button and its event listener.
 document.querySelector('.delete-post-btn-no').addEventListener('click', e => {toggleDeletePostPopup()});
     
+// Function to make "delete post" pop up visible or hide it.
 function toggleDeletePostPopup() {
     const popup = document.querySelector('.popup-delete-post-wrapper');
     popup.classList.toggle('show');
 
 }
     
+
+// "Yes" button for when user confirms they want to delete a post.
+document.querySelector('.delete-post-btn-yes').addEventListener('click', DeletePostRequest);
+
+// Function to delete a post.
+function DeletePostRequest() {
+
+    const obj = {
+        'postId' : deletePostId
+    };
+
+    fetch(`/delete-post`, {
+        method: 'POST',
+        headers : {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify(obj)
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Error in "delete" post request:', res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            location.reload(true);
+            console.log('yes:', data.id);
+        } else {
+            console.log('request return error when trying to delete a post');
+        }
+    })
+    .catch(erro => console.error(erro))
+}

@@ -58,8 +58,10 @@ Route::get('/profile-section', function () {
     // All posts belonging to current authenticated user.
     $currentUserPosts = $user->posts;
 
+    $reversedArrayOfCurrentUserPosts = $currentUserPosts->reverse();
+
     // redirecting user to profile page and passing all posts to the page to then display em.
-    return view('home.profile-page', ['posts' => $currentUserPosts]);
+    return view('home.profile-page', ['posts' => $$reversedArrayOfCurrentUserPosts]);
 })->name('profile.section');
 
 // This request will come from a JS fetch request to get all posts.
@@ -90,3 +92,6 @@ Route::post('/profile-section/like-post', [PostController::class, 'likePost']);
 
 // Route to dislike post.
 Route::get('/dislike-post/{post}', [PostController::class, 'dislikePost']);
+
+// Route to delete post.
+Route::post('/delete-post', [PostController::class, 'deletePost']);
