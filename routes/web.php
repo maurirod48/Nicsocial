@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Models\Product;
 
 // SIGNIN LOGIN ROUTES
 
@@ -61,7 +62,7 @@ Route::get('/profile-section', function () {
     $reversedArrayOfCurrentUserPosts = $currentUserPosts->reverse();
 
     // redirecting user to profile page and passing all posts to the page to then display em.
-    return view('home.profile-page', ['posts' => $$reversedArrayOfCurrentUserPosts]);
+    return view('home.profile-page', ['posts' => $reversedArrayOfCurrentUserPosts]);
 })->name('profile.section');
 
 // This request will come from a JS fetch request to get all posts.
