@@ -59,6 +59,7 @@ Route::get('/profile-section', function () {
     // All posts belonging to current authenticated user.
     $currentUserPosts = $user->posts;
 
+    // Reversing order of array so that latests posts are shown first.
     $reversedArrayOfCurrentUserPosts = $currentUserPosts->reverse();
 
     // redirecting user to profile page and passing all posts to the page to then display em.
