@@ -351,6 +351,7 @@ document.querySelector('.delete-post-btn-no').addEventListener('click', e => {to
 function toggleDeletePostPopup() {
     const popup = document.querySelector('.popup-delete-post-wrapper');
     popup.classList.toggle('show');
+    
 
 }
     
@@ -389,4 +390,18 @@ function DeletePostRequest() {
         }
     })
     .catch(erro => console.error(erro))
+}
+
+//////////////////////
+// EDIT POST CODE ////
+//////////////////////
+
+document.addEventListener('click', e => {
+    if (e.target.matches('.edit-post-btn')) {
+        toggleEditPostPopup();
+    }
+});
+
+function toggleEditPostPopup() {
+    console.log('edit postttt');
 }

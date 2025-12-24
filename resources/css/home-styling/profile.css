@@ -568,6 +568,7 @@ POST SECTION STYLING
     border: white solid 1px;
     border-radius: 1rem;
     padding: 1.5rem 2rem;
+    background-color: black;
 }
 
 .delete-post-yes-no-btn-wrapper {

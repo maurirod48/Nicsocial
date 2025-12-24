@@ -92,7 +92,7 @@
                                     <div class="post-options-dropdown-wrapper">
                                         <div class="post-options-dropdown">
                                             <span class="delete-post-btn">Delete</span>
-                                            <span>Edit</span>
+                                            <span class="edit-post-btn">Edit</span>
                                         </div>
                                     </div>
                                     
