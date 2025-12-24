@@ -396,12 +396,62 @@ function DeletePostRequest() {
 // EDIT POST CODE ////
 //////////////////////
 
+
+
+// STEP 1. user clicks on "edit" button for a post.
+
+// Event listener for when the edit button is clicked, this trigger event calls the "getPostToEditID" funciton.
 document.addEventListener('click', e => {
     if (e.target.matches('.edit-post-btn')) {
-        toggleEditPostPopup();
+        getPostToEditID(e);
     }
 });
 
+//STEP 2. Get post ID for the post user wants to edit.
+
+// This function will get the ID of the post tghe user wants to edit.
+function getPostToEditID(e) {
+    const postCard = e.target.closest('.post-container');
+    const postToEditId = postCard.querySelector('.post-id').value;
+    console.log('Post ID:', postToEditId);
+
+    // calling function to get post object.
+    getPostToEditObject(postToEditId);
+}
+
+// STEP 3. Get post object based on post ID.
+
+function getPostToEditObject(postId) {
+
+    const postInfo = {
+        'id' : postId
+    };
+
+    fetch('/get-post-object/edit', {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify(postInfo)
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Bad response:', res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('From fetch request: ',data.id);
+            console.log('Post title: ', data.post.title);
+        }
+    })
+    .catch(err => console.error(err));
+}
+
+// Function to make "edit post popup" appear/disappear.
 function toggleEditPostPopup() {
     console.log('edit postttt');
 }

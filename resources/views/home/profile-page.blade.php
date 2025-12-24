@@ -183,6 +183,12 @@
         </section>
     </div>
 
+    <div class="edit-post-popup-wrapper">
+        <div class="edit-post-popup">
+            <h1>Edit post popup</h1>
+        </div>
+    </div>
+
     <div class="popup-delete-post-wrapper">
         <div class="popup-delete-post-wrap">
             <h1>Delete this post?</h1>

@@ -171,5 +171,16 @@ class PostController extends Controller
 
         return response()->json(['success' => true, 'id' => $postId]);
     }
+
+    // This function will get the post object for when the user wants to edit a post. 
+    public function getPostObject(Request $request) {
+        $jsonInput = $request->json()->all();
+
+        $postId = $jsonInput['id'];
+
+        $post = Post::findOrFail($postId);
+
+        return response()->json(['success' => true, 'id' => $postId, 'post' => $post]);
+    }
 }
 
