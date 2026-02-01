@@ -185,7 +185,8 @@
 
     <div class="edit-post-popup-wrapper">
         <div class="edit-post-popup">
-            <h1>Edit post popup</h1>
+            <h1>Edit post</h1>
+            
         </div>
     </div>
 
