@@ -186,7 +186,11 @@
     <div class="edit-post-popup-wrapper">
         <div class="edit-post-popup">
             <h1>Edit post</h1>
-            
+            <form action="POST">
+                <input type="text" class="edit-post-title-input">
+                <textarea class="edit-post-desc-input"></textarea>
+                <img src="" alt="image" class="edit-post-img">
+            </form>
         </div>
     </div>
 

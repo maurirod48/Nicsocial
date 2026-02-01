@@ -396,6 +396,9 @@ function DeletePostRequest() {
 // EDIT POST CODE ////
 //////////////////////
 
+let postObject; // This variable will store the current post to be edited meaning the 
+// contents of this variable will change depending on which post they want to edit.
+
 
 
 // STEP 1. user clicks on "edit" button for a post.
@@ -446,6 +449,7 @@ function getPostToEditObject(postId) {
         if (data.success) {
             console.log('From fetch request: ',data.id);
             console.log('Post title: ', data.post.title);
+            postObject = data.post;
         }
     })
     .catch(err => console.error(err));
