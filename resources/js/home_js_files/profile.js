@@ -450,12 +450,33 @@ function getPostToEditObject(postId) {
             console.log('From fetch request: ',data.id);
             console.log('Post title: ', data.post.title);
             postObject = data.post;
+
+            // Calling function to make edit popup appear/disappear.
+            fillEditFields();
         }
     })
     .catch(err => console.error(err));
 }
 
+function fillEditFields() {
+    const postTitle = _('.edit-post-title-input');
+    postTitle.value = postObject.title;
+
+    // After populating the fields, we are ready to show the popup.
+    toggleEditPostPopup();
+}
+
 // Function to make "edit post popup" appear/disappear.
 function toggleEditPostPopup() {
+    const popup = document.querySelector('.edit-post-popup-wrapper');
+    popup.classList.toggle('show');
     console.log('edit postttt');
 }
+
+
+// If user clicks hide button then we'll hide the edit post popup.
+document.addEventListener('click', e => {
+    if (e.target.matches('.edit-post-popup-wrapper'))  {
+        toggleEditPostPopup();
+    }
+});

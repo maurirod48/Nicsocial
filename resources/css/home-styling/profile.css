@@ -606,6 +606,10 @@ POST SECTION STYLING
     background-color: rgb(0, 0, 0, 0.6);
 }
 
+.edit-post-popup-wrapper.show {
+    display: flex;
+}
+
 .edit-post-popup {
     background-color: black;
     border: white 1px solid;

@@ -190,6 +190,7 @@
                 <input type="text" class="edit-post-title-input">
                 <textarea class="edit-post-desc-input"></textarea>
                 <img src="" alt="image" class="edit-post-img">
+                <button>Cancel</button>
             </form>
         </div>
     </div>
