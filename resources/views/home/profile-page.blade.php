@@ -186,11 +186,16 @@
     <div class="edit-post-popup-wrapper">
         <div class="edit-post-popup">
             <h1>Edit post</h1>
-            <form action="POST">
-                <input type="text" class="edit-post-title-input">
-                <textarea class="edit-post-desc-input"></textarea>
-                <img src="" alt="image" class="edit-post-img">
-                <button>Cancel</button>
+            <form action="{{ route('post.edit') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" class="edit-post-id" name="edit-post-id">
+                <input type="text" class="edit-post-title-input" name="edit-post-title-input">
+                <br>
+                <textarea class="edit-post-desc-input" name="edit-post-desc-input"></textarea>
+                <br>
+                <img src="" class="edit-post-img">
+                <button>Update</button>
+                <button type="button" class="cancel-btn-edit-post">Cancel</button>
             </form>
         </div>
     </div>

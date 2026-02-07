@@ -98,5 +98,8 @@ Route::get('/dislike-post/{post}', [PostController::class, 'dislikePost']);
 // Route to delete post.
 Route::post('/delete-post', [PostController::class, 'deletePost']);
 
-// Route to edit post.
+// Route to get single post object.
 Route::post('/get-post-object/edit', [PostController::class, 'getPostObject']);
+
+//Route to edit post.
+Route::post('/edit-post', [PostController::class, 'editPost'])->name('post.edit');

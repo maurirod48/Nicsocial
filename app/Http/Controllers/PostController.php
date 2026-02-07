@@ -182,5 +182,22 @@ class PostController extends Controller
 
         return response()->json(['success' => true, 'id' => $postId, 'post' => $post]);
     }
-}
 
+    public function editPost(Request $request) {
+        $input = $request->validate([
+            'edit-post-title-input' => 'required',
+            'edit-post-desc-input' => 'required'
+        ]);
+
+        $id = $request['edit-post-id'];
+
+        $post = Post::findOrFail('$id');
+
+        $post->update([
+            'name' => $input['edit-post-title-input'],
+            'description' => $input['edit-post-desc-input']
+        ])->save();
+
+        return back();
+    }
+}

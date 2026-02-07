@@ -601,6 +601,7 @@ POST SECTION STYLING
 
     position: fixed;
     top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     background-color: rgb(0, 0, 0, 0.6);
@@ -615,4 +616,8 @@ POST SECTION STYLING
     border: white 1px solid;
     border-radius: .5rem;
     padding: 1rem 2rem;
+}
+
+.edit-post-desc-input {
+    resize: none;
 }

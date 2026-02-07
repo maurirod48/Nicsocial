@@ -459,8 +459,26 @@ function getPostToEditObject(postId) {
 }
 
 function fillEditFields() {
+    // Before we display the edit post form we neeed to fill out the input fields with the current post data.
     const postTitle = _('.edit-post-title-input');
     postTitle.value = postObject.title;
+
+    const postDescription = _('.edit-post-desc-input');
+    postDescription.value = postObject.description;
+
+    const postId = _('.edit-post-id');
+    postId.value = postObject.id;
+
+    // Checking if post has a pic to show.
+    if (postObject.image) {
+        console.log('This post has a pic');
+        const img = _('.edit-post-img');
+        img.src = `/storage/images/post_images/${postObject.image}`;
+    } else {
+        console.log('This post does not have a pic');
+        const img = _('.edit-post-img');
+        img.src = ``;
+    }
 
     // After populating the fields, we are ready to show the popup.
     toggleEditPostPopup();
@@ -474,9 +492,5 @@ function toggleEditPostPopup() {
 }
 
 
-// If user clicks hide button then we'll hide the edit post popup.
-document.addEventListener('click', e => {
-    if (e.target.matches('.edit-post-popup-wrapper'))  {
-        toggleEditPostPopup();
-    }
-});
+// Cancel button for when editing a post.
+_('.cancel-btn-edit-post').addEventListener('click', toggleEditPostPopup);
