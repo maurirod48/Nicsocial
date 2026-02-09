@@ -469,15 +469,23 @@ function fillEditFields() {
     const postId = _('.edit-post-id');
     postId.value = postObject.id;
 
+    // This element contains the input element to upload a new pic for a post. 
+    const optionalImgInput = _('.optional-img-input');
+
     // Checking if post has a pic to show.
     if (postObject.image) {
         console.log('This post has a pic');
         const img = _('.edit-post-img');
         img.src = `/storage/images/post_images/${postObject.image}`;
+
+        
+        optionalImgInput.style.display = 'flex';
     } else {
         console.log('This post does not have a pic');
         const img = _('.edit-post-img');
         img.src = ``;
+        
+        optionalImgInput.style.display = 'none';
     }
 
     // After populating the fields, we are ready to show the popup.

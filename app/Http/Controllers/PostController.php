@@ -191,12 +191,12 @@ class PostController extends Controller
 
         $id = $request['edit-post-id'];
 
-        $post = Post::findOrFail('$id');
+        $post = Post::findOrFail($id);
 
         $post->update([
             'name' => $input['edit-post-title-input'],
             'description' => $input['edit-post-desc-input']
-        ])->save();
+        ]);
 
         return back();
     }

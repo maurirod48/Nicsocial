@@ -194,6 +194,9 @@
                 <textarea class="edit-post-desc-input" name="edit-post-desc-input"></textarea>
                 <br>
                 <img src="" class="edit-post-img">
+                <div>
+                    <input type='file' class="optional-img-input">                
+                </div>
                 <button>Update</button>
                 <button type="button" class="cancel-btn-edit-post">Cancel</button>
             </form>

@@ -58,6 +58,7 @@ body {
     font-size: 1.3rem;
     padding: .6rem 0;
     border: none;
+    cursor: pointer;
 }
 
 .signin-btn {
@@ -66,4 +67,5 @@ body {
     font-size: 1.3rem;
     padding: .6rem 0;
     border: none;
+    cursor: pointer;
 }
