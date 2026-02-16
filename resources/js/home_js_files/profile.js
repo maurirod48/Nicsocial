@@ -501,4 +501,27 @@ function toggleEditPostPopup() {
 
 
 // Cancel button for when editing a post.
-_('.cancel-btn-edit-post').addEventListener('click', toggleEditPostPopup);
+_('.cancel-btn-edit-post').addEventListener('click', () => {
+    editPostPicNewInput.value = '';
+    toggleEditPostPopup();
+});
+
+
+const editPostPicNewInput = _('.optional-img-input');
+
+editPostPicNewInput.addEventListener('change', e => {
+    showNewPostPic(e);
+});
+
+function showNewPostPic(e) {
+    console.log('New pic selected');
+
+    const file = e.target.files[0];
+    console.log(file.name);
+
+    const tempLink = URL.createObjectURL(file);
+
+    const currentImg = _('.edit-post-img');
+    currentImg.src = tempLink;
+}
+

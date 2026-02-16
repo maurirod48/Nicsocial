@@ -24,9 +24,9 @@
                 </div>
 
                 {{-- <div class="nav-name-email">
-                    <h1 class="nav-name">{{auth()->user()->name}}</h1>
-                    <p class="nav-email">{{auth()->user()->email}}</p>
-                </div> --}}
+                        <h1 class="nav-name">{{auth()->user()->name}}</h1>
+                        <p class="nav-email">{{auth()->user()->email}}</p>
+                    </div> --}}
             </div>
             
 
