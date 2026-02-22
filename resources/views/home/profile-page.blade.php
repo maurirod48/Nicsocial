@@ -175,7 +175,6 @@
                                 <button class="post-btn">Post</button>
                                 <button class="post-cancel-btn" type="button">Cancel</button>
                             </div>
-                            
                         </div>
                     </form>
                 </div>
@@ -189,22 +188,28 @@
             <form action="{{ route('post.edit') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="edit-post-form">
-
-                        <input type="hidden" class="edit-post-id" name="edit-post-id">
-                        <input type="text" class="edit-post-title-input" name="edit-post-title-input">
-                        <br>
-                        <textarea class="edit-post-desc-input" name="edit-post-desc-input"></textarea>
-                        <br>
-                        <img src="" class="edit-post-img">
-                        <div>
-                            <label for="optional-img-input" id="update-pic-btn">Update this pic</label>
-                            <input type='file' class="optional-img-input" id="optional-img-input" style="display: none;">                
-                        </div>
+                    <input type="hidden" class="edit-post-id" name="edit-post-id">
+                    <input type="text" class="edit-post-title-input" name="edit-post-title-input">
+                    <br>
+                    <textarea class="edit-post-desc-input" name="edit-post-desc-input"></textarea>
+                    <br>
+                    <img src="" class="edit-post-img">
+                    <div>
+                        <label for="optional-img-input-id" id="update-pic-btn">Update this pic</label>
+                        <input type='file' class="optional-img-input" id="optional-img-input-id"
+                        name="new_post_pic">
+                    </div>
+                    <div class="edit-post-buttons-container">
                         <button>Update</button>
                         <button type="button" class="cancel-btn-edit-post">Cancel</button>
-                </div>
+                    </div>
 
-            
+                    @if (session('messi'))
+                        <h1>{{ session('messi') }}</h1>
+                        <h1>{{ session('imgName') }}</h1>
+                        <h1>{{ session('currentImage') }}</h1>
+                    @endif
+                </div>
             </form>
         </div>
     </div>

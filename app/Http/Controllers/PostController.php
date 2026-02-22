@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -193,11 +194,35 @@ class PostController extends Controller
 
         $post = Post::findOrFail($id);
 
+        $currentImg = $post->image;
+
         $post->update([
             'name' => $input['edit-post-title-input'],
             'description' => $input['edit-post-desc-input']
         ]);
 
-        return back();
+        // This is an instance of the image that could be uploaded when attempting to update a post (Not all posts have images).
+        $img = $request->file('new_post_pic');
+
+        // Checking to see if an image was uploaded for this attempt of trying to edit a post.
+        if ($img) {
+            // Name of new pic.
+            $imgName = $img->getClientOriginalName();
+
+            // uploading new post pic.
+            $img->storeAs('images/post_images', $imgName, 'public'); // The storeAs first parameter means the path inside /storage/app/public,
+            // the second parameter is the name will give to the image and then the third tells Laravel which filesystem disk to use. The disk names come from config/filesystems.php
+
+            if (Storage::disk('public')->exists('/images/post_images/' . $currentImg)) {
+                Storage::disk('public')->delete('/images/post_images/' . $currentImg);
+            }
+
+            return back()->with('messi', 'img was uploaded')
+                        ->with('currentImage', $currentImg)
+                        ->with('imgName', $imgName);
+        } else {
+            return back()->with('messi', 'img was not uploaded');
+        }
+        
     }
 }
