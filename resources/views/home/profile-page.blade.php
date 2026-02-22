@@ -188,17 +188,23 @@
             <h1>Edit post</h1>
             <form action="{{ route('post.edit') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" class="edit-post-id" name="edit-post-id">
-                <input type="text" class="edit-post-title-input" name="edit-post-title-input">
-                <br>
-                <textarea class="edit-post-desc-input" name="edit-post-desc-input"></textarea>
-                <br>
-                <img src="" class="edit-post-img">
-                <div>
-                    <input type='file' class="optional-img-input">                
+                <div class="edit-post-form">
+
+                        <input type="hidden" class="edit-post-id" name="edit-post-id">
+                        <input type="text" class="edit-post-title-input" name="edit-post-title-input">
+                        <br>
+                        <textarea class="edit-post-desc-input" name="edit-post-desc-input"></textarea>
+                        <br>
+                        <img src="" class="edit-post-img">
+                        <div>
+                            <label for="optional-img-input" id="update-pic-btn">Update this pic</label>
+                            <input type='file' class="optional-img-input" id="optional-img-input" style="display: none;">                
+                        </div>
+                        <button>Update</button>
+                        <button type="button" class="cancel-btn-edit-post">Cancel</button>
                 </div>
-                <button>Update</button>
-                <button type="button" class="cancel-btn-edit-post">Cancel</button>
+
+            
             </form>
         </div>
     </div>

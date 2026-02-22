@@ -513,11 +513,19 @@ editPostPicNewInput.addEventListener('change', e => {
     showNewPostPic(e);
 });
 
+// Function that updates the currently displayed image when editing a post.
 function showNewPostPic(e) {
     console.log('New pic selected');
 
+    // the "file" variable contains the uploaded file. In case the user submit more than one file we always make sure we grab the first one only.
     const file = e.target.files[0];
     console.log(file.name);
+
+    if (!file.type.startsWith('image/')) {
+        alert('The file uploaded is not an image.');
+        e.target.value = "";
+        return;
+    }
 
     const tempLink = URL.createObjectURL(file);
 
