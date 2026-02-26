@@ -188,7 +188,8 @@
             <form action="{{ route('post.edit') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="edit-post-form">
-                    <input type="hidden" class="edit-post-id" name="edit-post-id">
+                    <input type="hidden" class="edit-post-id" name="edit-post-id"> {{-- The value of this element is dynamically changed using 
+                    JS in /resources/js/home_js_files/profile.js --}}
                     <input type="text" class="edit-post-title-input" name="edit-post-title-input">
                     <br>
                     <textarea class="edit-post-desc-input" name="edit-post-desc-input"></textarea>
@@ -204,11 +205,11 @@
                         <button type="button" class="cancel-btn-edit-post">Cancel</button>
                     </div>
 
-                    @if (session('messi'))
+                    {{-- @if (session('messi'))
                         <h1>{{ session('messi') }}</h1>
                         <h1>{{ session('imgName') }}</h1>
                         <h1>{{ session('currentImage') }}</h1>
-                    @endif
+                    @endif --}}
                 </div>
             </form>
         </div>

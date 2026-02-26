@@ -645,3 +645,8 @@ POST SECTION STYLING
 .optional-img-input {
     display: none;
 }
+
+.edit-post-img {
+    max-width: 350px;
+    max-height: 400px;
+}

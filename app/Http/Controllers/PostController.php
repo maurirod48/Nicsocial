@@ -192,10 +192,13 @@ class PostController extends Controller
 
         $id = $request['edit-post-id'];
 
+        // Current post user wants to edit.
         $post = Post::findOrFail($id);
 
+        // Name of the post corresponding to the current post to be edited.
         $currentImg = $post->image;
 
+        // Updating post name and post description with the new data in the edit post form.
         $post->update([
             'name' => $input['edit-post-title-input'],
             'description' => $input['edit-post-desc-input']
@@ -213,9 +216,26 @@ class PostController extends Controller
             $img->storeAs('images/post_images', $imgName, 'public'); // The storeAs first parameter means the path inside /storage/app/public,
             // the second parameter is the name will give to the image and then the third tells Laravel which filesystem disk to use. The disk names come from config/filesystems.php
 
-            if (Storage::disk('public')->exists('/images/post_images/' . $currentImg)) {
-                Storage::disk('public')->delete('/images/post_images/' . $currentImg);
+
+            // Before we delete the old image from /storage/app/public/post_images we need to check to see if another post has the same image.
+            // cuz if they do, then deleting that image will make it not show up for that other post (User is not editing that other post).
+            $differentPostHasSameImage = Post::where('image', $currentImg)->exists();
+
+            // If differentPostHasSameImage is false (meaning no other post has the same image) we are good to proceed 
+            // and delete that image from /storage/app/public/post_images.
+            if (!$differentPostHasSameImage) {
+                // This if statement checks for an image inside /storage/app/public/images/post_images
+                // which name matches $currentImg.
+                if (Storage::disk('public')->exists('/images/post_images/' . $currentImg)) {
+                    Storage::disk('public')->delete('/images/post_images/' . $currentImg);
+                }
             }
+
+            // Now we need to update the name of th post image inside the DB.
+            $post->update([
+                'image' => $imgName
+            ]);
+
 
             return back()->with('messi', 'img was uploaded')
                         ->with('currentImage', $currentImg)
