@@ -217,9 +217,11 @@ class PostController extends Controller
             // the second parameter is the name will give to the image and then the third tells Laravel which filesystem disk to use. The disk names come from config/filesystems.php
 
 
-            // Before we delete the old image from /storage/app/public/post_images we need to check to see if another post has the same image.
-            // cuz if they do, then deleting that image will make it not show up for that other post (User is not editing that other post).
-            $differentPostHasSameImage = Post::where('image', $currentImg)->exists();
+            // Before we delete the current post image from /storage/app/public/post_images we need to check to see if another post has the same image.
+            // cuz if thats the case then deleting that image will cause problems for that other post (User is not editing that other post).
+            $differentPostHasSameImage = Post::where('image', '=', $currentImg)
+                                                ->where('id', "!=", $post->id) // Specifying we are looking a different post to have the same image.
+                                                ->exists();
 
             // If differentPostHasSameImage is false (meaning no other post has the same image) we are good to proceed 
             // and delete that image from /storage/app/public/post_images.

@@ -203,6 +203,7 @@
                     <div class="edit-post-buttons-container">
                         <button>Update</button>
                         <button type="button" class="cancel-btn-edit-post">Cancel</button>
+                        {{-- {{ auth()->id() }} --}}
                     </div>
 
                     {{-- @if (session('messi'))
