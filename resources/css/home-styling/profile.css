@@ -633,6 +633,15 @@ POST SECTION STYLING
     display: flex;
     gap: 1rem;
 }
+.edit-post-buttons-container button {
+    color: aliceblue;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    border: solid 1px white;
+    background-color: black;
+    cursor: pointer;
+}
 
 #update-pic-btn {
     background-color: rgb(0, 49, 211);

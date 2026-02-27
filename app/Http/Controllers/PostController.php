@@ -238,13 +238,9 @@ class PostController extends Controller
                 'image' => $imgName
             ]);
 
-
-            return back()->with('messi', 'img was uploaded')
-                        ->with('currentImage', $currentImg)
-                        ->with('imgName', $imgName);
+            return back();
         } else {
             return back()->with('messi', 'img was not uploaded');
         }
-        
     }
 }

@@ -19,8 +19,7 @@
                     <img src="{{ asset('storage/website_logo_images/Nicsocial logo - White.png') }}" alt="nicsocial logo"
                     class="logo-img-home-layout">
 
-                    {{-- <img src="{{ asset('images/default-images/elden_ring_logo2.png')}}" alt="elden ring logo"
-                    class="elden-ring-logo"> --}}
+                    <h2 style="font-weight:100;">Welcome {{ auth()->user()->name }}!</h2>
                 </div>
 
                 {{-- <div class="nav-name-email">
