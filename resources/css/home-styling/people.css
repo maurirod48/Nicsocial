@@ -1,0 +1,31 @@
+
+
+.people-section-container {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    border-top: solid 1px white;
+}
+
+
+.middle-center {
+    width: 800px;
+    height: 100vh;
+    border: solid 1px white;
+}
+
+.friends-people-tab-wrapper {
+    display: flex;
+    flex: 1;
+    /* justify-content: space-around; */
+    border-bottom: solid 1px white;
+}
+
+.friends-tab {
+    border-right: solid 1px white;
+}
+
+.friends-tab, .people-tab {
+    width: 50%;
+    text-align: center;
+}

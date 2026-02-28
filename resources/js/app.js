@@ -21,3 +21,8 @@ if (_('.profile-card-wrapper')) {
     import('../css/home-styling/profile.css');
     import('../js/home_js_files/profile.js');
 }
+
+if (_('.people-section-container')) {
+    import('../js/home_js_files/people.js');
+    import('../css/home-styling/people.css');
+}
