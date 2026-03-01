@@ -1,4 +1,71 @@
 console.log('people sectiooooonnnn!!');
-
+function _(element) {
+    return document.querySelector(element);
+}
 
 // Code to get all users and display them.
+
+let people;
+
+function getPeople() {
+    fetch('/people/users')
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Error while trying to get all users:', res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        people = data.people;
+        console.log(people);
+        displayPeople(people);
+    })
+    .catch(err => console.log(err));
+}
+
+
+// This part of the code calls a different function depending on which radio (friends/people) is currently checked.
+// It will either call the function that displays friends or the function that displays people.
+
+
+// Radio elements.
+const friendsRadio = _('#friends-radio');
+const peopleRadio = _('#people-radio');
+
+// Friends radio is checked by default when the people page is loaded.
+if (friendsRadio.checked) {
+    console.log('friends');
+}
+
+
+friendsRadio.addEventListener('change', function () {
+    if (this.checked) {
+        console.log('friends');
+        
+    }
+});
+peopleRadio.addEventListener('change', function () {
+    if (this.checked) {
+        console.log('people');
+        getPeople();
+    }
+});
+
+
+// DISPLAY PEOPLE.
+
+function displayPeople(people) {
+    const dynamicSection = _('.dynamic-section');
+
+    dynamicSection.innerHTML = '';
+
+    people.forEach(user => {
+        const userCard = document.createElement('div');
+        userCard.innerHTML = `
+            <h1>${user.name}</h1>
+        `;
+
+        dynamicSection.appendChild(userCard);
+    })
+}

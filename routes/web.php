@@ -3,8 +3,10 @@
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForgotPasswordController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\PeopleController;
+use App\Http\Controllers\PostController;
+
 use App\Models\Product;
 
 // SIGNIN LOGIN ROUTES
@@ -103,3 +105,10 @@ Route::post('/get-post-object/edit', [PostController::class, 'getPostObject']);
 
 //Route to edit post.
 Route::post('/edit-post', [PostController::class, 'editPost'])->name('post.edit');
+
+
+// ========================
+// PEOPLE SECTION ROUTES 
+// ========================
+
+Route::get('/people/users', [PeopleController::class, 'getPeople']);
