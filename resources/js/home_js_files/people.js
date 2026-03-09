@@ -6,7 +6,9 @@ function _(element) {
 // Code to get all users and display them.
 
 let people;
+let friends;
 
+// function to get all users except the one who's currently logged in (cuz why would we need to display that user in this section?).
 function getPeople() {
     fetch('/people/users')
     .then(res => {
@@ -42,9 +44,11 @@ if (friendsRadio.checked) {
 friendsRadio.addEventListener('change', function () {
     if (this.checked) {
         console.log('friends');
+        displayFriends(friends);
         
     }
 });
+
 peopleRadio.addEventListener('change', function () {
     if (this.checked) {
         console.log('people');
@@ -52,8 +56,14 @@ peopleRadio.addEventListener('change', function () {
     }
 });
 
+// DISPLAY FRIENDS CODE.
+function displayFriends(friends) {
+    const dynamicSection = _('.dynamic-section');
 
-// DISPLAY PEOPLE.
+    dynamicSection.innerHTML = '';
+}
+
+// DISPLAY PEOPLE CODE.
 
 function displayPeople(people) {
     const dynamicSection = _('.dynamic-section');
@@ -62,8 +72,13 @@ function displayPeople(people) {
 
     people.forEach(user => {
         const userCard = document.createElement('div');
+        userCard.classList = "user-card";
         userCard.innerHTML = `
+
+
             <h1>${user.name}</h1>
+
+            <button class="add-friend-btn">Add friend</button>
         `;
 
         dynamicSection.appendChild(userCard);
