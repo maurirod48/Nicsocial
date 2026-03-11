@@ -73,14 +73,29 @@ function displayPeople(people) {
     people.forEach(user => {
         const userCard = document.createElement('div');
         userCard.classList = "user-card";
-        userCard.innerHTML = `
 
 
-            <h1>${user.name}</h1>
+        if (user.profile_pic_path != null) {
+            userCard.innerHTML = `
+                <div style="display:flex; gap:1rem; align-items:center;">
+                    <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                    <h1>${user.name}</h1>
+                </div>
 
-            <button class="add-friend-btn">Add friend</button>
-        `;
+                <button class="add-friend-btn">Add friend</button>
+            `;
+        } else if (user.profile_pic_path == null) {
+            userCard.innerHTML = `
+                <div style="display:flex; gap:1rem; align-items:center;">
+                    <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
+                    <h1>${user.name}</h1>
+                    No pic
+                </div>
 
+                <button class="add-friend-btn">Add friend</button>
+            `;
+        }
+        
         dynamicSection.appendChild(userCard);
     })
 }
