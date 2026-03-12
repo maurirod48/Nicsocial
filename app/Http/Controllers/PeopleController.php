@@ -7,10 +7,18 @@ use Illuminate\Http\Request;
 
 class PeopleController extends Controller
 {
-    function getPeople(Request $request) {
+    public function getPeople(Request $request) {
 
         $people = User::where('id', '!=', auth()->user()->id)->get();
 
         return response()->json(['people' => $people]);
+    }
+
+    public function friendRequest(Request $request) {
+        $json = $request->json()->all();
+
+        $id = $json['id'];
+
+        return response()->json(['id' => $id]);
     }
 }

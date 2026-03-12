@@ -1,7 +1,12 @@
-console.log('people sectiooooonnnn!!');
+
+
+// console.log('people sectiooooonnnn!!');
 function _(element) {
     return document.querySelector(element);
 }
+
+// CSRF token.
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 // Code to get all users and display them.
 
@@ -75,19 +80,32 @@ function displayPeople(people) {
         userCard.classList = "user-card";
 
 
-        if (user.profile_pic_path != null) {
+        if (user.profile_pic_path != 'none') {
             userCard.innerHTML = `
                 <div style="display:flex; gap:1rem; align-items:center;">
+                    <input type="hidden" class="user-id" value="${user.id}">
                     <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
                     <h1>${user.name}</h1>
                 </div>
 
                 <button class="add-friend-btn">Add friend</button>
             `;
-        } else if (user.profile_pic_path == null) {
+        } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
             userCard.innerHTML = `
                 <div style="display:flex; gap:1rem; align-items:center;">
+                    <input type="hidden" class="user-id" value="${user.id}">
                     <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
+                    <h1>${user.name}</h1>
+                    No pic
+                </div>
+
+                <button class="add-friend-btn">Add friend</button>
+            `;
+        } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
+            userCard.innerHTML = `
+                <div style="display:flex; gap:1rem; align-items:center;">
+                    <input type="hidden" class="user-id" value="${user.id}">
+                    <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
                     <h1>${user.name}</h1>
                     No pic
                 </div>
@@ -98,4 +116,44 @@ function displayPeople(people) {
         
         dynamicSection.appendChild(userCard);
     })
+}
+
+// SEND FRIEND REQUEST CODE.
+
+document.querySelector('.dynamic-section').addEventListener('click', e => {
+    if (e.target.matches('.add-friend-btn')) {
+        console.log('add friend btn clicked');
+
+        // Grabbing the user card div element.
+        const userCard = e.target.closest('.user-card');
+        
+        // User ID:
+        const userId = userCard.querySelector('.user-id').value;
+        sendFriendRequest(userId);
+    }
+})
+
+function sendFriendRequest(friendId) {
+
+    const userInfo = {
+        'id' : friendId
+    };
+
+    fetch('/people/friend-request', {
+        method: 'POST',
+        headers : {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN' : csrfToken
+        },
+        body: JSON.stringify(userInfo)
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Error when trying to send friend request:', res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => console.log('From fetch response:', data.id))
+    .catch(err => console.error(err))
 }

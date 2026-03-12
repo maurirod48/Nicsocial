@@ -5,20 +5,21 @@
     /* flex-direction: column; */
     justify-content: center;
     border-top: solid 1px white;
-    max-height: 100vh;
+    max-height: 800px;
 }
 
 
 .middle-center {
     width: 900px;
-    height: 100vh;
+    height: 800px;
     border: solid 1px white;
     overflow: hidden;
 }
 
 .dynamic-section {
-    height: 100%;
-    overflow-y: auto;   
+    height: 700px;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .friends-people-tab-wrapper {

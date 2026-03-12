@@ -389,7 +389,7 @@ function DeletePostRequest() {
             console.log('request return error when trying to delete a post');
         }
     })
-    .catch(erro => console.error(erro))
+    .catch(err => console.error(err))
 }
 
 //////////////////////
