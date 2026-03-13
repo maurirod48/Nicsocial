@@ -17,8 +17,14 @@ class PeopleController extends Controller
     public function friendRequest(Request $request) {
         $json = $request->json()->all();
 
-        $id = $json['id'];
+        $currentLoggedInUser = auth()->user();
 
-        return response()->json(['id' => $id]);
+        $senderId = $currentLoggedInUser->id;
+        $receiverId = $json['id'];
+
+        $currentLoggedInUser->pendingSentFriendRequests()->attach($receiverId);
+
+
+        return response()->json(['id' => $receiverId]);
     }
 }

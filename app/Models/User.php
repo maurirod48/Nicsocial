@@ -69,4 +69,12 @@ class User extends Authenticatable
     public function dislikedPosts() {
         return $this->belongsToMany(Post::class, "dislikes")->withTimestamps();
     }
+
+    public function pendingSentFriendRequests() {
+        return $this->belongsToMany(User::class, 'friend_requests', 'sender_id', 'receiver_id')->withTimestamps();
+    }
+
+    public function pendingReceivedFriendRequest() {
+        return $this->belongsToMany(User::class, 'friend_requests', 'receiver_id', 'sender_id');
+    }
 }
