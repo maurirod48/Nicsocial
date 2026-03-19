@@ -115,3 +115,6 @@ Route::get('/people/users', [PeopleController::class, 'getPeople']);
 
 // Send friend request = Create record in friend_requests pivot table.
 Route::post('/people/friend-request', [PeopleController::class, 'friendRequest']);
+
+// Get all records in friend_requests table.
+Route::get('/people/get-friend-requests', [PeopleController::class, 'getAllFriendRequests']);

@@ -14,17 +14,24 @@ class PeopleController extends Controller
         return response()->json(['people' => $people]);
     }
 
+    // Method to create record in friend_requests pivot table.
     public function friendRequest(Request $request) {
         $json = $request->json()->all();
 
+        // current logged in user.
         $currentLoggedInUser = auth()->user();
 
         $senderId = $currentLoggedInUser->id;
         $receiverId = $json['id'];
 
+        // Creating record in pivot table.
         $currentLoggedInUser->pendingSentFriendRequests()->attach($receiverId);
 
 
         return response()->json(['id' => $receiverId]);
+    }
+
+    public function getAllFriendRequests() {
+        return response()->json(['response' => 'pending response']);
     }
 }

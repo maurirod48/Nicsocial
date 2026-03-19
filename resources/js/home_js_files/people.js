@@ -10,11 +10,12 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute
 
 // Code to get all users and display them.
 
-let people;
-let friends;
+let people; // all people/users.
+let friends; // friends only.
 
 // function to get all users except the one who's currently logged in (cuz why would we need to display that user in this section?).
 function getPeople() {
+    console.log('getting people');
     fetch('/people/users')
     .then(res => {
         if (!res.ok) {
@@ -68,13 +69,43 @@ function displayFriends(friends) {
     dynamicSection.innerHTML = '';
 }
 
+// Code to get all friends requests. This will later be used to decide what button to display for a user (add friend/cancel request).
+
+
+function getFriendRequestInstances() {
+    let dataToReturn;
+
+    fetch('/people/get-friend-requests')
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Something went wrong when trying get friend requests:', res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        dataToReturn = data.response;
+    })
+    .catch(err => console.log(err));
+
+    return dataToReturn;
+}
+
 // DISPLAY PEOPLE CODE.
 
 function displayPeople(people) {
     const dynamicSection = _('.dynamic-section');
 
+    // clearing dynamic view.
     dynamicSection.innerHTML = '';
 
+    // get all friend requests instances.
+    let friendRequests;
+
+    friendRequests = getFriendRequestInstances();
+    console.log('friend requests array data:', friendRequests);
+
+    // creating user card for each user.
     people.forEach(user => {
         const userCard = document.createElement('div');
         userCard.classList = "user-card";
@@ -114,6 +145,7 @@ function displayPeople(people) {
             `;
         }
         
+        // adding user card to dynamic section.
         dynamicSection.appendChild(userCard);
     })
 }
@@ -154,6 +186,9 @@ function sendFriendRequest(friendId) {
             return res.json();
         }
     })
-    .then(data => console.log('From fetch response:', data.id))
+    .then(data => {
+        console.log('From fetch response:', data.id);
+        getPeople();
+    })
     .catch(err => console.error(err))
 }
