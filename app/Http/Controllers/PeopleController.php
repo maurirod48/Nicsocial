@@ -38,4 +38,17 @@ class PeopleController extends Controller
 
         return response()->json(['response' => $data]);
     }
+
+    public function getFriendRequestStatusSpecificUser(User $user) {
+
+        $loggedInUser = auth()->user();
+
+        $sent = $loggedInUser->pendingSentFriendRequests()->where('receiver_id', $user->id)->first();
+
+        if ($sent) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
 }

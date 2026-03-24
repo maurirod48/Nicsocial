@@ -62,7 +62,9 @@ peopleRadio.addEventListener('change', function () {
     }
 });
 
+/////////////////////////
 // DISPLAY FRIENDS CODE.
+/////////////////////////
 function displayFriends(friends) {
     const dynamicSection = _('.dynamic-section');
 
@@ -91,7 +93,32 @@ async function getFriendRequestInstances() {
     }
 }
 
+//////////////////////
 // DISPLAY PEOPLE CODE.
+///////////////////////
+
+// This function will return true or false depending on if a friend request has been sent toa user that will be displayed in the people section.
+async function checkingSentForFriendRequest(userId) {
+
+    try {
+        const response = await fetch(`/people/get-friend-request-status/${userId}`);
+
+        if (!response.ok) {
+            throw new Error(`Error while trying to get friend requests status for user ${userId}: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+            return true;
+        } else {
+            return false;
+        }
+
+    } catch (error) {
+        console.error('error:', error);
+    }
+}
 
 async function displayPeople(people) {
     const dynamicSection = _('.dynamic-section');
@@ -100,56 +127,101 @@ async function displayPeople(people) {
     dynamicSection.innerHTML = '';
 
     // get all friend requests instances.
-
     friendRequests = await getFriendRequestInstances();
     console.log('friend requests array data:', friendRequests);
 
     // creating user card for each user.
-    people.forEach(user => {
+    for (const user of people) {
+
         const userCard = document.createElement('div');
-        userCard.classList = "user-card";
+        userCard.classList = 'user-card';
 
 
-        if (user.profile_pic_path != 'none') {
-            userCard.innerHTML = `
-                <div style="display:flex; gap:1rem; align-items:center;">
-                    <input type="hidden" class="user-id" value="${user.id}">
-                    <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
-                    <h1>${user.name}</h1>
-                </div>
+        // This flag will let us know if the currently logged in user has already sent a friend request to the user that it is to be displayed.
+        let flag = false;
 
-                <button class="add-friend-btn">Add friend</button>
-            `;
-        } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
-            userCard.innerHTML = `
-                <div style="display:flex; gap:1rem; align-items:center;">
-                    <input type="hidden" class="user-id" value="${user.id}">
-                    <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
-                    <h1>${user.name}</h1>
-                    No pic
-                </div>
+        const friendRequestStatus = await checkingSentForFriendRequest(user.id);
 
-                <button class="add-friend-btn">Add friend</button>
-            `;
-        } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
-            userCard.innerHTML = `
-                <div style="display:flex; gap:1rem; align-items:center;">
-                    <input type="hidden" class="user-id" value="${user.id}">
-                    <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
-                    <h1>${user.name}</h1>
-                    No pic
-                </div>
+        if (friendRequestStatus) {
+            console.log(`FOR USER ${user.name} TRUE`);
+            if (user.profile_pic_path != 'none') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                        <h1>${user.name}</h1>
+                    </div>
 
-                <button class="add-friend-btn">Add friend</button>
-            `;
+                    <button class="cancel-friend-request-btn">cancel request</button>
+                `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                        No pic
+                    </div>
+
+                    <button class="cancel-friend-request-btn">cancel request</button>
+                `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                        No pic
+                    </div>
+
+                    <button class="cancel-friend-request-btn">cancel request</button>
+                `;
+            }
+        } 
+        else {
+            console.log(`FOR USER ${user.name} FALSE`);
+            if (user.profile_pic_path != 'none') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                        <h1>${user.name}</h1>
+                    </div>
+
+                    <button class="add-friend-btn">Add friend</button>
+                `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                        No pic
+                    </div>
+
+                    <button class="add-friend-btn">Add friend</button>
+                `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                        No pic
+                    </div>
+
+                    <button class="add-friend-btn">Add friend</button>
+                `;
+            }
         }
         
         // adding user card to dynamic section.
         dynamicSection.appendChild(userCard);
-    })
+    }
 }
-
+//////////////////////////
 // SEND FRIEND REQUEST CODE.
+///////////////////////////
 
 document.querySelector('.dynamic-section').addEventListener('click', e => {
     if (e.target.matches('.add-friend-btn')) {
@@ -190,4 +262,26 @@ function sendFriendRequest(friendId) {
         getPeople();
     })
     .catch(err => console.error(err))
+}
+////////////////////////
+// CANCEL FRIEND REQUEST
+/////////////////////////
+
+document.querySelector('.dynamic-section').addEventListener('click', (e) => {
+    if (e.target.matches('.cancel-friend-request-btn')) {
+        console.log('cancel');
+        whichRequestToCancel(e);
+    }
+})
+
+// Function to find out which user request is trying to be canceled.
+function whichRequestToCancel(e) {
+    const userCard = e.target.closest('.user-card');
+    const userId = userCard.querySelector('.user-id').value;
+
+    cancelFriendRequest(userId);
+}
+
+function cancelFriendRequest(userId) {
+    console.log(userId);
 }

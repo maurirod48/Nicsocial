@@ -100,3 +100,18 @@ body:has(#requests-radio:checked) .blue-line-under-requests-tab {
     width: 60px;
     border-radius: 50%;
 }
+
+.cancel-friend-request-btn {
+    background-color: rgb(103, 0, 0);
+    color: white;
+    cursor: pointer;
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.cancel-friend-request-btn:hover {
+    border: white solid 1px;
+}
