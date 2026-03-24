@@ -32,6 +32,10 @@ class PeopleController extends Controller
     }
 
     public function getAllFriendRequests() {
-        return response()->json(['response' => 'pending response']);
+        $user = auth()->user();
+
+        $data = $user->pendingSentFriendRequests()->get();
+
+        return response()->json(['response' => $data]);
     }
 }

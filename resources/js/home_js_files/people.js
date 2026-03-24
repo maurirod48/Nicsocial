@@ -43,7 +43,7 @@ const peopleRadio = _('#people-radio');
 
 // Friends radio is checked by default when the people page is loaded.
 if (friendsRadio.checked) {
-    console.log('friends');
+    console.log('friends radio checked by default');
 }
 
 
@@ -69,40 +69,39 @@ function displayFriends(friends) {
     dynamicSection.innerHTML = '';
 }
 
-// Code to get all friends requests. This will later be used to decide what button to display for a user (add friend/cancel request).
+// Code to get all friends requests (all users this currently logged in user has sent a friend request to). This will later be used to decide what button to display for a user (add friend/cancel request).
 
+let friendRequests;
 
-function getFriendRequestInstances() {
-    let dataToReturn;
+async function getFriendRequestInstances() {
 
-    fetch('/people/get-friend-requests')
-    .then(res => {
-        if (!res.ok) {
-            throw new Error('Something went wrong when trying get friend requests:', res.status);
-        } else {
-            return res.json();
+    try {
+        const response = await fetch('/people/get-friend-requests');
+
+        if (!response.ok) {
+            throw new Error('Something went wrong when trying to get all friend requests:', response.status);
         }
-    })
-    .then(data => {
-        dataToReturn = data.response;
-    })
-    .catch(err => console.log(err));
 
-    return dataToReturn;
+        const data = await response.json();
+
+        return data.response;
+
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
 }
 
 // DISPLAY PEOPLE CODE.
 
-function displayPeople(people) {
+async function displayPeople(people) {
     const dynamicSection = _('.dynamic-section');
 
     // clearing dynamic view.
     dynamicSection.innerHTML = '';
 
     // get all friend requests instances.
-    let friendRequests;
 
-    friendRequests = getFriendRequestInstances();
+    friendRequests = await getFriendRequestInstances();
     console.log('friend requests array data:', friendRequests);
 
     // creating user card for each user.

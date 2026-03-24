@@ -118,3 +118,5 @@ Route::post('/people/friend-request', [PeopleController::class, 'friendRequest']
 
 // Get all records in friend_requests table.
 Route::get('/people/get-friend-requests', [PeopleController::class, 'getAllFriendRequests']);
+
+
