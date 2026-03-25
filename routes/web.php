@@ -122,3 +122,8 @@ Route::get('/people/get-friend-requests', [PeopleController::class, 'getAllFrien
 // Get friend request status for a specific user.
 Route::get('/people/get-friend-request-status/{user}', [PeopleController::class, 'getFriendRequestStatusSpecificUser']);
 
+//Cancel friend request.
+Route::get('/people/cancel-friend-request/{user}', [PeopleController::class, 'cancelFriendRequest']);
+
+// Get pending received friend requests.
+Route::get('/people/get-received-friend-requests', [PeopleController::class, 'getReceivedFriendRequests']);

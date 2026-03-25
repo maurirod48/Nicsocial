@@ -51,4 +51,20 @@ class PeopleController extends Controller
             return response()->json(['success' => false]);
         }
     }
+
+    public function cancelFriendRequest(User $user) {
+        $loggedInUser = auth()->user();
+
+        $loggedInUser->pendingSentFriendRequests()->detach($user->id);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function getReceivedFriendRequests() {
+        $loggedInUser = auth()->user();
+
+        $response = $loggedInUser->pendingReceivedFriendRequest()->get();
+
+        return response()->json(['success' => true, 'response' => $response]);
+    }
 }

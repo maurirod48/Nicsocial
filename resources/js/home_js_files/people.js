@@ -284,4 +284,47 @@ function whichRequestToCancel(e) {
 
 function cancelFriendRequest(userId) {
     console.log(userId);
+
+    fetch(`/people/cancel-friend-request/${userId}`)
+    .then(res => {
+        if (!res.ok) {
+            throw new Error("Error while trying to cancel friend request");
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('Friend request cancel');
+            getPeople();
+        }
+    })
+}
+
+////////////////////////////////////
+// DISPLAY RECEIVED FRIEND REQUESTS
+////////////////////////////////////
+
+document.querySelector('.requests-tab').addEventListener('click', getReceivedFriendRequests);
+
+function displayReceivedFriendRequests(data) {
+    const dynamicSection = document.querySelector('.dynamic-section');
+    dynamicSection.innerHTML = '';
+}
+
+function getReceivedFriendRequests() {
+    fetch('/people/get-received-friend-requests')
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Error while tryina get friend:', res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('People who have sent you friend requests:', data.response);
+            console.log('mmmm');
+        }
+    })
 }
