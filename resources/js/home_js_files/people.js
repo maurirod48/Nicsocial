@@ -305,12 +305,9 @@ function cancelFriendRequest(userId) {
 // DISPLAY RECEIVED FRIEND REQUESTS
 ////////////////////////////////////
 
-document.querySelector('.requests-tab').addEventListener('click', getReceivedFriendRequests);
+let usersWhoHaveSentMeFriendRequest;
 
-function displayReceivedFriendRequests(data) {
-    const dynamicSection = document.querySelector('.dynamic-section');
-    dynamicSection.innerHTML = '';
-}
+document.querySelector('.requests-tab').addEventListener('click', getReceivedFriendRequests);
 
 function getReceivedFriendRequests() {
     fetch('/people/get-received-friend-requests')
@@ -323,8 +320,31 @@ function getReceivedFriendRequests() {
     })
     .then(data => {
         if (data.success) {
-            console.log('People who have sent you friend requests:', data.response);
-            console.log('mmmm');
+            usersWhoHaveSentMeFriendRequest = data.response;
+            console.log('People who have sent you friend requests:', usersWhoHaveSentMeFriendRequest);
+            displayReceivedFriendRequests(usersWhoHaveSentMeFriendRequest);
         }
+    })
+}
+
+function displayReceivedFriendRequests(data) {
+    const dynamicSection = document.querySelector('.dynamic-section');
+    dynamicSection.innerHTML = '';
+
+    data.forEach(user => {
+        const userCard = document.createElement('div');
+        userCard.classList = 'user-card-received-request';
+
+        userCard.innerHTML = `
+            <div style="display:flex; gap:1rem; align-items:center;">
+                <input type="hidden" class="user-id" value="${user.id}">
+                <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                <h1>${user.name}</h1>
+            </div>
+
+            <button class="accept-friend-request-btn">accept request</button>
+        `;
+
+        dynamicSection.appendChild(userCard);
     })
 }

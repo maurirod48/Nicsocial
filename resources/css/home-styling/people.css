@@ -115,3 +115,23 @@ body:has(#requests-radio:checked) .blue-line-under-requests-tab {
 .cancel-friend-request-btn:hover {
     border: white solid 1px;
 }
+
+.user-card-received-request {
+    padding: 1rem;
+    border: solid gray 1px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accept-friend-request-btn {
+    background-color: rgb(14, 51, 188);
+    color: white;
+    cursor: pointer;
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
