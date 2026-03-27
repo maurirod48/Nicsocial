@@ -8,30 +8,6 @@ function _(element) {
 // CSRF token.
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-// Code to get all users and display them.
-
-let people; // all people/users.
-let friends; // friends only.
-
-// function to get all users except the one who's currently logged in (cuz why would we need to display that user in this section?).
-function getPeople() {
-    console.log('getting people');
-    fetch('/people/users')
-    .then(res => {
-        if (!res.ok) {
-            throw new Error('Error while trying to get all users:', res.status);
-        } else {
-            return res.json();
-        }
-    })
-    .then(data => {
-        people = data.people;
-        console.log(people);
-        displayPeople(people);
-    })
-    .catch(err => console.log(err));
-}
-
 
 // This part of the code calls a different function depending on which radio (friends/people) is currently checked.
 // It will either call the function that displays friends or the function that displays people.
@@ -69,6 +45,8 @@ function displayFriends(friends) {
     const dynamicSection = _('.dynamic-section');
 
     dynamicSection.innerHTML = '';
+
+    console.log('My friends:', friends);
 }
 
 // Code to get all friends requests (all users this currently logged in user has sent a friend request to). This will later be used to decide what button to display for a user (add friend/cancel request).
@@ -96,6 +74,30 @@ async function getFriendRequestInstances() {
 //////////////////////
 // DISPLAY PEOPLE CODE.
 ///////////////////////
+
+// Code to get all users and display them.
+
+let people; // all people/users.
+let friends; // friends only.
+
+// function to get all users except the one who's currently logged in (cuz why would we need to display that user in this section?).
+function getPeople() {
+    console.log('getting people');
+    fetch('/people/users')
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Error while trying to get all users:', res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        people = data.people;
+        console.log(people);
+        displayPeople(people);
+    })
+    .catch(err => console.log(err));
+}
 
 // This function will return true or false depending on if a friend request has been sent toa user that will be displayed in the people section.
 async function checkingSentForFriendRequest(userId) {
@@ -140,6 +142,28 @@ async function receivedFriendRequest(userId) {
     }
 }
 
+// function to check if Im already friends with a user. This is helpful because if this return true, then we dont display that user in this section.
+async function AreWeFriendsAlready(userId) {
+    try {
+        const res = await fetch(`/people/friends-already/${userId}`);
+
+        if (!res.ok) {
+            throw new Error('Error when trying to check for user friend relationship:', res.status);
+        }
+
+        const data = await res.json();
+
+        if (data.success) {
+            return true;
+        } else {
+            return false;
+        }
+
+    } catch(err) {
+        console.error(err)
+    }
+}
+
 async function displayPeople(people) {
     const dynamicSection = _('.dynamic-section');
 
@@ -153,137 +177,147 @@ async function displayPeople(people) {
     // creating user card for each user.
     for (const user of people) {
 
-        const userCard = document.createElement('div');
-        userCard.classList = 'user-card';
+        const alreadyFriends = await AreWeFriendsAlready(user.id);
 
-        // This variable here will be true or false and will let us know if the currently logged in 
-        // user has already sent a friend request to the user that it is to be displayed.
-        const friendRequestStatus = await checkingSentForFriendRequest(user.id);
+        if (!alreadyFriends) {
+            const userCard = document.createElement('div');
+            userCard.classList = 'user-card';
 
-        // This variable will be true if the user to displayed had already sent us a friend request, cuz if thats the case, then the only option we have is to accept or reject.
-        const haveIreceivedFriendRequestFromThisUser = await receivedFriendRequest(user.id);
+            // This variable here will be true or false and will let us know if the currently logged in 
+            // user has already sent a friend request to the user that it is to be displayed.
+            const friendRequestStatus = await checkingSentForFriendRequest(user.id);
 
-        if (haveIreceivedFriendRequestFromThisUser) {
-            console.log(`USER ${user.name} HAS SENT ME A FRIEND REQUEST`);
-            if (user.profile_pic_path != 'none') {
-                userCard.innerHTML = `
-                    <div style="display:flex; gap:1rem; align-items:center;">
-                        <input type="hidden" class="user-id" value="${user.id}">
-                        <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
-                        <h1>${user.name}</h1>
-                    </div>
+            // This variable will be true if the user to displayed had already sent us a friend request, cuz if thats the case, then the only option we have is to accept or reject.
+            const haveIreceivedFriendRequestFromThisUser = await receivedFriendRequest(user.id);
 
-                    <div>
-                        <button class="accept-friend-request-btn">confirm</button>
-                        <button class="delete-friend-request-btn">delete</button>
-                    </div>
-                    
-                `;
-            } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
-                userCard.innerHTML = `
-                    <div style="display:flex; gap:1rem; align-items:center;">
-                        <input type="hidden" class="user-id" value="${user.id}">
-                        <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
-                        <h1>${user.name}</h1>
-                        No pic
-                    </div>
+            if (haveIreceivedFriendRequestFromThisUser) {
+                console.log(`USER ${user.name} HAS SENT ME A FRIEND REQUEST`);
+                if (user.profile_pic_path != 'none') {
+                    userCard.innerHTML = `
+                        <div style="display:flex; gap:1rem; align-items:center;">
+                            <input type="hidden" class="user-id" value="${user.id}">
+                            <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                            <h1>${user.name}</h1>
+                        </div>
 
-                    <div>
-                        <button class="accept-friend-request-btn">confirm</button>
-                        <button class="delete-friend-request-btn">delete</button>
-                    </div>
-                `;
-            } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
-                userCard.innerHTML = `
-                    <div style="display:flex; gap:1rem; align-items:center;">
-                        <input type="hidden" class="user-id" value="${user.id}">
-                        <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
-                        <h1>${user.name}</h1>
-                        No pic
-                    </div>
+                        <div>
+                            <button class="accept-friend-request-btn">confirm</button>
+                            <button class="delete-friend-request-btn">delete</button>
+                        </div>
+                        
+                    `;
+                } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
+                    userCard.innerHTML = `
+                        <div style="display:flex; gap:1rem; align-items:center;">
+                            <input type="hidden" class="user-id" value="${user.id}">
+                            <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
+                            <h1>${user.name}</h1>
+                            No pic
+                        </div>
 
-                    <div>
-                        <button class="accept-friend-request-btn">confirm</button>
-                        <button class="delete-friend-request-btn">delete</button>
-                    </div>
-                `;
+                        <div>
+                            <button class="accept-friend-request-btn">confirm</button>
+                            <button class="delete-friend-request-btn">delete</button>
+                        </div>
+                    `;
+                } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
+                    userCard.innerHTML = `
+                        <div style="display:flex; gap:1rem; align-items:center;">
+                            <input type="hidden" class="user-id" value="${user.id}">
+                            <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
+                            <h1>${user.name}</h1>
+                            No pic
+                        </div>
+
+                        <div>
+                            <button class="accept-friend-request-btn">confirm</button>
+                            <button class="delete-friend-request-btn">delete</button>
+                        </div>
+                    `;
+                }
             }
+            else if (friendRequestStatus) {
+                console.log(`I HAVE SENT A FRIEND REQUEST TO USER: ${user.name} TRUE`);
+                if (user.profile_pic_path != 'none') {
+                    userCard.innerHTML = `
+                        <div style="display:flex; gap:1rem; align-items:center;">
+                            <input type="hidden" class="user-id" value="${user.id}">
+                            <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                            <h1>${user.name}</h1>
+                        </div>
+
+                        <button class="cancel-friend-request-btn">cancel request</button>
+                    `;
+                } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
+                    userCard.innerHTML = `
+                        <div style="display:flex; gap:1rem; align-items:center;">
+                            <input type="hidden" class="user-id" value="${user.id}">
+                            <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
+                            <h1>${user.name}</h1>
+                            No pic
+                        </div>
+
+                        <button class="cancel-friend-request-btn">cancel request</button>
+                    `;
+                } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
+                    userCard.innerHTML = `
+                        <div style="display:flex; gap:1rem; align-items:center;">
+                            <input type="hidden" class="user-id" value="${user.id}">
+                            <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
+                            <h1>${user.name}</h1>
+                            No pic
+                        </div>
+
+                        <button class="cancel-friend-request-btn">cancel request</button>
+                    `;
+                }
+            } 
+            else {
+                console.log(`I HAVE NOT SENT A FRIEND REQUEST AND THEY HAVE NOT SENT ME ONE NEITHER, USER: ${user.name} FALSE`);
+                if (user.profile_pic_path != 'none') {
+                    userCard.innerHTML = `
+                        <div style="display:flex; gap:1rem; align-items:center;">
+                            <input type="hidden" class="user-id" value="${user.id}">
+                            <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                            <h1>${user.name}</h1>
+                        </div>
+
+                        <button class="add-friend-btn">Add friend</button>
+                    `;
+                } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
+                    userCard.innerHTML = `
+                        <div style="display:flex; gap:1rem; align-items:center;">
+                            <input type="hidden" class="user-id" value="${user.id}">
+                            <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
+                            <h1>${user.name}</h1>
+                            No pic
+                        </div>
+
+                        <button class="add-friend-btn">Add friend</button>
+                    `;
+                } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
+                    userCard.innerHTML = `
+                        <div style="display:flex; gap:1rem; align-items:center;">
+                            <input type="hidden" class="user-id" value="${user.id}">
+                            <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
+                            <h1>${user.name}</h1>
+                            No pic
+                        </div>
+
+                        <button class="add-friend-btn">Add friend</button>
+                    `;
+                }
+            }
+            
+            // adding user card to dynamic section.
+            dynamicSection.appendChild(userCard);
+
+        // here    
+        } else {
+            console.log(`User ${user.name} is already my friend`);
         }
-        else if (friendRequestStatus) {
-            console.log(`I HAVE SENT A FRIEND REQUEST TO USER: ${user.name} TRUE`);
-            if (user.profile_pic_path != 'none') {
-                userCard.innerHTML = `
-                    <div style="display:flex; gap:1rem; align-items:center;">
-                        <input type="hidden" class="user-id" value="${user.id}">
-                        <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
-                        <h1>${user.name}</h1>
-                    </div>
 
-                    <button class="cancel-friend-request-btn">cancel request</button>
-                `;
-            } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
-                userCard.innerHTML = `
-                    <div style="display:flex; gap:1rem; align-items:center;">
-                        <input type="hidden" class="user-id" value="${user.id}">
-                        <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
-                        <h1>${user.name}</h1>
-                        No pic
-                    </div>
-
-                    <button class="cancel-friend-request-btn">cancel request</button>
-                `;
-            } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
-                userCard.innerHTML = `
-                    <div style="display:flex; gap:1rem; align-items:center;">
-                        <input type="hidden" class="user-id" value="${user.id}">
-                        <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
-                        <h1>${user.name}</h1>
-                        No pic
-                    </div>
-
-                    <button class="cancel-friend-request-btn">cancel request</button>
-                `;
-            }
-        } 
-        else {
-            console.log(`I HAVE NOT SENT A FRIEND REQUEST AND THEY HAVE NOT SENT ME ONE NEITHER, USER: ${user.name} FALSE`);
-            if (user.profile_pic_path != 'none') {
-                userCard.innerHTML = `
-                    <div style="display:flex; gap:1rem; align-items:center;">
-                        <input type="hidden" class="user-id" value="${user.id}">
-                        <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
-                        <h1>${user.name}</h1>
-                    </div>
-
-                    <button class="add-friend-btn">Add friend</button>
-                `;
-            } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
-                userCard.innerHTML = `
-                    <div style="display:flex; gap:1rem; align-items:center;">
-                        <input type="hidden" class="user-id" value="${user.id}">
-                        <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
-                        <h1>${user.name}</h1>
-                        No pic
-                    </div>
-
-                    <button class="add-friend-btn">Add friend</button>
-                `;
-            } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
-                userCard.innerHTML = `
-                    <div style="display:flex; gap:1rem; align-items:center;">
-                        <input type="hidden" class="user-id" value="${user.id}">
-                        <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
-                        <h1>${user.name}</h1>
-                        No pic
-                    </div>
-
-                    <button class="add-friend-btn">Add friend</button>
-                `;
-            }
-        }
         
-        // adding user card to dynamic section.
-        dynamicSection.appendChild(userCard);
     }
 }
 //////////////////////////
@@ -445,7 +479,6 @@ function deleteWhichFriendRequest(e) {
 
     const reloadSection = userCard1 ? 'people' : 'pending friend requests';
 
-
     console.log(userId);
     deleteFriendRequest(userId)
 }
@@ -490,6 +523,52 @@ function deleteFriendRequest(userId, reloadsection) {
 
 document.querySelector('.dynamic-section').addEventListener('click', (e) => {
     if (e.target.matches('.accept-friend-request-btn')) {
+
+        let userCard;
+        
+        if (e.target.closest('.user-card')) {
+            userCard = e.target.closest('.user-card');
+        }
+        else if (e.target.closest('.user-card-received-request')) {
+            userCard = e.target.closest('.user-card-received-request')
+        }
+        
+        const userId = userCard.querySelector('.user-id').value;
+
         console.log('accept');
+        console.log('user id:', userId);
+
+        acceptFriendRequest(userId);
     }
 })
+
+function acceptFriendRequest(userId) {
+    
+    const data = {
+        'id' : userId
+    };
+
+    fetch('/people/accept-friend-request', {
+        method: 'POST',
+        headers : {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN':csrfToken
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Error while trying to accept friend request:', res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            console.log('friend request accepted');
+            location.reload();
+        }
+        
+    })
+    .catch(err => console.error(err))
+}

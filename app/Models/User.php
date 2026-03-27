@@ -77,4 +77,8 @@ class User extends Authenticatable
     public function pendingReceivedFriendRequest() {
         return $this->belongsToMany(User::class, 'friend_requests', 'receiver_id', 'sender_id')->withTimestamps();
     }
+
+    public function friends() {
+        return $this->belongsToMany(User::class, 'friends', 'user_id', 'friend')->withTimestamps();
+    }
 }

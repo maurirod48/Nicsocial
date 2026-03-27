@@ -94,4 +94,40 @@ class PeopleController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function acceptFriendRequest(Request $request) {
+        $json = $request->json()->all();
+
+        $userToBeFriend = User::findOrFail($json['id']);
+        $userId = $userToBeFriend->id;
+
+
+        $loggedInUser = auth()->user();
+
+        // Creating friend relationship by adding new record to pivot table.
+        $loggedInUser->friends()->attach($userId);
+        $userToBeFriend->friends()->attach($loggedInUser);
+
+        // Deleting pending friend request.
+        $loggedInUser->pendingReceivedFriendRequest()->detach($userId);
+
+        return response()->json(['success' => true]);
+    }
+
+    public function areWeFriendsAlready(User $user) {
+        $flag = false;
+        
+        $loggedInUser = auth()->user();
+    
+        // checking to see if logged in user and the user obtain thru laravel route model binding are friends.
+        if ($loggedInUser->friends()->where('users.id', '=', $user->id)->exists() && $user->friends()->where('users.id', '=', $loggedInUser->id)) {
+            $flag = true;
+        }
+
+        if ($flag) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
 }

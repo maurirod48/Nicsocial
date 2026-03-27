@@ -131,4 +131,11 @@ Route::get('/people/get-received-friend-requests', [PeopleController::class, 'ge
 // Check to see if a user has sent the logged in user a friend request.
 Route::get('/people/check-for-received-friend-request/{user}', [PeopleController::class, 'haveIReceivedaFriendRequestFromSpecificUser']);
 
+// Check to see if we are already friends with a user.
+Route::get('/people/friends-already/{user}', [PeopleController::class, 'areWeFriendsAlready']);
+
+// Delete/reject friend request.
 Route::post('/people/delete-friend-request', [PeopleController::class, 'deleteFriendRequest']);
+
+// Accept friend request.
+Route::post('people/accept-friend-request', [PeopleController::class, 'acceptFriendRequest']);
