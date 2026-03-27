@@ -82,4 +82,16 @@ class PeopleController extends Controller
             return response()->json(['success' => false]);
         }
     }
+
+    public function deleteFriendRequest(Request $request) {
+        $jsonData = $request->json()->all();
+
+        $userId = $jsonData['id'];
+
+        $loggedInUser = auth()->user();
+
+        $loggedInUser->pendingReceivedFriendRequest()->detach($userId);
+
+        return response()->json(['success' => true]);
+    }
 }

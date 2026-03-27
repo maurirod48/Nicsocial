@@ -376,6 +376,8 @@ let usersWhoHaveSentMeFriendRequest;
 
 document.querySelector('.requests-tab').addEventListener('click', getReceivedFriendRequests);
 
+// This function makes the variable "usersWhoHaveSentMeFriendRequest" be equal to all the friend requests 
+// that the logged in user has received for them to then be displayed.
 function getReceivedFriendRequests() {
     fetch('/people/get-received-friend-requests')
     .then(res => {
@@ -409,9 +411,85 @@ function displayReceivedFriendRequests(data) {
                 <h1>${user.name}</h1>
             </div>
 
-            <button class="accept-friend-request-btn">accept request</button>
+            <div>
+                <button class="accept-friend-request-btn">confirm</button>
+                <button class="delete-friend-request-btn">delete</button>
+            </div>
         `;
 
         dynamicSection.appendChild(userCard);
     })
 }
+
+//////////////////////////////
+// REJECT FRIEND REQUEST CODE
+//////////////////////////////
+document.querySelector('.dynamic-section').addEventListener('click', (e) => {
+    if (e.target.matches('.delete-friend-request-btn')) {
+        console.log('delete');
+        deleteWhichFriendRequest(e);
+    }
+})
+
+function deleteWhichFriendRequest(e) {
+    const userCard1 = e.target.closest('.user-card');
+    const userCard2 = e.target.closest('.user-card-received-request');
+
+    let userId
+
+    if (userCard1) {
+        userId = userCard1.querySelector('.user-id').value;
+    } else if (userCard2) {
+        userId = userCard2.querySelector('.user-id').value;
+    }
+
+    const reloadSection = userCard1 ? 'people' : 'pending friend requests';
+
+
+    console.log(userId);
+    deleteFriendRequest(userId)
+}
+
+// The second parameter for this function is just to know which section 
+// we are reloading, it could be the people section or the friend requests section depending on from 
+// where the user is deleting the friend request.
+function deleteFriendRequest(userId, reloadsection) {
+
+    const jsonData = {
+        'id' : userId
+    };
+
+    fetch('/people/delete-friend-request', {
+        method: 'POST',
+        headers : {
+            'Content-Type':'application/json',
+            'X-CSRF-TOKEN':csrfToken
+        },
+        body: JSON.stringify(jsonData)
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Error while trying to send request to delete friend request.');
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => { 
+        if (data.success) {
+            location.reload();
+            console.log('Friend request was deleted');
+
+        }
+    })
+    .catch(err => console.error(err))
+}
+
+//////////////////////////////
+// ACCEPT FRIEND REQUEST CODE
+//////////////////////////////
+
+document.querySelector('.dynamic-section').addEventListener('click', (e) => {
+    if (e.target.matches('.accept-friend-request-btn')) {
+        console.log('accept');
+    }
+})
