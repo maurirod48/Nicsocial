@@ -135,3 +135,14 @@ body:has(#requests-radio:checked) .blue-line-under-requests-tab {
     font-size: 1rem;
     font-weight: 500;
 }
+
+.delete-friend-request-btn {
+    background-color: rgb(147, 11, 4);
+    color: white;
+    cursor: pointer;
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    font-size: 1rem;
+    font-weight: 500;
+}

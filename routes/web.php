@@ -127,3 +127,6 @@ Route::get('/people/cancel-friend-request/{user}', [PeopleController::class, 'ca
 
 // Get pending received friend requests.
 Route::get('/people/get-received-friend-requests', [PeopleController::class, 'getReceivedFriendRequests']);
+
+// Check to see if a user has sent the logged in user a friend request.
+Route::get('/people/check-for-received-friend-request/{user}', [PeopleController::class, 'haveIReceivedaFriendRequestFromSpecificUser']);

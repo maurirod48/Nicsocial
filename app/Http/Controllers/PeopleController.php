@@ -67,4 +67,19 @@ class PeopleController extends Controller
 
         return response()->json(['success' => true, 'response' => $response]);
     }
+
+    // this function is called when displaying people (all users) in the people section. This is useful to know which button to display for that user.
+    // If this function returns true then it means the user that will be displayed, has sent us a friend request therefore we must display a button that 
+    // either accepts the request or rejects it.
+    public function haveIReceivedaFriendRequestFromSpecificUser(User $user) {
+        $loggedInUser = auth()->user();
+
+        $flag = $loggedInUser->pendingReceivedFriendRequest()->where('sender_id', $user->id)->first();
+
+        if ($flag) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
 }
