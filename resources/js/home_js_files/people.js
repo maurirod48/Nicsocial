@@ -69,14 +69,52 @@ async function displayFriends() {
 
     console.log('My friends:', friends);
 
-    for (const friend of friends) {
-        console.log('Friend name:', friend.name);
+    for (const user of friends) {
+        console.log('Friend name:', user.name);
         const userCard = document.createElement('div');
         userCard.classList = 'user-card';
 
-        userCard.innerHTML = `
-            <div>${friend.name}</div>
-        `;
+        if (user.profile_pic_path != 'none') {
+            userCard.innerHTML = `
+            <div style="display:flex; gap:1rem; align-items:center;">
+                <input type="hidden" class="user-id" value="${user.id}">
+                <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                <h1>${user.name}</h1>
+            </div>
+
+            <div>
+                <button class="accept-friend-request-btn">confirm</button>
+                <button class="delete-friend-request-btn">delete</button>
+            </div>
+                        
+                    `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                    </div>
+
+                    <div>
+                        <button class="accept-friend-request-btn">confirm</button>
+                        <button class="delete-friend-request-btn">delete</button>
+                    </div>
+                    `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                    </div>
+
+                    <div>
+                        <button class="accept-friend-request-btn">confirm</button>
+                        <button class="delete-friend-request-btn">delete</button>
+                    </div>
+                `;
+            }
 
         dynamicSection.appendChild(userCard);
     }
