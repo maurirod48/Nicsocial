@@ -139,3 +139,6 @@ Route::post('/people/delete-friend-request', [PeopleController::class, 'deleteFr
 
 // Accept friend request.
 Route::post('people/accept-friend-request', [PeopleController::class, 'acceptFriendRequest']);
+
+// Get all my friends.
+Route::get('/people/get-my-friends', [PeopleController::class, 'getMyFriends']);

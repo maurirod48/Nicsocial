@@ -20,6 +20,7 @@ const peopleRadio = _('#people-radio');
 // Friends radio is checked by default when the people page is loaded.
 if (friendsRadio.checked) {
     console.log('friends radio checked by default');
+    displayFriends();
 }
 
 
@@ -41,12 +42,44 @@ peopleRadio.addEventListener('change', function () {
 /////////////////////////
 // DISPLAY FRIENDS CODE.
 /////////////////////////
-function displayFriends(friends) {
+
+async function getMyFriends() {
+    try {
+        const res = await fetch('/people/get-my-friends');
+
+        if (!res.ok) {
+            throw new Error('Error when tryina get all friends:', res.status);
+        }
+
+        const data = await res.json();
+
+        return data.friends;
+
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function displayFriends() {
     const dynamicSection = _('.dynamic-section');
 
     dynamicSection.innerHTML = '';
 
+    const friends = await getMyFriends();
+
     console.log('My friends:', friends);
+
+    for (const friend of friends) {
+        console.log('Friend name:', friend.name);
+        const userCard = document.createElement('div');
+        userCard.classList = 'user-card';
+
+        userCard.innerHTML = `
+            <div>${friend.name}</div>
+        `;
+
+        dynamicSection.appendChild(userCard);
+    }
 }
 
 // Code to get all friends requests (all users this currently logged in user has sent a friend request to). This will later be used to decide what button to display for a user (add friend/cancel request).

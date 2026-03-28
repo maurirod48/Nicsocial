@@ -130,4 +130,12 @@ class PeopleController extends Controller
             return response()->json(['success' => false]);
         }
     }
+
+    public function getMyFriends() {
+        $loggedInUser = auth()->user();
+
+        $allFriends = $loggedInUser->friends()->get();
+
+        return response()->json(['friends' => $allFriends]);
+    }
 }
