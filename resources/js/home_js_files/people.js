@@ -83,8 +83,7 @@ async function displayFriends() {
             </div>
 
             <div>
-                <button class="accept-friend-request-btn">confirm</button>
-                <button class="delete-friend-request-btn">delete</button>
+                <button class="unfriend-btn">unfriend</button>
             </div>
                         
                     `;
@@ -141,6 +140,18 @@ async function getFriendRequestInstances() {
         console.error('Fetch error:', error);
     }
 }
+
+// Delete/Unfriend a friend code.
+_('.dynamic-section').addEventListener('click', (e) => {
+    if (e.target.matches('.unfriend-btn')) {
+        console.log('unfriend');
+
+        const userCard = e.target.closest('.user-card');
+        const userId = userCard.querySelector('.user-id').value;
+
+        console.log('Unfriend:', userId);
+    }
+});
 
 //////////////////////
 // DISPLAY PEOPLE CODE.
