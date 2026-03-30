@@ -21,11 +21,6 @@
 
                     <h2 style="font-weight:100;">Welcome {{ auth()->user()->name }}!</h2>
                 </div>
-
-                {{-- <div class="nav-name-email">
-                        <h1 class="nav-name">{{auth()->user()->name}}</h1>
-                        <p class="nav-email">{{auth()->user()->email}}</p>
-                    </div> --}}
             </div>
             
 
