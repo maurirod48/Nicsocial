@@ -16,7 +16,7 @@
             <div class="nav-section-1">
                 
                 <div class="logo-container">
-                    <img src="{{ asset('storage/website_logo_images/Nicsocial logo - White.png') }}" alt="nicsocial logo"
+                    <img src="{{ asset('images/website_logo_images/Nicsocial logo - White.png') }}" alt="nicsocial logo"
                     class="logo-img-home-layout">
 
                     <h2 style="font-weight:100;">Welcome {{ auth()->user()->name }}!</h2>
@@ -26,30 +26,30 @@
 
             <ul class="nav-options">
                 <li><a href="{{route('home.section')}}">
-                    <img src="{{ asset('storage/website_images/home1.png') }}" alt="home image" class="nav-bar-icon"
+                    <img src="{{ asset('images/website_images/home1.png') }}" alt="home image" class="nav-bar-icon"
                     title="home">
                 </a>
                 </li>
                 <li>
                     <a href="{{route('people.section')}}">
-                        <img src="{{ asset('storage/website_images/people.png') }}" alt="profile image" class="nav-bar-icon"
+                        <img src="{{ asset('images/website_images/people.png') }}" alt="profile image" class="nav-bar-icon"
                         title="people">
                     </a>
                 </li>
                 <li>
                     <a href="{{route('profile.section')}}">
-                        <img src="{{ asset('storage/website_images/user.png') }}" alt="profile image" class="nav-bar-icon" 
+                        <img src="{{ asset('images/website_images/user.png') }}" alt="profile image" class="nav-bar-icon" 
                         title="profile">
                     </a>
                 </li>
                 <li>
                     <a href="#settings">
-                        <img src="{{ asset('storage/website_images/setting.png') }}" alt="profile image" class="nav-bar-icon"
+                        <img src="{{ asset('images/website_images/setting.png') }}" alt="profile image" class="nav-bar-icon"
                         title="settings">
                     </a>
                 </li>
                 <li class="logout-btn" style="cursor: pointer;">
-                    <img src="{{ asset('storage/website_images/logout.png') }}" alt="profile image" class="nav-bar-icon"
+                    <img src="{{ asset('images/website_images/logout.png') }}" alt="profile image" class="nav-bar-icon"
                     title="logout">
                 </li>
             </ul>
