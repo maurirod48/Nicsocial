@@ -19,7 +19,7 @@
                 @elseif (auth()->user()->gender === 'female' && auth()->user()->profile_pic_path == 'none')
                     <img src="{{asset('images/default-images/female-pic.jpeg')}}" alt="SOME PIC" class="default-female-profile-pic">
                 @else
-                    <img src="{{asset('storage/images/other_images/' . auth()->user()->profile_pic_path)}}" alt="actual profile pic" class="default-female-profile-pic">
+                    <img src="{{asset('images/other_images/' . auth()->user()->profile_pic_path)}}" alt="actual profile pic" class="default-female-profile-pic">
                 @endif
 
                 <button class="change-pic-btn">Change picture</button>
