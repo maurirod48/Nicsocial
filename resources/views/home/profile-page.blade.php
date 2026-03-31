@@ -86,7 +86,7 @@
                                 </div>
                                 
                                 <div class="post-options-container">
-                                    <img src="{{ asset('storage/website_images/three_dots.png') }}" alt="post-options-image"
+                                    <img src="{{ asset('images/website_images/three_dots.png') }}" alt="post-options-image"
                                     class="post-options-image">
 
                                     <div class="post-options-dropdown-wrapper">
