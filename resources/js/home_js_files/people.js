@@ -79,7 +79,7 @@ async function displayFriends() {
             <div style="display:flex; gap:1rem; align-items:center;">
                 <input type="hidden" class="user-id" value="${user.id}">
                 <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
-                <h1>${user.name}</h1>
+                <h1 class="user-name">${user.name}</h1>
             </div>
 
             <div>
@@ -92,7 +92,7 @@ async function displayFriends() {
                     <div style="display:flex; gap:1rem; align-items:center;">
                         <input type="hidden" class="user-id" value="${user.id}">
                         <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
-                        <h1>${user.name}</h1>
+                        <h1 class="user-name">${user.name}</h1>
                     </div>
 
                     <div>
@@ -105,7 +105,7 @@ async function displayFriends() {
                     <div style="display:flex; gap:1rem; align-items:center;">
                         <input type="hidden" class="user-id" value="${user.id}">
                         <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
-                        <h1>${user.name}</h1>
+                        <h1 class="user-name">${user.name}</h1>
                     </div>
 
                     <div>
@@ -140,18 +140,6 @@ async function getFriendRequestInstances() {
         console.error('Fetch error:', error);
     }
 }
-
-// Delete/Unfriend a friend code.
-_('.dynamic-section').addEventListener('click', (e) => {
-    if (e.target.matches('.unfriend-btn')) {
-        console.log('unfriend');
-
-        const userCard = e.target.closest('.user-card');
-        const userId = userCard.querySelector('.user-id').value;
-
-        console.log('Unfriend:', userId);
-    }
-});
 
 //////////////////////
 // DISPLAY PEOPLE CODE.
@@ -654,3 +642,42 @@ function acceptFriendRequest(userId) {
     })
     .catch(err => console.error(err))
 }
+
+///////////////////////////
+// UNFRIEND/DELETE FRIEND
+//////////////////////////
+
+// Checking for when "unfriend" button is clicked. When it is, we need to find out which friend the user is trying to unfriend.
+// We also need to show a popup window asking to confirm this action.
+_('.dynamic-section').addEventListener('click', (e) => {
+    if (e.target.matches('.unfriend-btn')) {
+        console.log('unfriend');
+
+        const userCard = e.target.closest('.user-card');
+        const userId = userCard.querySelector('.user-id').value;
+        const userName = userCard.querySelector('.user-name').textContent;
+
+        console.log('Unfriend:', userId);
+        console.log('Username to unfriend:', userName);
+
+        toggleConfirmUnfriendPopUpWindow(userName);
+    }
+});
+
+// Show popup to confirm the unfriending of a user.
+function toggleConfirmUnfriendPopUpWindow(userName) {
+
+    const popup = _('.confirm-unfriend-popup-wrapper');
+    popup.classList.toggle('show');
+
+    const text = _('.confirm-unfriend-popup-text');
+    text.textContent = `Unfriend ${userName}?`;
+}
+
+document.addEventListener('click', (e) => {
+    if (e.target.matches('.confirm-unfriend-popup-wrapper')) {
+        toggleConfirmUnfriendPopUpWindow();
+    }
+});
+
+_('.unfriend-no-btn').addEventListener('click', toggleConfirmUnfriendPopUpWindow);

@@ -24,7 +24,18 @@
         </div>
 
         <div class="dynamic-section">
-            {{-- This will be dynamically changed using JS. --}}
+            {{-- This will be dynamically changed using JS. here we'll show friends, users, friend requests. --}}
+        </div>
+    </div>
+
+    {{-- Pop up for when user tries to unfriend a user --}}
+    <div class="confirm-unfriend-popup-wrapper">
+        <div class="confirm-unfriend-popup-wrap">
+            <h1 class="confirm-unfriend-popup-text"></h1>
+            <div class="confirm-unfriend-button-wrapper">
+                <button class="unfriend-yes-btn unfriend-btn">yes</button>
+                <button class="unfriend-no-btn unfriend-btn">no</button>
+            </div>
         </div>
     </div>
 </div>
