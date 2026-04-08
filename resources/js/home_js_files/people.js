@@ -8,7 +8,6 @@ function _(element) {
 // CSRF token.
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-
 // This part of the code calls a different function depending on which radio (friends/people) is currently checked.
 // It will either call the function that displays friends or the function that displays people.
 
@@ -16,6 +15,13 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute
 // Radio elements.
 const friendsRadio = _('#friends-radio');
 const peopleRadio = _('#people-radio');
+const requestRadio = _('#requests-radio');
+
+// Tab elements.
+const friendsTab = _('.friends-tab');
+const peopleTab = _('.people-tab');
+const requestsTab = _('.requests-tab');
+
 
 // Friends radio is checked by default when the people page is loaded.
 if (friendsRadio.checked) {
@@ -61,6 +67,11 @@ async function getMyFriends() {
 }
 
 async function displayFriends() {
+
+    peopleTab.classList.add('disabled');
+    requestsTab.classList.add('disabled');
+
+    // Dynamic section.
     const dynamicSection = _('.dynamic-section');
 
     dynamicSection.innerHTML = '';
@@ -117,6 +128,9 @@ async function displayFriends() {
 
         dynamicSection.appendChild(userCard);
     }
+
+    peopleTab.classList.remove('disabled');
+    requestsTab.classList.remove('disabled');
 }
 
 // Code to get all friends requests (all users this currently logged in user has sent a friend request to). This will later be used to decide what button to display for a user (add friend/cancel request).
@@ -152,7 +166,7 @@ let friends; // friends only.
 
 // function to get all users except the one who's currently logged in (cuz why would we need to display that user in this section?).
 function getPeople() {
-    console.log('getting people');
+
     fetch('/people/users')
     .then(res => {
         if (!res.ok) {
@@ -234,7 +248,16 @@ async function AreWeFriendsAlready(userId) {
     }
 }
 
+
+
 async function displayPeople(people) {
+
+
+    // Disabling click event listeners for other tabs.
+    friendsTab.classList.add('disabled');
+    requestsTab.classList.add('disabled');
+
+    // Dynamic section.
     const dynamicSection = _('.dynamic-section');
 
     // clearing dynamic view.
@@ -389,6 +412,10 @@ async function displayPeople(people) {
 
         
     }
+
+    // Making other tabs clickable again.
+    friendsTab.classList.remove('disabled');
+    requestsTab.classList.remove('disabled');
 }
 //////////////////////////
 // SEND FRIEND REQUEST CODE.
@@ -483,6 +510,7 @@ document.querySelector('.requests-tab').addEventListener('click', getReceivedFri
 // This function makes the variable "usersWhoHaveSentMeFriendRequest" be equal to all the friend requests 
 // that the logged in user has received for them to then be displayed.
 function getReceivedFriendRequests() {
+
     fetch('/people/get-received-friend-requests')
     .then(res => {
         if (!res.ok) {
@@ -498,9 +526,16 @@ function getReceivedFriendRequests() {
             displayReceivedFriendRequests(usersWhoHaveSentMeFriendRequest);
         }
     })
+
+
 }
 
 function displayReceivedFriendRequests(data) {
+
+    // Disabling click event listeners for other tabs.
+    friendsTab.classList.add('disabled');
+    peopleTab.classList.add('disabled');
+
     const dynamicSection = document.querySelector('.dynamic-section');
     dynamicSection.innerHTML = '';
 
@@ -523,6 +558,10 @@ function displayReceivedFriendRequests(data) {
 
         dynamicSection.appendChild(userCard);
     })
+
+    // Making other tabs clickable again.
+    friendsTab.classList.remove('disabled');
+    peopleTab.classList.remove('disabled');
 }
 
 //////////////////////////////

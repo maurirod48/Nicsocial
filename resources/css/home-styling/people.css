@@ -196,3 +196,8 @@ body:has(#requests-radio:checked) .blue-line-under-requests-tab {
     padding: .8rem 1.5rem;
 
 }
+
+
+.tabb.disabled {
+    pointer-events: none;
+}
