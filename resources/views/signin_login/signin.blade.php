@@ -9,7 +9,7 @@
 </head>
 <body class="login-page">
     <div class="main-wrapper">
-        <img src="{{ asset('storage/website_logo_images/Nicsocial logo - White.png') }}" alt="nicsocial logo"
+        <img src="{{ asset('images/website_logo_images/Nicsocial logo - White.png') }}" alt="nicsocial logo"
         class="logo-img">
         <div class="main-wrap">
             <h1>Sign In</h1>

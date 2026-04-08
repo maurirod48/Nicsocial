@@ -197,7 +197,7 @@ body:has(#requests-radio:checked) .blue-line-under-requests-tab {
 
 }
 
-
+/* This is for making tabs unclickable (their eventlisteners won't work) */
 .tabb.disabled {
     pointer-events: none;
 }
