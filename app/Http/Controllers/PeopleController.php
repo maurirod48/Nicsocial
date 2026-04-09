@@ -138,4 +138,20 @@ class PeopleController extends Controller
 
         return response()->json(['friends' => $allFriends]);
     }
+
+    public function deleteFriend(Request $request) {
+        $json = $request->json()->all();
+
+        $userToDelete = User::findOrFail($json['id']);
+        $loggedInUser = auth()->user();
+        
+        // Detach both records.
+        $userToDelete->friends()->detach($loggedInUser->id);
+        $loggedInUser->friends()->detach($userToDelete->id);
+
+        return response()->json([
+            'success' => true
+        ]);
+
+    }
 }

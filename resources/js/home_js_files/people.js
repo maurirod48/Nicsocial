@@ -107,8 +107,7 @@ async function displayFriends() {
                     </div>
 
                     <div>
-                        <button class="accept-friend-request-btn">confirm</button>
-                        <button class="delete-friend-request-btn">delete</button>
+                        <button class="unfriend-btn">unfriend</button>
                     </div>
                     `;
             } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
@@ -120,8 +119,7 @@ async function displayFriends() {
                     </div>
 
                     <div>
-                        <button class="accept-friend-request-btn">confirm</button>
-                        <button class="delete-friend-request-btn">delete</button>
+                        <button class="unfriend-btn">unfriend</button>
                     </div>
                 `;
             }
@@ -686,6 +684,8 @@ function acceptFriendRequest(userId) {
 // UNFRIEND/DELETE FRIEND
 //////////////////////////
 
+let user2Unfriend; // ID of the user to be deleted/unfriended.
+
 // Checking for when "unfriend" button is clicked. When it is, we need to find out which friend the user is trying to unfriend.
 // We also need to show a popup window asking to confirm this action.
 _('.dynamic-section').addEventListener('click', (e) => {
@@ -698,6 +698,8 @@ _('.dynamic-section').addEventListener('click', (e) => {
 
         console.log('Unfriend:', userId);
         console.log('Username to unfriend:', userName);
+
+        user2Unfriend = userId; // Variable will be used later to actually unfriend a user.
 
         toggleConfirmUnfriendPopUpWindow(userName);
     }
@@ -719,4 +721,43 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// Eventlistener for "No" button inside the "unfriend user" popup screen.
 _('.unfriend-no-btn').addEventListener('click', toggleConfirmUnfriendPopUpWindow);
+
+
+// Evvent listener for then the user clicks on the "yes" button to unfriend a user (the user ID should already be stored in the variable previously defined).
+document.querySelector('.unfriend-yes-btn').addEventListener('click', deleteFriend);
+
+function deleteFriend() {
+    console.log('Unfriend user:', user2Unfriend);
+
+    const data = {
+        'id' : user2Unfriend
+    };
+
+    // Send DELETE request to Laravel route.
+    fetch('/people/delete-friend', {
+        method: 'DELETE',
+        headers : {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN' : csrfToken
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Error when trying to delete friend:', res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) { 
+            console.log("Friend deleted");
+            toggleConfirmUnfriendPopUpWindow();
+            displayFriends();
+        }
+    })
+    .catch(err => console.error(err))
+
+}
