@@ -26,6 +26,10 @@
         <div class="dynamic-section">
             {{-- This will be dynamically changed using JS. here we'll show friends, users, friend requests. --}}
         </div>
+        <div class="loading-gif-container">
+            <img src={{ asset('images/website_images/blue-loading.gif') }} alt="loading gif"
+            class="blue-loading-gif">
+        </div>
     </div>
 
     {{-- Pop up for when user tries to unfriend a user --}}

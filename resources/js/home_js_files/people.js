@@ -50,6 +50,11 @@ peopleRadio.addEventListener('change', function () {
 /////////////////////////
 
 async function getMyFriends() {
+
+    // while friends are retrived in the backend we want to show the loading GIF.
+    const blueLoadingGIF = _('.loading-gif-container');
+    blueLoadingGIF.classList.add('show');
+
     try {
         const res = await fetch('/people/get-my-friends');
 
@@ -76,6 +81,7 @@ async function displayFriends() {
 
     dynamicSection.innerHTML = '';
 
+    // Calling async function to get friends.
     const friends = await getMyFriends();
 
     console.log('My friends:', friends);
@@ -127,8 +133,13 @@ async function displayFriends() {
         dynamicSection.appendChild(userCard);
     }
 
+    // Making other tabs clickable again.
     peopleTab.classList.remove('disabled');
     requestsTab.classList.remove('disabled');
+
+    // Removing loading GIF once all friends have been displayed.
+    const blueLoadingGIF = _('.loading-gif-container');
+    blueLoadingGIF.classList.remove('show');
 }
 
 // Code to get all friends requests (all users this currently logged in user has sent a friend request to). This will later be used to decide what button to display for a user (add friend/cancel request).
@@ -164,6 +175,10 @@ let friends; // friends only.
 
 // function to get all users except the one who's currently logged in (cuz why would we need to display that user in this section?).
 function getPeople() {
+
+    // while users are retrived in the backend we want to show the loading GIF.
+    const blueLoadingGIF = _('.loading-gif-container');
+    blueLoadingGIF.classList.add('show');
 
     fetch('/people/users')
     .then(res => {
@@ -414,6 +429,10 @@ async function displayPeople(people) {
     // Making other tabs clickable again.
     friendsTab.classList.remove('disabled');
     requestsTab.classList.remove('disabled');
+
+    // Removing loading GIF once all users have been deployed.
+    const blueLoadingGIF = _('.loading-gif-container');
+    blueLoadingGIF.classList.remove('show');
 }
 //////////////////////////
 // SEND FRIEND REQUEST CODE.
@@ -509,6 +528,10 @@ document.querySelector('.requests-tab').addEventListener('click', getReceivedFri
 // that the logged in user has received for them to then be displayed.
 function getReceivedFriendRequests() {
 
+    // while friend requests are retrived in the backend we want to show the loading GIF.
+    const blueLoadingGIF = _('.loading-gif-container');
+    blueLoadingGIF.classList.add('show');
+
     fetch('/people/get-received-friend-requests')
     .then(res => {
         if (!res.ok) {
@@ -560,6 +583,10 @@ function displayReceivedFriendRequests(data) {
     // Making other tabs clickable again.
     friendsTab.classList.remove('disabled');
     peopleTab.classList.remove('disabled');
+
+    // while friends are retrived in the backend we want to show the loading GIF.
+    const blueLoadingGIF = _('.loading-gif-container');
+    blueLoadingGIF.classList.remove('show');
 }
 
 //////////////////////////////
