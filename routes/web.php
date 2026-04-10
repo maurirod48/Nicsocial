@@ -11,7 +11,7 @@ use App\Models\Product;
 
 // SIGNIN LOGIN ROUTES
 
-// this route sends user to login page.
+// This route sends user to login page.
 Route::get('/', function () {
     return view('signin_login.login');
 })->name('login.page');
