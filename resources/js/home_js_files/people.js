@@ -318,7 +318,6 @@ async function displayPeople(people) {
                             <input type="hidden" class="user-id" value="${user.id}">
                             <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
                             <h1>${user.name}</h1>
-                            No pic
                         </div>
 
                         <div>
@@ -332,7 +331,6 @@ async function displayPeople(people) {
                             <input type="hidden" class="user-id" value="${user.id}">
                             <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
                             <h1>${user.name}</h1>
-                            No pic
                         </div>
 
                         <div>
@@ -360,7 +358,6 @@ async function displayPeople(people) {
                             <input type="hidden" class="user-id" value="${user.id}">
                             <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
                             <h1>${user.name}</h1>
-                            No pic
                         </div>
 
                         <button class="cancel-friend-request-btn">cancel request</button>
@@ -371,7 +368,6 @@ async function displayPeople(people) {
                             <input type="hidden" class="user-id" value="${user.id}">
                             <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
                             <h1>${user.name}</h1>
-                            No pic
                         </div>
 
                         <button class="cancel-friend-request-btn">cancel request</button>
@@ -396,7 +392,6 @@ async function displayPeople(people) {
                             <input type="hidden" class="user-id" value="${user.id}">
                             <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
                             <h1>${user.name}</h1>
-                            No pic
                         </div>
 
                         <button class="add-friend-btn">Add friend</button>
@@ -407,7 +402,6 @@ async function displayPeople(people) {
                             <input type="hidden" class="user-id" value="${user.id}">
                             <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
                             <h1>${user.name}</h1>
-                            No pic
                         </div>
 
                         <button class="add-friend-btn">Add friend</button>

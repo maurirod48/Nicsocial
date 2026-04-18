@@ -35,7 +35,7 @@
             <div class="user-basic-info-wrapper">
                 <div class="user-username">{{Auth::user()->name}}</div>
                 <div class="user-email">{{Auth::user()->email}}</div>
-                <div class="user-id">ID: {{ Auth()->user()->id }}</div>
+                {{-- <div class="user-id">ID: {{ Auth()->user()->id }}</div> --}}
 
                 <div class="user-bio">
                     @if (Auth::user()->bio === NULL)
