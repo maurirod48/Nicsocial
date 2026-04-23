@@ -36,7 +36,7 @@ class PostController extends Controller
 
             $input['image'] = $imgName;
 
-            $path = $img->storeAs('images/post_images', $imgName, 'public');
+            $path = $img->storeAs('images/post_images', $imgName, 's3');
 
         }
 
@@ -213,7 +213,7 @@ class PostController extends Controller
             $imgName = $img->getClientOriginalName();
 
             // uploading new post pic.
-            $img->storeAs('images/post_images', $imgName, 'public'); // The storeAs first parameter means the path inside /storage/app/public,
+            $img->storeAs('images/post_images', $imgName, 's3'); // The storeAs first parameter means the path inside /storage/app/public,
             // the second parameter is the name will give to the image and then the third tells Laravel which filesystem disk to use. The disk names come from config/filesystems.php
 
 
@@ -228,8 +228,8 @@ class PostController extends Controller
             if (!$differentPostHasSameImage) {
                 // This if statement checks for an image inside /storage/app/public/images/post_images
                 // which name matches $currentImg.
-                if (Storage::disk('public')->exists('/images/post_images/' . $currentImg)) {
-                    Storage::disk('public')->delete('/images/post_images/' . $currentImg);
+                if (Storage::disk('s3')->exists('/images/post_images/' . $currentImg)) {
+                    Storage::disk('s3')->delete('/images/post_images/' . $currentImg);
                 }
             }
 

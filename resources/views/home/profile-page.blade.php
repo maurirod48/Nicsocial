@@ -19,7 +19,8 @@
                 @elseif (auth()->user()->gender === 'female' && auth()->user()->profile_pic_path == 'none')
                     <img src="{{asset('images/default-images/female-pic.jpeg')}}" alt="SOME PIC" class="default-female-profile-pic">
                 @else
-                    <img src="{{asset('storage/images/other_images/' . auth()->user()->profile_pic_path)}}" alt="actual profile pic" class="default-female-profile-pic">
+                    <img src="{{Storage::disk('s3')->url('images/other_images/' . auth()->user()->profile_pic_path)}}" 
+                    alt="actual profile pic" class="default-female-profile-pic">
                 @endif
 
                 <button class="change-pic-btn">Change picture</button>
@@ -71,7 +72,7 @@
                 @enderror
             </div>
 
-            {{-- POSTs SECTION (where all posts will be displayed one by one)--}}
+            {{-- POSTS SECTION (where all posts will be displayed one by one)--}}
             <section class="posts-section">
                 @foreach ( $posts as $post)
 
@@ -106,7 +107,7 @@
                         <p class="post-description">{{ $post->description}}</p>
 
                         @if ($post->image)
-                            <img src="{{ asset('storage/images/post_images/' . $post->image) }}" alt="post image" class="post-image">
+                            <img src="{{ Storage::link('s3')->url('/images/post_images/' . $post->image) }}" alt="post image" class="post-image">
                         @endif
 
                         <div class="post-footer">

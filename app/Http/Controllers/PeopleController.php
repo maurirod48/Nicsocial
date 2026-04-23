@@ -11,6 +11,7 @@ class PeopleController extends Controller
 
         $people = User::where('id', '!=', auth()->user()->id)->get();
 
+
         return response()->json(['people' => $people]);
     }
 

@@ -121,8 +121,8 @@ class UserController extends Controller
         // File name.
         $imgName = $img->getClientOriginalName();
 
-        // Uploading/saving uploaded file to location inside storage/app/public.
-        $path = $img->storeAs('images/other_images', $imgName, 'public');
+        // Uploading/saving uploaded file to location inside my s3 bucket.
+        $path = $img->storeAs('images/other_images', $imgName, 's3');
 
         $user = Auth()->user();
         $user->profile_pic_path = $imgName;
