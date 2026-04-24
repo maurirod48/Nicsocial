@@ -148,7 +148,19 @@ class PeopleController extends Controller
 
         $allFriends = $loggedInUser->friends()->get();
 
-        return response()->json(['friends' => $allFriends]);
+        // Here we map friends so that we can add an extra attribute to each friend object.
+        // This object contains the user's profile pic s3 URL (if the user has a profile pic in the first place).
+        $mappedFriends = $allFriends->map(function ($friend) {
+            if ($friend->profile_pic_path == 'none') {
+                $friend->profile_pic_s3_url = NULL;
+            } else {
+                $friend->profile_pic_s3_url = Storage::disk('s3')->url($friend->profile_pic_path);
+            }
+
+            return $friend;
+        });
+
+        return response()->json(['friends' => $mappedFriends]);
     }
 
     public function deleteFriend(Request $request) {

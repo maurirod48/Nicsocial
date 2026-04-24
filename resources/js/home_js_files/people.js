@@ -34,7 +34,6 @@ friendsRadio.addEventListener('change', function () {
     if (this.checked) {
         console.log('friends');
         displayFriends(friends);
-        
     }
 });
 
@@ -548,12 +547,49 @@ function displayReceivedFriendRequests(data) {
     friendsTab.classList.add('disabled');
     peopleTab.classList.add('disabled');
 
+    // Clearing dynamic section.
     const dynamicSection = document.querySelector('.dynamic-section');
     dynamicSection.innerHTML = '';
 
     data.forEach(user => {
         const userCard = document.createElement('div');
         userCard.classList = 'user-card-received-request';
+
+
+        // if (user.profile_pic_path != 'none') {
+        //             userCard.innerHTML = `
+        //                 <div style="display:flex; gap:1rem; align-items:center;">
+        //                     <input type="hidden" class="user-id" value="${user.id}">
+        //                     <img src="${user.profile_pic_s3_url}" class="user-profile-pic" data-mssg="first-block">
+        //                     <h1>${user.name}</h1>
+        //                 </div>
+
+        //                 <button class="cancel-friend-request-btn">cancel request</button>
+        //             `;
+        // } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
+        //             userCard.innerHTML = `
+        //                 <div style="display:flex; gap:1rem; align-items:center;">
+        //                     <input type="hidden" class="user-id" value="${user.id}">
+        //                     <img src="/storage/images/other_images/male-pic.jpg" class="user-profile-pic">
+        //                     <h1>${user.name}</h1>
+        //                 </div>
+
+        //                 <button class="cancel-friend-request-btn">cancel request</button>
+        //             `;
+        // } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
+        //             userCard.innerHTML = `
+        //                 <div style="display:flex; gap:1rem; align-items:center;">
+        //                     <input type="hidden" class="user-id" value="${user.id}">
+        //                     <img src="/storage/images/other_images/female-pic.jpeg" class="user-profile-pic">
+        //                     <h1>${user.name}</h1>
+        //                 </div>
+
+        //                 <button class="cancel-friend-request-btn">cancel request</button>
+        //             `;
+        // }
+
+
+        /////////////////////
 
         userCard.innerHTML = `
             <div style="display:flex; gap:1rem; align-items:center;">
