@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 use Illuminate\Http\Request;
 
@@ -11,8 +12,18 @@ class PeopleController extends Controller
 
         $people = User::where('id', '!=', auth()->user()->id)->get();
 
+        // Here we use map() to add a new attribute called "profile_pic_s3_url". This new attribute contains the
+        // s3 url which will then be used to display the user's profile pic. If the user has no profile pic, then this value is NULL
+        $sortedPeople = $people->map(function ($user) {
+            if ($user->profile_pic_path == 'none') {
+                $user->profile_pic_s3_url = NULL;
+            } else {
+                $user->profile_pic_s3_url = Storage::disk('s3')->url('images/other_images/' . $user->profile_pic_path);;
+            }
 
-        return response()->json(['people' => $people]);
+            return $user;
+        });
+        return response()->json(['people' => $sortedPeople]);
     }
 
     // Method to create record in friend_requests pivot table.

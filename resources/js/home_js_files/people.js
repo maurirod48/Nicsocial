@@ -297,12 +297,11 @@ async function displayPeople(people) {
             const haveIreceivedFriendRequestFromThisUser = await receivedFriendRequest(user.id);
 
             if (haveIreceivedFriendRequestFromThisUser) {
-                console.log(`USER ${user.name} HAS SENT ME A FRIEND REQUEST`);
                 if (user.profile_pic_path != 'none') {
                     userCard.innerHTML = `
                         <div style="display:flex; gap:1rem; align-items:center;">
                             <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                            <img src="${user.profile_pic_s3_url}" class="user-profile-pic" data-mssg="first-block">
                             <h1>${user.name}</h1>
                         </div>
 
@@ -341,12 +340,11 @@ async function displayPeople(people) {
                 }
             }
             else if (friendRequestStatus) {
-                console.log(`I HAVE SENT A FRIEND REQUEST TO USER: ${user.name} TRUE`);
                 if (user.profile_pic_path != 'none') {
                     userCard.innerHTML = `
                         <div style="display:flex; gap:1rem; align-items:center;">
                             <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                            <img src="${user.profile_pic_s3_url}" class="user-profile-pic" data-mssg="first-block">
                             <h1>${user.name}</h1>
                         </div>
 
@@ -375,12 +373,11 @@ async function displayPeople(people) {
                 }
             } 
             else {
-                console.log(`I HAVE NOT SENT A FRIEND REQUEST AND THEY HAVE NOT SENT ME ONE NEITHER, USER: ${user.name} FALSE`);
                 if (user.profile_pic_path != 'none') {
                     userCard.innerHTML = `
                         <div style="display:flex; gap:1rem; align-items:center;">
                             <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                            <img src="${user.profile_pic_s3_url}" class="user-profile-pic" data-mssg="first-block">
                             <h1>${user.name}</h1>
                         </div>
 
