@@ -113,13 +113,13 @@
                         <div class="post-footer">
                             <div class="post-action-buttons" style="display: flex; gap: .5rem;">
                                 @if (Auth()->user()->likedPosts()->where('post_id', $post->id)->exists())
-                                    <img src="{{ asset('storage/website_images/liked.png') }}" alt="liked icond" class="like-btn-img">
+                                    <img src="{{ asset('images/website_images/liked.png') }}" alt="liked icond" class="like-btn-img">
                                 @else
                                     <img src="images/default-images/like_btn.png" alt="like button image" class="like-btn-img">
                                 @endif
 
                                 @if (Auth()->user()->dislikedPosts()->where('post_id', $post->id)->exists())
-                                    <img src="{{ asset('storage/website_images/dislike.png') }}" alt="liked icond" class="dislike-btn-img">
+                                    <img src="{{ asset('images/website_images/dislike.png') }}" alt="liked icond" class="dislike-btn-img">
                                 @else
                                     <img src="images/default-images/dislike_btn.png" alt="like button image" class="dislike-btn-img">
                                 @endif

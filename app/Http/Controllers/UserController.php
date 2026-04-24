@@ -132,7 +132,7 @@ class UserController extends Controller
         if ($user->profile_pic_path != 'none') {
 
             // Old profile pic name.
-            $oldProfilePicName =$user->profile_pic_path;
+            $oldProfilePicName = $user->profile_pic_path;
 
             // Before deleting the old profile pic, we want to see if another user has the same profile pic, if they do, 
             // then we dont wanna delete it (since it will display for them).
