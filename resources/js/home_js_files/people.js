@@ -94,7 +94,7 @@ async function displayFriends() {
             userCard.innerHTML = `
             <div style="display:flex; gap:1rem; align-items:center;">
                 <input type="hidden" class="user-id" value="${user.id}">
-                <img src="/storage/images/other_images/${user.profile_pic_path}" class="user-profile-pic" data-mssg="first-block">
+                <img src="${user.profile_pic_s3_url}" class="user-profile-pic" data-mssg="first-block">
                 <h1 class="user-name">${user.name}</h1>
             </div>
 

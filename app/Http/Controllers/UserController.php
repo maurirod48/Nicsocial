@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 // this facade is for using Auth
 use Illuminate\Support\Facades\Auth;
@@ -110,7 +111,6 @@ class UserController extends Controller
         ]);
 
         return back()->with('success', 'changes were saved');
-
     }
 
     public function changeProfilePic(Request $request) {
@@ -123,8 +123,31 @@ class UserController extends Controller
 
         // Uploading/saving uploaded file to location inside my s3 bucket.
         $path = $img->storeAs('images/other_images', $imgName, 's3');
+        
 
+        // User object.
         $user = Auth()->user();
+
+        // Deleting previous profile pic (if any) from s3 bucket.
+        if ($user->profile_pic_path != 'none') {
+
+            // Old profile pic name.
+            $oldProfilePicName =$user->profile_pic_path;
+
+            // Before deleting the old profile pic, we want to see if another user has the same profile pic, if they do, 
+            // then we dont wanna delete it (since it will display for them).
+            $otherUserHasSameProfilePic = User::where('profile_pic_path', '=', $oldProfilePicName)
+                                                ->where('id', '!=', $user->id )
+                                                ->exists();
+            
+            // If $otherUserHasSameProfilePic is false, then no other use has the same profile pic and we can
+            // go ahead and delete the old profile pic from the s3 bucket.
+            if (!$otherUserHasSameProfilePic) {
+                Storage::disk('s3')->delete('images/other_images/' . $oldProfilePicName);
+            }
+        }
+
+        // Updating object column in database "profile_pic_path".
         $user->profile_pic_path = $imgName;
         $user->save();
 

@@ -192,10 +192,10 @@ class PostController extends Controller
 
         $id = $request['edit-post-id'];
 
-        // Current post user wants to edit.
+        // Current post object the user wants to edit.
         $post = Post::findOrFail($id);
 
-        // Name of the post corresponding to the current post to be edited.
+        // Image of the post corresponding to the current post to be edited.
         $currentImg = $post->image;
 
         // Updating post name and post description with the new data in the edit post form.
@@ -218,12 +218,12 @@ class PostController extends Controller
 
 
             // Before we delete the current post image from /storage/app/public/post_images we need to check to see if another post has the same image.
-            // cuz if thats the case then deleting that image will cause problems for that other post (User is not editing that other post).
+            // cuz if thats the case, then deleting that image will cause problems for that other post's image (Current user is not editing that other post).
             $differentPostHasSameImage = Post::where('image', '=', $currentImg)
                                                 ->where('id', "!=", $post->id) // Specifying we are looking a different post to have the same image.
                                                 ->exists();
 
-            // If differentPostHasSameImage is false (meaning no other post has the same image) we are good to proceed 
+            // If "$differentPostHasSameImage" is false (meaning no other post has the same image) we are good to proceed 
             // and delete that image from /storage/app/public/post_images.
             if (!$differentPostHasSameImage) {
                 // This if statement checks for an image inside /storage/app/public/images/post_images

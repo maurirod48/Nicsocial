@@ -77,7 +77,17 @@ class PeopleController extends Controller
 
         $response = $loggedInUser->pendingReceivedFriendRequest()->get();
 
-        return response()->json(['success' => true, 'response' => $response]);
+        $mappedResponse = $response->map(function ($user) {
+            if ($user->profile_pic_path == 'none') {
+                $user->profile_pic_s3_url = NULL;
+            } else {
+                $user->profile_pic_s3_url = Storage::disk('s3')->url('images/other_images/' . $user->profile_pic_path);
+            }
+
+            return $user;
+        });
+
+        return response()->json(['success' => true, 'response' => $mappedResponse]);
     }
 
     // this function is called when displaying people (all users) in the people section. This is useful to know which button to display for that user.
@@ -154,7 +164,7 @@ class PeopleController extends Controller
             if ($friend->profile_pic_path == 'none') {
                 $friend->profile_pic_s3_url = NULL;
             } else {
-                $friend->profile_pic_s3_url = Storage::disk('s3')->url($friend->profile_pic_path);
+                $friend->profile_pic_s3_url = Storage::disk('s3')->url('images/other_images/' . $friend->profile_pic_path);
             }
 
             return $friend;

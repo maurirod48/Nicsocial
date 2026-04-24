@@ -107,7 +107,7 @@
                         <p class="post-description">{{ $post->description}}</p>
 
                         @if ($post->image)
-                            <img src="{{ Storage::link('s3')->url('/images/post_images/' . $post->image) }}" alt="post image" class="post-image">
+                            <img src="{{ Storage::disk('s3')->url('images/post_images/' . $post->image) }}" alt="post image" class="post-image">
                         @endif
 
                         <div class="post-footer">
