@@ -11,6 +11,7 @@
 <body class="home-page">
 
     <div class="body-main">
+        {{-- Navigation bar --}}
         <nav class="nav-bar">
 
             <div class="nav-section-1">
