@@ -107,7 +107,7 @@ async function displayFriends() {
                 userCard.innerHTML = `
                     <div style="display:flex; gap:1rem; align-items:center;">
                         <input type="hidden" class="user-id" value="${user.id}">
-                        <img src="/images/default_images/male-pic.jpg" class="user-profile-pic">
+                        <img src="/images/default-images/male-pic.jpg" class="user-profile-pic">
                         <h1 class="user-name">${user.name}</h1>
                     </div>
 
@@ -119,7 +119,7 @@ async function displayFriends() {
                 userCard.innerHTML = `
                     <div style="display:flex; gap:1rem; align-items:center;">
                         <input type="hidden" class="user-id" value="${user.id}">
-                        <img src="/images/default_images/female-pic.jpeg" class="user-profile-pic">
+                        <img src="/images/default-images/female-pic.jpeg" class="user-profile-pic">
                         <h1 class="user-name">${user.name}</h1>
                     </div>
 
@@ -314,7 +314,7 @@ async function displayPeople(people) {
                     userCard.innerHTML = `
                         <div style="display:flex; gap:1rem; align-items:center;">
                             <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default_images/male-pic.jpg" class="user-profile-pic">
+                            <img src="/images/default-images/male-pic.jpg" class="user-profile-pic">
                             <h1>${user.name}</h1>
                         </div>
 
@@ -327,7 +327,7 @@ async function displayPeople(people) {
                     userCard.innerHTML = `
                         <div style="display:flex; gap:1rem; align-items:center;">
                             <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default_images/female-pic.jpeg" class="user-profile-pic">
+                            <img src="/images/default-images/female-pic.jpeg" class="user-profile-pic">
                             <h1>${user.name}</h1>
                         </div>
 
@@ -353,7 +353,7 @@ async function displayPeople(people) {
                     userCard.innerHTML = `
                         <div style="display:flex; gap:1rem; align-items:center;">
                             <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default_images/male-pic.jpg" class="user-profile-pic">
+                            <img src="/images/default-images/male-pic.jpg" class="user-profile-pic">
                             <h1>${user.name}</h1>
                         </div>
 
@@ -363,7 +363,7 @@ async function displayPeople(people) {
                     userCard.innerHTML = `
                         <div style="display:flex; gap:1rem; align-items:center;">
                             <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default_images/female-pic.jpeg" class="user-profile-pic">
+                            <img src="/images/default-images/female-pic.jpeg" class="user-profile-pic">
                             <h1>${user.name}</h1>
                         </div>
 
@@ -386,7 +386,7 @@ async function displayPeople(people) {
                     userCard.innerHTML = `
                         <div style="display:flex; gap:1rem; align-items:center;">
                             <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default_images/male-pic.jpg" class="user-profile-pic">
+                            <img src="/images/default-images/male-pic.jpg" class="user-profile-pic">
                             <h1>${user.name}</h1>
                         </div>
 
@@ -396,7 +396,7 @@ async function displayPeople(people) {
                     userCard.innerHTML = `
                         <div style="display:flex; gap:1rem; align-items:center;">
                             <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default_images/female-pic.jpeg" class="user-profile-pic">
+                            <img src="/images/default-images/female-pic.jpeg" class="user-profile-pic">
                             <h1>${user.name}</h1>
                         </div>
 
@@ -573,7 +573,7 @@ function displayReceivedFriendRequests(data) {
                     userCard.innerHTML = `
                         <div style="display:flex; gap:1rem; align-items:center;">
                             <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default_images/male-pic.jpg" class="user-profile-pic">
+                            <img src="/images/default-images/male-pic.jpg" class="user-profile-pic">
                             <h1>${user.name}</h1>
                         </div>
 
@@ -586,7 +586,7 @@ function displayReceivedFriendRequests(data) {
                     userCard.innerHTML = `
                         <div style="display:flex; gap:1rem; align-items:center;">
                             <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default_images/female-pic.jpeg" class="user-profile-pic">
+                            <img src="/images/default-images/female-pic.jpeg" class="user-profile-pic">
                             <h1>${user.name}</h1>
                         </div>
 
