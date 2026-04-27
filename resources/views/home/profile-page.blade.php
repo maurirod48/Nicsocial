@@ -158,7 +158,7 @@
 
                             <div class="post-form-field">
                                 <label for="upload-img">
-                                    <img src="{{ asset('storage/website_images/upload_pic_icon.png') }}" alt="upload pic icon" class="upload-pic-img">
+                                    <img src="{{ asset('images/website_images/upload_pic_icon.png') }}" alt="upload pic icon" class="upload-pic-img">
                                 </label>
 
                                 <input type="file" name="postPic" id="upload-img" style="display: none;">
