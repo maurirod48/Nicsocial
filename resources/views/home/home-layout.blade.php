@@ -75,7 +75,9 @@
         
 
 
-        {{-- bottom bar --}}
+        
+    </div>
+    {{-- bottom bar --}}
         <nav class="bottom-nav-bar">
             <a href="{{route('home.section')}}">
                 <img src="{{ asset('images/website_images/home1.png') }}" alt="home" class="bottom-nav-icon" title="home">
@@ -89,11 +91,9 @@
             <a href="#settings">
                 <img src="{{ asset('images/website_images/setting.png') }}" alt="settings" class="bottom-nav-icon" title="settings">
             </a>
-            <span class="logout-btn">
+            <div class="logout-btn bottom-logout-btn">
                 <img src="{{ asset('images/website_images/logout.png') }}" alt="logout" class="bottom-nav-icon" title="logout">
-            </span>
+            </div>
         </nav>
-    </div>
-    
 </body>
 </html>

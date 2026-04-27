@@ -13,6 +13,7 @@ body {
     padding-bottom: 70px;
     min-height: 100vh;
     background-color: black;
+    overflow: visible;
 }
 
 /* NAVIGATION BAR STYLING*/

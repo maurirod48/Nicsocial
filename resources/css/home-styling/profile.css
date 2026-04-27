@@ -659,3 +659,50 @@ POST SECTION STYLING
     max-width: 350px;
     max-height: 400px;
 }
+
+
+@media (max-width: 768px) {
+
+    .default-male-profile-pic, .default-female-profile-pic {
+        width: 150px;
+        height: 150px;
+    }
+
+    .profile-pic-container {
+        top: 50px;
+        left: 20px;
+    }
+
+    .user-basic-info-wrapper {
+        margin-top: 2rem;
+        padding-left: 1.5rem;
+    }
+
+    .post-btn-wrapper {
+        padding: 1rem 1.5rem;
+    }
+
+    .posts-section {
+        padding: 0 1rem;
+    }
+
+    .post-form-popup-wrap {
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+    .edit-profile-popup-wrap {
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+    .edit-profile-errors-popup-wrap {
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+    #desc {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

@@ -10,12 +10,15 @@ function _(element) {
 function toggleLogoutPopup() {
     const logoutPopupWrapper = _('.logout-popup-wrapper');
     logoutPopupWrapper.classList.toggle('show');
+    console.log('wwwwwww');
 }
 
 
 // If user clicks logout button, logout popup will show up.
 const logoutBtn = _('.logout-btn'); 
 logoutBtn.addEventListener('click', toggleLogoutPopup);
+const bottomLogoutBtn = _('.bottom-logout-btn');
+bottomLogoutBtn.addEventListener('click', toggleLogoutPopup);
 
 
 // If user clicks the "No" button (when popup shows up), the logout popup will disappear.
