@@ -21,7 +21,9 @@ body {
     background-color: rgb(12, 62, 168);
     padding: 2rem 2.5rem;
     border-radius: .5rem;
-    /* margin-top: 7rem; */
+    width: 100%;
+    max-width: 420px;
+    box-sizing: border-box;
 }
 
 .main-wrap h1 {
@@ -36,11 +38,13 @@ body {
     gap: 1.5em;
 }
 
-.login-form input{
+.login-form input {
     font-size: 1.3rem;
     padding: .5rem;
     border: solid 1px white;
     border-radius: .5rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .login-form p {
@@ -68,4 +72,32 @@ body {
     padding: .6rem 0;
     border: none;
     cursor: pointer;
+}
+
+
+/* MEDIA QUERIES */
+
+@media (max-width: 480px) {
+    .main-wrapper {
+        padding: 0 2rem;
+    }
+
+    .logo-img {
+        margin-top: 2rem;
+        height: 60px;
+    }
+
+    .main-wrap {
+        padding: 1.5rem 1.2rem;
+        border-radius: .5rem;
+    }
+
+    .main-wrap h1 {
+        font-size: 2rem;
+    }
+
+    .login-form input,
+    .login-btn {
+        font-size: 1.1rem;
+    }
 }
