@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign In</title>
+    <title>Sign Up</title>
     @vite('resources/js/app.js')
 </head>
 <body class="login-page">
@@ -12,8 +12,8 @@
         <img src="{{ asset('images/website_logo_images/Nicsocial logo - White.png') }}" alt="nicsocial logo"
         class="logo-img">
         <div class="main-wrap">
-            <h1>Sign In</h1>
-            <form action="{{route('user.signin')}}" method="POST">
+            <h1>Sign Up</h1>
+            <form action="{{route('user.signup')}}" method="POST">
                 @csrf
                 <div class="login-form">
                     <input type="text" placeholder="Username" name="name" required>
@@ -28,7 +28,7 @@
 
                     <input type="password" placeholder="Password" name="password" required>
 
-                    <button class="signin-btn">Sign In</button>
+                    <button class="signin-btn">Sign Up</button>
 
                     <p>
                         <a href="{{route('login.page')}}">Already have an account?</a>

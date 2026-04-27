@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     // function that handles the sign in process, meaning it saves new user info to database using a User model.
-    public function signIn (Request $request) {
+    public function signUp (Request $request) {
         // sign in code goes here
 
         // validation rules.
@@ -37,7 +37,7 @@ class UserController extends Controller
         $user = User::create($input);
 
         // returning user back to sign in page with a success message.
-        return back()->with('message', 'your account has been created');
+        return redirect('/')->with('message', 'your account has been created');
     }
 
 
