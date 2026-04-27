@@ -73,6 +73,26 @@
         {{-- Page content goes here --}}
         @yield('content')
         
+
+
+        {{-- bottom bar --}}
+        <nav class="bottom-nav-bar">
+            <a href="{{route('home.section')}}">
+                <img src="{{ asset('images/website_images/home1.png') }}" alt="home" class="bottom-nav-icon" title="home">
+            </a>
+            <a href="{{route('people.section')}}">
+                <img src="{{ asset('images/website_images/people.png') }}" alt="people" class="bottom-nav-icon" title="people">
+            </a>
+            <a href="{{route('profile.section')}}">
+                <img src="{{ asset('images/website_images/user.png') }}" alt="profile" class="bottom-nav-icon" title="profile">
+            </a>
+            <a href="#settings">
+                <img src="{{ asset('images/website_images/setting.png') }}" alt="settings" class="bottom-nav-icon" title="settings">
+            </a>
+            <span class="logout-btn">
+                <img src="{{ asset('images/website_images/logout.png') }}" alt="logout" class="bottom-nav-icon" title="logout">
+            </span>
+        </nav>
     </div>
     
 </body>
