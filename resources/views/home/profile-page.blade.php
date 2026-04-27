@@ -23,7 +23,7 @@
                     alt="actual profile pic" class="default-female-profile-pic">
                 @endif
 
-                <button class="change-pic-btn">Change picture</button>
+                <button class="change-pic-btn">Edit Picture</button>
             </div>
         </div>
 

@@ -32,11 +32,11 @@
 }
 
 .change-pic-btn {
-    background-color: rgb(3, 131, 3);
+    background-color: rgb(0, 49, 211);
     color: white;
-    padding: .5rem 1rem;
+    padding: .5rem 1.2rem;
     border-radius: .5rem;
-    font-size: 1rem;
+    font-size: 2rem;
     cursor: pointer;
     font-weight: 500;
 }
@@ -663,18 +663,28 @@ POST SECTION STYLING
 
 @media (max-width: 768px) {
 
-    .default-male-profile-pic, .default-female-profile-pic {
-        width: 150px;
-        height: 150px;
+    .default-banner-image {
+        height: 130px;
     }
 
     .profile-pic-container {
-        top: 50px;
-        left: 20px;
+        top: 70px;
+        left: 15px;
+    }
+
+    .default-male-profile-pic, .default-female-profile-pic {
+        width: 120px;
+        height: 120px;
+    }
+
+    .change-pic-btn {
+        font-size: 0.75rem;
+        padding: .3rem .6rem;
+        margin-top: .3rem;
     }
 
     .user-basic-info-wrapper {
-        margin-top: 2rem;
+        margin-top: 4rem;
         padding-left: 1.5rem;
     }
 
@@ -686,16 +696,8 @@ POST SECTION STYLING
         padding: 0 1rem;
     }
 
-    .post-form-popup-wrap {
-        width: 90%;
-        box-sizing: border-box;
-    }
-
-    .edit-profile-popup-wrap {
-        width: 90%;
-        box-sizing: border-box;
-    }
-
+    .post-form-popup-wrap,
+    .edit-profile-popup-wrap,
     .edit-profile-errors-popup-wrap {
         width: 90%;
         box-sizing: border-box;
