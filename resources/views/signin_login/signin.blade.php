@@ -36,6 +36,9 @@
                 </div>
             </form>
         </div>
+
+        <h3>By Mauricio Rodriguez</h3>
+
         @if($errors->any())
             @foreach ($errors->all() as $error)
                 <p>{{$error}}</p>

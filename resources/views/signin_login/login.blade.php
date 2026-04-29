@@ -13,6 +13,8 @@
         <img src="{{ asset('images/website_logo_images/Nicsocial logo - White.png') }}" alt="nicsocial logo"
         class="logo-img">
 
+        
+
         <div class="main-wrap">
             <h1>Log In</h1>
             <form action="{{route('user.login')}}" method="POST">
@@ -33,6 +35,9 @@
                 </div>
             </form>
         </div>
+
+        <h3>By Mauricio Rodriguez</h3>
+
         @if ($errors->any())
             @foreach ($errors->all() as $error)
                 <p>{{$error}}</p>

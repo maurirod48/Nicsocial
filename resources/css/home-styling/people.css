@@ -230,3 +230,45 @@ body:has(#requests-radio:checked) .blue-line-under-requests-tab {
     width: 280px;
     padding-left: 35%;
 }
+
+
+/* MEDIA QUERIES */
+
+@media (max-width: 768px) {
+
+    .people-section-container {
+        max-height: none;
+    }
+
+    .middle-center {
+        width: 100%;
+        height: auto;
+        max-height: none;
+        border-left: none;
+        border-right: none;
+    }
+
+    .dynamic-section {
+        height: auto;
+        max-height: 60vh;
+    }
+
+    .friends-tab, .people-tab, .requests-tab {
+        width: 33.33%;
+    }
+
+    .friends-people-tab-wrapper h1 {
+        font-size: 1.1rem;
+        padding: 0.5rem 0;
+    }
+
+    .blue-loading-gif {
+        padding-left: 0;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .loading-gif-container {
+        position: fixed;
+    }
+}
