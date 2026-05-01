@@ -13,6 +13,7 @@ class PostController extends Controller
 
         // using a relationship I created to get each post's respective creator/user.
         $posts = Post::with('user')
+                ->where('user_id', '!=', Auth()->user()->id)
                 ->orderBy('created_at', 'desc')
                 ->get();
 
