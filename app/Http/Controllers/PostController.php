@@ -9,8 +9,11 @@ use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
-    public function getPosts() {
-        return response()->json(['success' => true]);
+    public function getAllPosts() {
+
+        $posts = Post::all();
+
+        return response()->json(['success' => true, 'publicPosts' => $posts]);
     }
 
     public function createPost(Request $request) {

@@ -12,7 +12,7 @@
                 <span class="blue-line-under-friends-tab"></span>
             </label>
             <label for="people-radio" class="people-tab tabb">
-                <h1>More people</h1>
+                <h1>Find Users</h1>
                 <input type="radio" name="tab-radio" id="people-radio"> {{-- Radio to check which tab is currently being selected --}}
                 <span class="blue-line-under-people-tab"></span>
             </label>

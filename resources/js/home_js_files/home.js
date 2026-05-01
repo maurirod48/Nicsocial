@@ -51,10 +51,34 @@ function get_posts() {
     })
     .then(data => {
         if(data.success) {
+            console.log(data.publicPosts);
             console.log('posts were returned');
+
+            // Calling function to display public posts.
+            displayPublicPosts(data.publicPosts);
         }
     })
     .catch(err => console.log(err));
 }
 
 get_posts();
+
+
+function displayPublicPosts(posts) {
+
+    // Grabbing dynamic section.
+    const feed = _('.dynamic-feed-section');
+    feed.innerHTML = '';
+
+    posts.forEach(post => {
+        const postCard = document.createElement('div');
+        postCard.classList = 'public-post';
+
+        postCard.innerHTML = `
+            <h1>${post.title}</h1>
+        `;
+
+        feed.appendChild(postCard);
+    });
+
+}

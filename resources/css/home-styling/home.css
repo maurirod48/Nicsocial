@@ -253,3 +253,10 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
         font-size: 1.5rem;
     }
 }
+
+@media (max-width:420px) {
+    .home-middle-section-container {
+        border: solid 1px white;
+        width: 340px;
+    }
+}
