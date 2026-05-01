@@ -330,5 +330,6 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
 
     .post-img {
     max-width: 250px;
+    max-height: 350px;
 }
 }
