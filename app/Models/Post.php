@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Post extends Model
 {
@@ -14,12 +15,18 @@ class Post extends Model
         return $this->belongsToMany(User::class);
     }
 
-    // Relationship with User model to keeep track of likes.
+    // Relationship with User model to keeep track of likes. Second parameter references table name.
     public function likedByUser() {
         return $this->belongsToMany(User::class, 'likes')->withTimestamps();
     }
 
+    // Relationship with User model to keeep track of dislikes. Second parameter references table name.
     public function dislikedByUser() {
         return $this->belongsToMany(User::class, 'dislikes')->withTimestamps();
+    }
+
+    // This relationship helps getting the creator of each post model instance.
+    public function user() {
+        return $this->BelongsTo(User::class);
     }
 }

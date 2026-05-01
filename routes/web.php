@@ -69,7 +69,7 @@ Route::get('/profile-section', function () {
 })->name('profile.section');
 
 // This request will come from a JS fetch request to get all posts.
-Route::get('/get-posts', [PostController::class, 'getAllPosts'])->name('post.get');
+Route::get('/get-public-posts', [PostController::class, 'getAllPosts'])->name('post.get');
 
 // Route to trigger logout.
 Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');

@@ -11,7 +11,10 @@ class PostController extends Controller
 {
     public function getAllPosts() {
 
-        $posts = Post::all();
+        // using a relationship I created to get each post's respective creator/user.
+        $posts = Post::with('user')
+                ->orderBy('created_at', 'desc')
+                ->get();
 
         return response()->json(['success' => true, 'publicPosts' => $posts]);
     }

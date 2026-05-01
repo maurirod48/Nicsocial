@@ -3,45 +3,25 @@
 function _(element) {
     return document.querySelector(element);
 }
-    
-// LOGOUT POPUP CODE.
-
-// Function to add the "show" class to logout popup element, when this element has this class, popup becomes visible and interactable.
-function toggleLogoutPopup() {
-    const logoutPopupWrapper = _('.logout-popup-wrapper');
-    logoutPopupWrapper.classList.toggle('show');
-    console.log('wwwwwww');
-}
-
-
-// If user clicks logout button, logout popup will show up.
-const logoutBtn = _('.logout-btn'); 
-logoutBtn.addEventListener('click', toggleLogoutPopup);
-const bottomLogoutBtn = _('.bottom-logout-btn');
-bottomLogoutBtn.addEventListener('click', toggleLogoutPopup);
-
-
-// If user clicks the "No" button (when popup shows up), the logout popup will disappear.
-const closeLogoutPopupBtn = _('.logout-opt-no');
-closeLogoutPopupBtn.addEventListener('click', toggleLogoutPopup);
 
 
 
-// If user clicks on logout popup background (outside popup asking if you really wanna logout), the popup will disappear.
-document.addEventListener('click', e => {
-    if (e.target.matches('.logout-popup-wrapper')) {
-        toggleLogoutPopup();
-    }
-})
-
-
-
-
-
+//////////////////////////////////////////
 // CODE TO GET POSTS AND THEN DISPLAY THEM
+//////////////////////////////////////////
 
-function get_posts() {
-    fetch('/get-posts')
+
+// Public feed radio.
+const publicFeedRadio = _('#global');
+publicFeedRadio.addEventListener('change', getPublicPosts);
+
+// Friends feed radio.
+const friendsFeedRadio = _('#friends-only');
+friendsFeedRadio.addEventListener('change', getFriendsOnlyPosts);
+
+// function to get all public posts.
+function getPublicPosts() {
+    fetch('/get-public-posts')
     .then(res => {
         if (!res.ok) {
             throw new Error('Bad response when trying to get posts:', res.status);
@@ -61,7 +41,8 @@ function get_posts() {
     .catch(err => console.log(err));
 }
 
-get_posts();
+// THIS FUNCTION WILL BE CALLED EVERYTIME USER VISITS HOME PAGE.
+getPublicPosts();
 
 
 function displayPublicPosts(posts) {
@@ -72,13 +53,44 @@ function displayPublicPosts(posts) {
 
     posts.forEach(post => {
         const postCard = document.createElement('div');
-        postCard.classList = 'public-post';
+        postCard.classList = 'public-post-card';
 
         postCard.innerHTML = `
-            <h1>${post.title}</h1>
+            <div class="post-header">
+                <div class="user-info-container">
+                    <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/other_images/${post.user.profile_pic_path}"
+                    class="user-img">
+
+                    <div>
+                        <h3 class="post-creator-name">${post.user.name}</h3>
+                        <p class="post-creator-email">${post.user.email}</p>
+                    </div>
+                </div>
+
+                <div class="post-options-container">
+                    <h3>options</h3>
+                </div>
+                
+            </div>
+
+            <div class="post-body">
+                <div class="post-description">
+                    <p>
+                        ${post.description}
+                    </p>
+                </div>
+            </div>
+            
         `;
 
         feed.appendChild(postCard);
     });
 
+}
+
+
+function getFriendsOnlyPosts() {
+    // Grabbing and clearing dynamic section.
+    const feed = _('.dynamic-feed-section');
+    feed.innerHTML = '';
 }
