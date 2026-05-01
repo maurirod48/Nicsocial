@@ -9,7 +9,7 @@
         <div class="feed-tabs-wrapper">
             <label for="global" class="feed-tab">
                 <h1>Public</h1>
-                <input type="radio" id="global" name="hh" class="feed-tab-radio">
+                <input type="radio" id="global" name="hh" class="feed-tab-radio" checked>
                 <span class="public-tab-bottom-line"></span>
             </label>
             <label for="friends-only" class="feed-tab">

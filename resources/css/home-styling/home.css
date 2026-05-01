@@ -221,3 +221,35 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
     height: 20px;
     background-color: rgb(52, 77, 166);
 }
+
+.dynamic-feed-section {
+    /* border: 5px solid rgb(142, 49, 49); */
+    height: 100vh;
+    width: 100%;
+}
+
+
+
+
+
+
+/* HOME MEDIA QUERIES */
+
+@media (max-width:960px) {
+    .home-middle-section-container {
+        border: solid 1px white;
+        width: 600px;
+    }
+}
+
+
+@media (max-width:560px) {
+    .home-middle-section-container {
+        border: solid 1px white;
+        width: 380px;
+    }
+
+    .feed-tab h1{
+        font-size: 1.5rem;
+    }
+}
