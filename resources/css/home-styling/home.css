@@ -239,10 +239,18 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
     justify-content: space-between;
 }
 
+.post-creator-name {
+    font-size: 2.5rem;
+}
+
+.post-creator-email {
+    font-size: 1.5rem;
+}
+
 .user-img {
-    width: 60px;
-    height: 60px;
-    border-radius: 2rem;
+    width: 120px;
+    height: 120px;
+    border-radius: 5rem;
 }
 
 .user-info-container {
@@ -254,7 +262,14 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
     margin: 0;
 }
 
+.post-body {
+    padding: 1.5rem;
+}
 
+.post-options-image {
+    height: 80px;
+    cursor: pointer;
+}
 
 
 /* HOME MEDIA QUERIES */
@@ -276,6 +291,24 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
     .feed-tab h1{
         font-size: 1.5rem;
     }
+
+    .post-creator-name {
+        font-size: 1.5rem;
+    }
+
+    .post-creator-email {
+        font-size: .7rem;
+    }
+
+    .post-title {
+        font-size: 1.7rem;
+    }
+
+    .user-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 2rem;
+    }
 }
 
 @media (max-width:420px) {
@@ -283,4 +316,19 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
         border: solid 1px white;
         width: 340px;
     }
+
+    .user-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 2rem;
+    }
+
+    .post-options-image {
+        height: 40px;
+        cursor: pointer;
+    }
+
+    .post-img {
+    max-width: 250px;
+}
 }

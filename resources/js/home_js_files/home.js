@@ -56,6 +56,8 @@ function displayPublicPosts(posts) {
         postCard.classList = 'public-post-card';
 
         postCard.innerHTML = `
+            <input type="hidden" value=${post.id} class="post-id">
+            <input type="hidden" value=${post.user.id} class="user-id">
             <div class="post-header">
                 <div class="user-info-container">
                     <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/other_images/${post.user.profile_pic_path}"
@@ -68,17 +70,20 @@ function displayPublicPosts(posts) {
                 </div>
 
                 <div class="post-options-container">
-                    <h3>options</h3>
+                    <img src="/images/website_images/three_dots.png" alt="post-options-image" class="post-options-image">
                 </div>
                 
             </div>
 
             <div class="post-body">
+                <h1 class="post-title">${post.title}</h1>
                 <div class="post-description">
                     <p>
                         ${post.description}
                     </p>
                 </div>
+
+                <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.image}" class="post-img" alt="post-image">
             </div>
             
         `;
