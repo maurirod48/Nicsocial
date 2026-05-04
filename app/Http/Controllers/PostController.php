@@ -17,12 +17,16 @@ class PostController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
 
+        // Using map() to add a new attribute to each $post object. This new attr will let us know if the currently logged in
+        // user has liked or disliked $this post.
         $mappedPosts = $posts->map(function ($post) {
-            if ($post->likedByUser()->where('user_id', '=', auth()->user()->id)->exists()) {
-                return $post->likedByYou = true;
-            } else {
-                return $post->likedByYou = false;
-            }
+            // This will be true if current logged in user has liked this post.
+            $post->likedByYou = $post->likedByUser()->where('user_id', '=', auth()->user()->id)->exists();
+
+            // This will be true if current logged in user has disliked this post.
+            $post->dislikedByYou = $post->dislikedByUser()->where('user_id', '=', auth()->user()->id)->exists();
+
+            return $post;
         });
 
         return response()->json(['success' => true, 'publicPosts' => $posts]);

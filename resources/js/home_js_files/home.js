@@ -95,7 +95,7 @@ function displayPublicPosts(posts) {
                 <div class="post-footer">
                     <div class="post-react-btn-container">
                         <img alt="like button" src="/images/website_images/${post.likedByYou ? 'liked.png' : 'like_btn.png'}" class="post-like-btn post-btn">
-                        <img alt="like button" src="/images/website_images/dislike_btn.png" class="post-dislike-btn post-btn">
+                        <img alt="like button" src="/images/website_images/${post.dislikedByYou ? 'dislike.png' : 'dislike_btn.png'}" class="post-dislike-btn post-btn">
                         <img alt="like button" src="/images/website_images/share_btn.png" class="post-share-btn post-btn">
                     </div>
                     <div class="post-stats-container">
@@ -141,7 +141,7 @@ function displayPublicPosts(posts) {
                     <div class="post-footer">
                     <div class="post-react-btn-container">
                         <img alt="like button" src="/images/website_images/${post.likedByYou ? 'liked.png' : 'like_btn.png'}" class="post-like-btn post-btn">
-                        <img alt="like button" src="/images/website_images/dislike_btn.png" class="post-dislike-btn post-btn">
+                        <img alt="like button" src="/images/website_images/${post.dislikedByYou ? 'dislike.png' : 'dislike_btn.png'}" class="post-dislike-btn post-btn">
                         <img alt="like button" src="/images/website_images/share_btn.png" class="post-share-btn post-btn">
                     </div>
                     <div class="post-stats-container">
@@ -234,3 +234,51 @@ function likePost(postId) {
 
     
 };
+
+
+/////////////////////
+// DISLIKE BUTTON ///
+/////////////////////
+
+_('.dynamic-feed-section').addEventListener('click', (e) => {
+    if (e.target.matches('.post-dislike-btn')) {
+        console.log('baaaaf');
+        findPostToDislikeID(e);
+    }
+});
+
+
+function findPostToDislikeID(e) {
+
+    const post = e.target.closest('.public-post-card');
+
+    const postId = post.querySelector('.post-id').value;
+    console.log('dislike button was clicked, post ID:', postId);
+
+    dislikePost(postId);
+}
+
+function dislikePost(id) {
+    console.log('initiating process to send fetch request over to Laravel, ID:', id);
+
+    fetch(`/dislike-post/${id}`,{
+        method: 'GET',
+        headers: {
+            'Content-Type' : 'application/json',
+            'CSFR-X-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Bad Network response:', res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            getPublicPosts();
+        }
+    })
+    .catch(err => console.error(err));
+}
