@@ -4,6 +4,9 @@ function _(element) {
     return document.querySelector(element);
 }
 
+// CSRF token for POST requests to Laravel.
+const csrfToken = _('meta[name="csrf-token"]').getAttribute('content');
+
 
 
 //////////////////////////////////////////
@@ -148,3 +151,74 @@ function getFriendsOnlyPosts() {
     const feed = _('.dynamic-feed-section');
     feed.innerHTML = '';
 }
+
+
+///////////////////////////////
+// POST BUTTONS FUNCTIONALITY//
+///////////////////////////////
+
+// NOTE!
+// The following functions basically give funcionality to all the buttons that can be found inside a post: like, share, etc.
+
+//////////////////
+// LIKE BUTTON ///
+//////////////////
+
+
+document.querySelector('.dynamic-feed-section').addEventListener('click', (e) => {
+    if (e.target.matches('.post-like-btn')) {
+        console.log('1000 billion points');
+        likeWhatPost(e);
+    }
+});
+
+// This function checks what post was the "like" button clicked for.
+function likeWhatPost(e) {
+
+    // post container element.
+    const postContainer = e.target.closest('.public-post-card');
+
+    const postId = postContainer.querySelector('.post-id').value;
+
+    console.log('Post id:', postId);
+    // Calling function that'll execute the liking process.
+    likePost(postId);
+}
+
+// This functions takes the post ID as parameter and then sends a Fecth request 
+// for laravel logic to update the "likes" count for the post.
+function likePost(postId) {
+    console.log(postId);
+
+    // we need to send the info as JSON therefore I create this object.
+    const postIdObject = {
+        'post_id' : postId
+    }
+
+    // Fetch request to Laravel route for logic that will update "like" count for post.
+    fetch(`/profile-section/like-post`, {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json',
+            'X-CSRF-TOKEN' : csrfToken
+        },
+        body: JSON.stringify(postIdObject)
+    })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Error when sending request to like post:', res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        if (data.success) {
+            location.reload();
+            console.log('Post current like count', data.post.likes);
+            console.log(data.message);
+        } 
+    })
+    .catch(err => console.error(err));
+
+    
+};

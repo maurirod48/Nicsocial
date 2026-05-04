@@ -291,6 +291,7 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
     height: 60px;
     width: 60px;
     border-radius: 5rem;
+    cursor: pointer;
 }
 
 .post-stats-container {
@@ -355,7 +356,17 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
     }
 
     .post-img {
-    max-width: 250px;
-    max-height: 350px;
-}
+        max-width: 250px;
+        max-height: 350px;
+    }
+
+    .post-btn {
+        height: 30px;
+        width: 30px;
+        border-radius: 5rem;
+    }
+
+    .post-stats-container p {
+        font-size: 12px;
+    }
 }
