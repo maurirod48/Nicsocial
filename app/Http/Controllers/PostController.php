@@ -17,6 +17,14 @@ class PostController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
 
+        $mappedPosts = $posts->map(function ($post) {
+            if ($post->likedByUser()->where('user_id', '=', auth()->user()->id)->exists()) {
+                return $post->likedByYou = true;
+            } else {
+                return $post->likedByYou = false;
+            }
+        });
+
         return response()->json(['success' => true, 'publicPosts' => $posts]);
     }
 

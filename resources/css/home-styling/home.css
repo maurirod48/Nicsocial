@@ -189,7 +189,7 @@ body {
 
 .home-middle-section-container {
     border: solid 1px white;
-    width: 1000px;
+    width: 800px;
 }
 
 .feed-tabs-wrapper {
@@ -266,11 +266,37 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
     padding: 1.5rem;
 }
 
+.post-img {
+    width: 350px;
+    /* height: 400px; */
+}
+
 .post-options-image {
     height: 80px;
     cursor: pointer;
 }
 
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.post-react-btn-container {
+    display: flex;
+    gap:.5rem;
+}
+
+.post-btn {
+    height: 60px;
+    width: 60px;
+    border-radius: 5rem;
+}
+
+.post-stats-container {
+    display: flex;
+    gap: 1rem;
+}
 
 /* HOME MEDIA QUERIES */
 

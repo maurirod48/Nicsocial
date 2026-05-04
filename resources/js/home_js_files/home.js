@@ -55,6 +55,7 @@ function displayPublicPosts(posts) {
         const postCard = document.createElement('div');
         postCard.classList = 'public-post-card';
 
+        // Checking to if post has an image.
         if (post.image) {
 
             postCard.innerHTML = `
@@ -86,6 +87,19 @@ function displayPublicPosts(posts) {
                     </div>
 
                     <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.image}" class="post-img" alt="post-image">
+                </div>
+
+                <div class="post-footer">
+                    <div class="post-react-btn-container">
+                        <img alt="like button" src="/images/website_images/like_btn.png" class="post-like-btn post-btn">
+                        <img alt="like button" src="/images/website_images/dislike_btn.png" class="post-dislike-btn post-btn">
+                        <img alt="like button" src="/images/website_images/share_btn.png" class="post-share-btn post-btn">
+                    </div>
+                    <div class="post-stats-container">
+                        <p> likes ${post.likes}</p>
+                        <p> dislikes ${post.dislikes}</p>
+                        <p>shared ${post.times_shared}</p>
+                    </div>  
                 </div>
                 
             `;
