@@ -287,7 +287,7 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
     gap:.5rem;
 }
 
-.post-btn {
+.public-post-btn {
     height: 60px;
     width: 60px;
     border-radius: 5rem;
@@ -360,7 +360,7 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
         max-height: 350px;
     }
 
-    .post-btn {
+    .public-post-btn {
         height: 30px;
         width: 30px;
         border-radius: 5rem;
