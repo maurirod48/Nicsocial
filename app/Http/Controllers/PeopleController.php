@@ -188,4 +188,9 @@ class PeopleController extends Controller
         ]);
 
     }
+
+
+    public function checkoutOtherUser(User $user) {
+        return view('home.other-user-profile-page', ['user' => $user]);
+    }
 }

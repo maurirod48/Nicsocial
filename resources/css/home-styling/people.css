@@ -101,6 +101,7 @@ body:has(#requests-radio:checked) .blue-line-under-requests-tab {
     height: 60px;
     width: 60px;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .cancel-friend-request-btn {

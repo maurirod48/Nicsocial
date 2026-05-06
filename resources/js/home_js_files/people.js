@@ -808,3 +808,30 @@ function deleteFriend() {
     .catch(err => console.error(err))
 
 }
+
+
+/////////////////////////////////////////
+// CODE TO CHECK OUT OTHER USER'S PROFILE
+/////////////////////////////////////////
+
+
+// Function to check when user clicks on another user's profile pic to check their profile.
+document.querySelector('.dynamic-section').addEventListener('click', (e) => {
+    if (e.target.matches('.user-profile-pic')) {
+        console.log('MOIST KR1T1C4L');
+        redirect2OtherUserProfile(e);
+    }
+})
+
+// This function grabs and checks the ID of the user and then redirects the current user to the page where more 
+// details about the clicked user can be sendFriendRequest.
+function redirect2OtherUserProfile(e) {
+    const userCard = e.target.closest('.user-card');
+
+    const userId = userCard.querySelector('.user-id').value;
+
+    console.log(userId);
+
+    // Redirect user to other user profile page.
+    window.location.href = `/other-user-profile/${userId}`;
+}
