@@ -79,7 +79,7 @@ function displayPublicPosts(posts) {
                     </div>
 
                     <div class="post-options-container">
-                        <img src="/images/website_images/three_dots.png" alt="post-options-image" class="post-options-image">
+                        
                     </div>
                     
                 </div>
@@ -125,7 +125,7 @@ function displayPublicPosts(posts) {
                         </div>
 
                         <div class="post-options-container">
-                            <img src="/images/website_images/three_dots.png" alt="post-options-image" class="post-options-image">
+                            
                         </div>
                         
                     </div>
@@ -173,7 +173,7 @@ function displayPublicPosts(posts) {
                         </div>
 
                         <div class="post-options-container">
-                            <img src="/images/website_images/three_dots.png" alt="post-options-image" class="post-options-image">
+                            
                         </div>
                         
                     </div>
