@@ -212,6 +212,19 @@ function getFriendsOnlyPosts() {
     // Grabbing and clearing dynamic section.
     const feed = _('.dynamic-feed-section');
     feed.innerHTML = '';
+
+    fetch('/get-friends-posts')
+    .then(res => {
+        if (!res.ok) {
+            throw new Error("Something went wrong when trying to get your friends' posts:", res.status);
+        } else {
+            return res.json();
+        }
+    })
+    .then(data => {
+        console.log(data.friendsPosts);
+    })
+    .catch(err => console.error(err))
 }
 
 

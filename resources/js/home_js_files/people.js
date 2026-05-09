@@ -828,6 +828,7 @@ document.querySelector('.dynamic-section').addEventListener('click', (e) => {
 function redirect2OtherUserProfile(e) {
     const userCard = e.target.closest('.user-card');
 
+    // User ID.
     const userId = userCard.querySelector('.user-id').value;
 
     console.log(userId);

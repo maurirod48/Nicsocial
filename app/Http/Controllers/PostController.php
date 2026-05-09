@@ -262,4 +262,22 @@ class PostController extends Controller
             return back()->with('messi', 'img was not uploaded');
         }
     }
+
+    public function getFriendsPosts() {
+
+        // Logged in user object.
+        $user = auth()->user();
+
+        // Logged in user's friends.
+        $listOfUserIDs = $user->friends()->pluck('friend');
+
+        // Using whereIn() to grab posts whose user_id is among the array $listOfUserIDs. 
+        // Here I also used with('user') to get the user object for the user that created this post. 
+        // This is thanks to a model relationship in the Post.php model.
+        $friendsPosts = Post::with('user')->whereIn('user_id', $listOfUserIDs)->get();
+
+
+        // Returning response to JS.
+        return response()->json(['friendsPosts' => $friendsPosts]);
+    }
 }

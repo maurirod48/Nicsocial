@@ -149,3 +149,6 @@ Route::delete('/people/delete-friend', [PeopleController::class, 'deleteFriend']
 
 // Route to checkout another user profile.
 Route::get('/other-user-profile/{user}', [PeopleController::class, 'checkoutOtherUser']);
+
+// Route to get posts posted by the friends of the currently logged in user.
+Route::get('/get-friends-posts', [PostController::class, 'getFriendsPosts']);
