@@ -207,11 +207,8 @@ function displayPublicPosts(posts) {
 
 }
 
-
+// Function to get posts that friends have posts.
 function getFriendsOnlyPosts() {
-    // Grabbing and clearing dynamic section.
-    const feed = _('.dynamic-feed-section');
-    feed.innerHTML = '';
 
     fetch('/get-friends-posts')
     .then(res => {
@@ -223,8 +220,168 @@ function getFriendsOnlyPosts() {
     })
     .then(data => {
         console.log(data.friendsPosts);
+        displayFriendsPosts(data.friendsPosts);
     })
     .catch(err => console.error(err))
+}
+
+// Display friends.
+function displayFriendsPosts(posts) {
+    // Grabbing and clearing dynamic section.
+    const feed = _('.dynamic-feed-section');
+    feed.innerHTML = '';
+
+    // Creating a new <div> HTML element for each post.
+    posts.forEach(post => {
+        const postCard = document.createElement('div');
+        postCard.classList = 'friend-post-card';
+
+        // Checking to if post has an image.
+        if (post.image) {
+
+            // Checking to see if user has a profile pic.
+
+            if (post.user.profile_pic_path == 'none') {
+                postCard.innerHTML = `
+                <input type="hidden" value=${post.id} class="post-id">
+                <input type="hidden" value=${post.user.id} class="user-id">
+                <div class="post-header">
+                    <div class="user-info-container">
+                        <img src="/images/default-images/${post.user.gender == 'male' ? 'male-pic.jpg' : 'female-pic.jpeg'}"
+                        class="user-img">
+
+                        <div>
+                            <h3 class="post-creator-name">${post.user.name}</h3>
+                            <p class="post-creator-email">${post.user.email}</p>
+                        </div>
+                    </div>
+
+                    <div class="post-options-container">
+                        
+                    </div>
+                    
+                </div>
+
+                <div class="post-body">
+                    <h1 class="post-title">${post.title}</h1>
+                    <div class="post-description">
+                        <p>
+                            ${post.description}
+                        </p>
+                    </div>
+
+                    <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.image}" class="post-img" alt="post-image">
+                </div>
+
+                <div class="post-footer">
+                    <div class="post-react-btn-container">
+                        <img alt="like button" src="/images/website_images/${post.likedByYou ? 'liked.png' : 'like_btn.png'}" class="post-like-btn public-post-btn">
+                        <img alt="like button" src="/images/website_images/${post.dislikedByYou ? 'dislike.png' : 'dislike_btn.png'}" public-post-btn" class="post-dislike-btn public-post-btn">
+                        <img alt="like button" src="/images/website_images/share_btn.png" class="post-share-btn public-post-btn">
+                    </div>
+                    <div class="post-stats-container">
+                        <p> likes ${post.likes}</p>
+                        <p> dislikes ${post.dislikes}</p>
+                        <p>shared ${post.times_shared}</p>
+                    </div>  
+                </div>
+                
+                `;
+            }else {
+                postCard.innerHTML = `
+                    <input type="hidden" value=${post.id} class="post-id">
+                    <input type="hidden" value=${post.user.id} class="user-id">
+                    <div class="post-header">
+                        <div class="user-info-container">
+                            <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/other_images/${post.user.profile_pic_path}"
+                            class="user-img">
+
+                            <div>
+                                <h3 class="post-creator-name">${post.user.name}</h3>
+                                <p class="post-creator-email">${post.user.email}</p>
+                            </div>
+                        </div>
+
+                        <div class="post-options-container">
+                            
+                        </div>
+                        
+                    </div>
+
+                    <div class="post-body">
+                        <h1 class="post-title">${post.title}</h1>
+                        <div class="post-description">
+                            <p>
+                                ${post.description}
+                            </p>
+                        </div>
+
+                        <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.image}" class="post-img" alt="post-image">
+                    </div>
+
+                    <div class="post-footer">
+                        <div class="post-react-btn-container">
+                            <img alt="like button" src="/images/website_images/${post.likedByYou ? 'liked.png' : 'like_btn.png'}" class="post-like-btn public-post-btn">
+                            <img alt="like button" src="/images/website_images/${post.dislikedByYou ? 'dislike.png' : 'dislike_btn.png'}" public-post-btn" class="post-dislike-btn public-post-btn">
+                            <img alt="like button" src="/images/website_images/share_btn.png" class="post-share-btn public-post-btn">
+                        </div>
+                        <div class="post-stats-container">
+                            <p> likes ${post.likes}</p>
+                            <p> dislikes ${post.dislikes}</p>
+                            <p>shared ${post.times_shared}</p>
+                        </div>  
+                    </div>
+                    
+                `;
+            }
+        } else if (!postCard.image) {
+
+                postCard.innerHTML = `
+                    <input type="hidden" value=${post.id} class="post-id">
+                    <input type="hidden" value=${post.user.id} class="user-id">
+                    <div class="post-header">
+                        <div class="user-info-container">
+                            <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/other_images/${post.user.profile_pic_path}"
+                            class="user-img">
+
+                            <div>
+                                <h3 class="post-creator-name">${post.user.name}</h3>
+                                <p class="post-creator-email">${post.user.email}</p>
+                            </div>
+                        </div>
+
+                        <div class="post-options-container">
+                            
+                        </div>
+                        
+                    </div>
+
+                    <div class="post-body">
+                        <h1 class="post-title">${post.title}</h1>
+                        <div class="post-description">
+                            <p>
+                                ${post.description}
+                            </p>
+                        </div>
+
+                    </div>
+                    
+                    <div class="post-footer">
+                    <div class="post-react-btn-container">
+                        <img alt="like button" src="/images/website_images/${post.likedByYou ? 'liked.png' : 'like_btn.png'}" class="post-like-btn public-post-btn">
+                        <img alt="like button" src="/images/website_images/${post.dislikedByYou ? 'dislike.png' : 'dislike_btn.png'}" class="post-dislike-btn public-post-btn">
+                        <img alt="like button" src="/images/website_images/share_btn.png" class="post-share-btn public-post-btn">
+                    </div>
+                    <div class="post-stats-container">
+                        <p> likes ${post.likes}</p>
+                        <p> dislikes ${post.dislikes}</p>
+                        <p>shared ${post.times_shared}</p>
+                    </div>
+            `;
+        }
+
+        feed.appendChild(postCard);
+    });
 }
 
 
