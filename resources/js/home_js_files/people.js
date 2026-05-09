@@ -830,9 +830,9 @@ function redirect2OtherUserProfile(e) {
     let userCard;
     
     if (e.target.closest('.user-card')) {
-        userCard = e.target.closest('.user-card')
+        userCard = e.target.closest('.user-card');
     } else if(e.target.closest('.user-card-received-request')) {
-        userCard = e.target.closest('.user-card-received-request')
+        userCard = e.target.closest('.user-card-received-request');
     }
 
     // User ID.

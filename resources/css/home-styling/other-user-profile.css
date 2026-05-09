@@ -1,0 +1,77 @@
+
+
+.other-profile-section-wrapper {
+    display: flex;
+    justify-content: center;
+    border-top: solid 1px rgba(255, 255, 255, 0.348);
+}
+
+.other-profile-section-container {
+    width: 900px;
+    height: 100vh;
+    border: solid 1px rgba(255, 255, 255, 0.348);
+}
+
+.default-banner-img-container {
+    width: 900px; /*This value must always be the same value as the width of .other-profile-section-container */
+    height: 140px;
+    position: relative;
+}
+
+.default-banner-image {
+    width: 100%;
+    height: 100%;
+}
+
+.user-profile-pic {
+    position: absolute;
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+    left: 20px;
+    top: 50px;
+}
+
+
+
+@media (max-width:940px) {
+    .other-profile-section-container {
+        width: 600px;
+    }
+
+    .default-banner-img-container {
+        width: 600px; /*This value must always be the same value as the width of .other-profile-section-container */
+        height: 120px;
+    }
+}
+
+
+@media (max-width:640px) {
+    .other-profile-section-container {
+        width: 400px;
+    }
+
+    .default-banner-img-container {
+        width: 400px; /*This value must always be the same value as the width of .other-profile-section-container */
+        height: 120px;
+    }
+}
+
+/* PHONE VIEW */
+@media (max-width:400px) {
+    .other-profile-section-container {
+        width: 300px;
+    }
+
+    .default-banner-img-container {
+        width: 300px; /*This value must always be the same value as the width of .other-profile-section-container */
+        height: 100px;
+    }
+
+    .user-profile-pic {
+        height: 90px;
+        width: 90px;
+        left: 20px;
+        top: 50px;
+    }
+}

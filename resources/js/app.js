@@ -30,3 +30,7 @@ if (_('.people-section-container')) {
     import('../js/home_js_files/people.js');
     import('../css/home-styling/people.css');
 }
+
+if (_('.other-profile-section-wrapper')) {
+    import('../css/home-styling/other-user-profile.css');
+}
