@@ -826,7 +826,14 @@ document.querySelector('.dynamic-section').addEventListener('click', (e) => {
 // This function grabs and checks the ID of the user and then redirects the current user to the page where more 
 // details about the clicked user can be sendFriendRequest.
 function redirect2OtherUserProfile(e) {
-    const userCard = e.target.closest('.user-card');
+
+    let userCard;
+    
+    if (e.target.closest('.user-card')) {
+        userCard = e.target.closest('.user-card')
+    } else if(e.target.closest('.user-card-received-request')) {
+        userCard = e.target.closest('.user-card-received-request')
+    }
 
     // User ID.
     const userId = userCard.querySelector('.user-id').value;

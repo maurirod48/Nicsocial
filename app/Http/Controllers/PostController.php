@@ -274,7 +274,9 @@ class PostController extends Controller
         // Using whereIn() to grab posts whose user_id is among the array $listOfUserIDs. 
         // Here I also used with('user') to get the user object for the user that created this post. 
         // This is thanks to a model relationship in the Post.php model.
-        $friendsPosts = Post::with('user')->whereIn('user_id', $listOfUserIDs)->get();
+        $friendsPosts = Post::with('user')->whereIn('user_id', $listOfUserIDs)
+                            ->orderBy('created_at', 'desc')
+                            ->get();
 
 
         // Returning response to JS.
