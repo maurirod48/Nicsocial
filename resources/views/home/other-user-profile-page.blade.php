@@ -52,10 +52,34 @@
                 </div>
             </div>
         </div>
-
+        <h1 style="margin-left:1rem;">Posts</h1>
         {{-- POSTS GO HERE --}}
         <div class="posts-container">
+            @foreach ($user->posts as $post)
+                <div class="post-container">
+                    <div class="post-header">
+                        <div class="post-user-info">
+                            <div class="post-user-profile-container">
+                                @if ($user->profile_pic_path == 'none' && $user->gender == 'male')
+                                    <img src="{{ asset('images/default-images/male-pic.jpg') }}" class="post-user-profile-pic">
+                                @elseif ($user->profile_pic_path == 'none' && $user->gender == 'female')
+                                    <img src="{{ asset('images/default-images/female-pic.jpeg') }}" class="post-user-profile-pic">
+                                @else
+                                    <img src="{{ Storage::disk('s3')->url('images/other_images/' . $user->profile_pic_path) }}" class="post-user-profile-pic">
+                                @endif
+                            </div>
 
+                            <div class="post-username-email">
+                                <h2 class="user-name">{{ $user->name }}</h2>
+                                <p class="user-email">{{ $user->email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-body">
+                        <h1>{{ $post->title }}</h1>
+                    </div>
+                </div>
+            @endforeach
         </div>
     </div>
 </div>

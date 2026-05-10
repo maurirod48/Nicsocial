@@ -1,15 +1,21 @@
 
+.body-main {
+    height: 1200px;
+    overflow: hidden;
+}
 
 .other-profile-section-wrapper {
     display: flex;
     justify-content: center;
     border-top: solid 1px rgba(255, 255, 255, 0.348);
+    height: 100vh;
 }
 
 .other-profile-section-container {
     width: 900px;
-    height: 100vh;
+    height: 500px;
     border: solid 1px rgba(255, 255, 255, 0.348);
+    border-bottom: none;
 }
 
 .default-banner-img-container {
@@ -86,6 +92,29 @@
 }
 
 
+/* POSTS STYLING */
+
+.posts-container {
+    overflow-y: auto;
+    height: 700px;
+}
+
+.post-user-profile-pic {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+}
+
+.post-user-info {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.post-container {
+    border: solid 1px rgba(255, 255, 255, 0.348);
+}
+
 
 @media (max-width:940px) {
     .other-profile-section-container {
@@ -111,6 +140,11 @@
 
 /* MEDIA QUERIES */
 @media (max-width:640px) {
+
+    .body-main {
+        height: 1000px;
+        overflow: hidden;
+    }
     .other-profile-section-container {
         width: 400px;
     }
