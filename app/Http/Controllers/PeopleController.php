@@ -191,6 +191,11 @@ class PeopleController extends Controller
 
 
     public function checkoutOtherUser(User $user) {
-        return view('home.other-user-profile-page', ['user' => $user]);
+
+        // Since displaying this user's posts will be required.
+        $posts = $user->posts()->orderBy('created_at', 'desc')->get();
+        
+        // Sending data to HTTP session.
+        return view('home.other-user-profile-page', ['user' => $user, 'posts' => $posts]);
     }
 }

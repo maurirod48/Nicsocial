@@ -96,7 +96,7 @@
 
 .posts-container {
     overflow-y: auto;
-    height: 700px;
+    height: 100%;
 }
 
 .post-user-profile-pic {
