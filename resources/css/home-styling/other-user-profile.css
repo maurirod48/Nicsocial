@@ -115,6 +115,17 @@
     border: solid 1px rgba(255, 255, 255, 0.348);
 }
 
+.post-footer {
+    padding: 1rem;
+}
+
+.post-reaction-btn {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
 
 @media (max-width:940px) {
     .other-profile-section-container {

@@ -77,6 +77,7 @@
                             </div>
                         </div>
                     </div>
+                    {{-- post body --}}
                     <div class="post-body">
                         <div class="post-title-description-container">
                             <h1 class="post-title">{{ $post->title }}</h1>
@@ -87,6 +88,25 @@
                             <img src="{{ Storage::disk('s3')->url('images/post_images/' . $post->image) }}" alt="post image"
                             class="post-img">
                         @endif
+                    </div>
+                    {{-- post footer --}}
+                    <div class="post-footer">
+                        <div class="post-footer-reaction-btns-container">
+                            {{-- like button --}}
+                            @if ($post->likedByUser()->where('user_id', '=', $user->id)->exists())
+                                <img src="{{ asset('images/website_images/liked.png') }}" alt="like button" class="like-btn post-reaction-btn">
+                            @else
+                                <h1>not liked yet</h1>
+                                <img src="{{ asset('images/default-images/like_btn.png') }}" alt="like button" class="like-btn post-reaction-btn">
+                            @endif
+                            {{-- dislike button --}}
+                            @if ($post->dislikedByUser()->where('user_id', '=', $user->id)->exists())
+                                <img src="{{ asset('images/website_images/dislike.png') }}" alt="dislike button" class="like-btn post-reaction-btn">
+                            @else
+                                <img src="{{ asset('images/default-images/dislike_btn.png') }}" alt="dislike button" class="like-btn post-reaction-btn">
+                            @endif
+                            
+                        </div>
                     </div>
                 </div>
             @endforeach
