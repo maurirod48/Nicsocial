@@ -32,6 +32,59 @@
     top: 50px;
 }
 
+.profile-body-header-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+.friend-request-btn {
+    padding: .5rem 1rem;
+    border: none;
+    background-color: aliceblue;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: 500;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+.friend-request-btn:hover {
+    background-color: rgb(203, 210, 215);
+}
+
+
+.user-info-container {
+    padding: 0 2rem;
+    padding-bottom: 2rem;
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.348);
+}
+
+.user-email, .user-name {
+    margin: 0;
+}
+
+.user-name {
+    font-size: 2.2rem;
+}
+.user-email {
+    font-size: 1.5rem;
+}
+
+.join-date-container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.calendar-icon {
+    height: 40px;
+    width: 40px;
+}
+
 
 
 @media (max-width:940px) {
@@ -43,9 +96,20 @@
         width: 600px; /*This value must always be the same value as the width of .other-profile-section-container */
         height: 120px;
     }
+
+    .user-info-container {
+        padding: 0 2rem;
+        margin-top: 3.5rem;
+    }
+
+
+    .friend-request-btn {
+        padding: .2rem .7rem;    
+        font-size: 1.1rem;
+    }
 }
 
-
+/* MEDIA QUERIES */
 @media (max-width:640px) {
     .other-profile-section-container {
         width: 400px;
@@ -54,6 +118,29 @@
     .default-banner-img-container {
         width: 400px; /*This value must always be the same value as the width of .other-profile-section-container */
         height: 120px;
+    }
+
+    .user-info-container {
+        padding: 0 2rem;
+        margin-top: 1.1rem;
+    }
+
+    .user-profile-pic {
+        height: 130px;
+        width: 130px;
+        left: 20px;
+        top: 50px;
+    }
+
+    .user-name {
+        font-size: 1.9rem;
+    }
+    .user-email {
+        font-size: 1.2rem;
+    }
+
+    .join-date {
+        font-size: 1rem;
     }
 }
 
@@ -73,5 +160,33 @@
         width: 90px;
         left: 20px;
         top: 50px;
+    }
+
+    .friend-request-btn {
+        padding: .2rem .7rem;    
+        font-size: 12px;
+    }
+
+    .user-info-container {
+        padding: 0 2rem;
+        padding-bottom: 1rem;
+        margin-top: .4rem;
+        border-bottom: solid 1px rgba(255, 255, 255, 0.348);
+    }
+
+    .user-name {
+        font-size: 1.6rem;
+    }
+    .user-email {
+        font-size: 1rem;
+    }
+
+    .calendar-icon {
+        height: 35px;
+        width: 35px;
+    }
+
+    .join-date {
+        font-size: .9rem;
     }
 }
