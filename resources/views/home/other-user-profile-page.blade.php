@@ -25,7 +25,23 @@
         <div class="user-profile-body-container">
             {{-- body header --}}
             <div class="profile-body-header-container">
-                <button class="friend-request-btn">Send friend request</button>
+                @if (auth()->user()->friends()->where('friend', '=', $user->id)->exists())
+                    <h1>already friends</h1>
+                @elseif (auth()->user()->pendingSentFriendRequests()->where('receiver_id', '=', $user->id)->exists())
+                    <form action="{{ route('cancel-friend-request') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="user_id" class="user-id" value="{{ $user->id }}">
+                        <button class="cancel-friend-request-btn">Cancel request</button>
+                    </form>
+                @else
+                    <form action="{{ route('send-friend-request') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="user_id" class="user-id" value="{{ $user->id }}">
+                        <button class="friend-request-btn">Send friend request</button>
+                        <h1>user id {{ $user->id }}</h1>
+                    </form>
+                @endif
+                
             </div>
             {{-- user profile info/description --}}
             <div class="user-info-container">
@@ -93,19 +109,18 @@
                     <div class="post-footer">
                         <div class="post-footer-reaction-btns-container">
                             {{-- like button --}}
-                            @if ($post->likedByUser()->where('user_id', '=', $user->id)->exists())
+                            @if ($post->likedByUser()->where('user_id', '=', auth()->user()->id)->exists())
                                 <img src="{{ asset('images/website_images/liked.png') }}" alt="like button" class="like-btn post-reaction-btn">
                             @else
-                                <h1>not liked yet</h1>
                                 <img src="{{ asset('images/default-images/like_btn.png') }}" alt="like button" class="like-btn post-reaction-btn">
                             @endif
+
                             {{-- dislike button --}}
-                            @if ($post->dislikedByUser()->where('user_id', '=', $user->id)->exists())
+                            @if ($post->dislikedByUser()->where('user_id', '=', auth()->user()->id)->exists())
                                 <img src="{{ asset('images/website_images/dislike.png') }}" alt="dislike button" class="like-btn post-reaction-btn">
                             @else
                                 <img src="{{ asset('images/default-images/dislike_btn.png') }}" alt="dislike button" class="like-btn post-reaction-btn">
                             @endif
-                            
                         </div>
                     </div>
                 </div>

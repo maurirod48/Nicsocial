@@ -43,6 +43,19 @@ class PeopleController extends Controller
         return response()->json(['id' => $receiverId]);
     }
 
+    public function sendFriendRequestFromUserProfile(Request $request) {
+        // this ID belongs to the user we are sending the friend request to.
+        $userId = $request->user_id;
+
+        // Current logged in user.
+        $loggedInUser = auth()->user();
+
+        // Creating record to friend_requests table.
+        $loggedInUser->pendingSentFriendRequests()->attach($userId);
+
+        return back();
+    }
+
     public function getAllFriendRequests() {
         $user = auth()->user();
 
@@ -70,6 +83,16 @@ class PeopleController extends Controller
         $loggedInUser->pendingSentFriendRequests()->detach($user->id);
 
         return response()->json(['success' => true]);
+    }
+
+    public function cancelFriendRequestFromUserProfile(Request $request) {
+        $userId = $request->user_id;
+
+        $loggedInUser = auth()->user();
+
+        $loggedInUser->pendingSentFriendRequests()->detach($userId);
+
+        return back();
     }
 
     public function getReceivedFriendRequests() {

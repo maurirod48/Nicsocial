@@ -116,6 +116,7 @@ Route::get('/people/users', [PeopleController::class, 'getPeople']);
 // Send friend request = Create record in friend_requests pivot table.
 Route::post('/people/friend-request', [PeopleController::class, 'friendRequest']);
 
+
 // Get all records in friend_requests table.
 Route::get('/people/get-friend-requests', [PeopleController::class, 'getAllFriendRequests']);
 
@@ -149,6 +150,10 @@ Route::delete('/people/delete-friend', [PeopleController::class, 'deleteFriend']
 
 // Route to checkout another user profile.
 Route::get('/other-user-profile/{user}', [PeopleController::class, 'checkoutOtherUser']);
+
+// Send friend request from user profile (when checking out another user's profile).
+Route::post('/other-user-profile/send-friend-request', [PeopleController::class, 'sendFriendRequestFromUserProfile'])->name('send-friend-request');
+Route::post('/other-user-profile/cancel-friend-request', [PeopleController::class, 'cancelFriendRequestFromUserProfile'])->name('cancel-friend-request');
 
 // Route to get posts posted by the friends of the currently logged in user.
 Route::get('/get-friends-posts', [PostController::class, 'getFriendsPosts']);
