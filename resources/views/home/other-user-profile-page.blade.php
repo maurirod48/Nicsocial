@@ -4,6 +4,8 @@
 
 @section('content')
 
+{{-- ID of the user we are checking out --}}
+<meta name="loggedin-user-id" content="{{ $user->id }}">
 
 <div class="other-profile-section-wrapper">
     <div class="other-profile-section-container">
@@ -26,7 +28,11 @@
             {{-- body header --}}
             <div class="profile-body-header-container">
                 @if (auth()->user()->friends()->where('friend', '=', $user->id)->exists())
-                    <h1>already friends</h1>
+                    <form action="{{ route('unfriend-user') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="user_id" class="user-id" value="{{ $user->id }}">
+                        <button class="unfriend-btn">Unfriend</button>
+                    </form>
                 @elseif (auth()->user()->pendingSentFriendRequests()->where('receiver_id', '=', $user->id)->exists())
                     <form action="{{ route('cancel-friend-request') }}" method="POST">
                         @csrf
@@ -38,7 +44,6 @@
                         @csrf
                         <input type="hidden" name="user_id" class="user-id" value="{{ $user->id }}">
                         <button class="friend-request-btn">Send friend request</button>
-                        <h1>user id {{ $user->id }}</h1>
                     </form>
                 @endif
                 

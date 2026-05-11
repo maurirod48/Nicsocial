@@ -56,7 +56,7 @@ function displayPublicPosts(posts) {
 
     posts.forEach(post => {
         const postCard = document.createElement('div');
-        postCard.classList = 'public-post-card';
+        postCard.classList = 'post-card';
 
         // Checking to if post has an image.
         if (post.image) {
@@ -234,7 +234,7 @@ function displayFriendsPosts(posts) {
     // Creating a new <div> HTML element for each post.
     posts.forEach(post => {
         const postCard = document.createElement('div');
-        postCard.classList = 'friend-post-card';
+        postCard.classList = 'post-card friend-post';
 
         // Checking to if post has an image.
         if (post.image) {
@@ -408,18 +408,28 @@ document.querySelector('.dynamic-feed-section').addEventListener('click', (e) =>
 function likeWhatPost(e) {
 
     // post container element.
-    const postContainer = e.target.closest('.public-post-card');
+    const postContainer = e.target.closest('.post-card');
 
+    // Getting post id.
     const postId = postContainer.querySelector('.post-id').value;
 
-    console.log('Post id:', postId);
+    // This part here helps indetify if the post they are reacting to is inside the public or friends feed.
+    let feed;
+
+    if (postContainer.classList.contains('friend-post')) {
+        feed = 'friends';
+    } else {
+        feed = 'public';
+    }
+
+
     // Calling function that'll execute the liking process.
-    likePost(postId);
+    likePost(postId, feed);
 }
 
 // This functions takes the post ID as parameter and then sends a Fecth request 
 // for laravel logic to update the "likes" count for the post.
-function likePost(postId) {
+function likePost(postId, feed) {
     console.log(postId);
 
     // we need to send the info as JSON therefore I create this object.
@@ -445,9 +455,11 @@ function likePost(postId) {
     })
     .then(data => {
         if (data.success) {
-            getPublicPosts();
-            console.log('Post current like count', data.post.likes);
-            console.log(data.message);
+            if (feed == 'friends') {
+                getFriendsOnlyPosts();
+            } else if (feed == 'public') {
+                getPublicPosts();
+            }
         } 
     })
     .catch(err => console.error(err));
@@ -470,15 +482,24 @@ _('.dynamic-feed-section').addEventListener('click', (e) => {
 
 function findPostToDislikeID(e) {
 
-    const post = e.target.closest('.public-post-card');
+    const post = e.target.closest('.post-card');
 
     const postId = post.querySelector('.post-id').value;
     console.log('dislike button was clicked, post ID:', postId);
 
-    dislikePost(postId);
+    // This part here helps indetify if the post they are reacting to is inside the public or friends feed.
+    let feed;
+
+    if (post.classList.contains('friend-post')) {
+        feed = 'friends';
+    } else {
+        feed = 'public';
+    }
+
+    dislikePost(postId, feed);
 }
 
-function dislikePost(id) {
+function dislikePost(id, feed) {
     console.log('initiating process to send fetch request over to Laravel, ID:', id);
 
     fetch(`/dislike-post/${id}`,{
@@ -497,7 +518,11 @@ function dislikePost(id) {
     })
     .then(data => {
         if (data.success) {
-            getPublicPosts();
+            if (feed == 'public') {
+                getPublicPosts();
+            } else if (feed == 'friends') {
+                getFriendsOnlyPosts();
+            }
         }
     })
     .catch(err => console.error(err));

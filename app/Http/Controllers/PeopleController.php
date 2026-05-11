@@ -221,4 +221,22 @@ class PeopleController extends Controller
         // Sending data to HTTP session.
         return view('home.other-user-profile-page', ['user' => $user, 'posts' => $posts]);
     }
+
+
+    public function unfriendUser(Request $request) {
+
+        // Authenticated user object.
+        $loggedInUser = auth()->user();
+
+        // Other user object (user we are checking out profile for).
+        $otherUser = User::findOrFail($request->user_id);
+
+
+        // Removing many-2-many relationship.
+        $loggedInUser->friends()->detach($otherUser->id);
+        $otherUser->friends()->detach($loggedInUser->id);
+
+        // Redicrecting user back to user page.
+        return back();
+    }
 }

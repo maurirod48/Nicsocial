@@ -231,7 +231,7 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
     overflow: auto;
 }
 
-.public-post-card, .friend-post-card {
+.post-card {
     padding: 1rem;
     border-bottom: solid 1px white;
 }

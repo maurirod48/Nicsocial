@@ -148,12 +148,21 @@ Route::get('/people/get-my-friends', [PeopleController::class, 'getMyFriends']);
 Route::delete('/people/delete-friend', [PeopleController::class, 'deleteFriend']);
 
 
+//==========================
+// OTHER USER PROFILE ROUTES
+//==========================
+
 // Route to checkout another user profile.
 Route::get('/other-user-profile/{user}', [PeopleController::class, 'checkoutOtherUser']);
 
-// Send friend request from user profile (when checking out another user's profile).
-Route::post('/other-user-profile/send-friend-request', [PeopleController::class, 'sendFriendRequestFromUserProfile'])->name('send-friend-request');
-Route::post('/other-user-profile/cancel-friend-request', [PeopleController::class, 'cancelFriendRequestFromUserProfile'])->name('cancel-friend-request');
-
 // Route to get posts posted by the friends of the currently logged in user.
 Route::get('/get-friends-posts', [PostController::class, 'getFriendsPosts']);
+
+// Send friend request from user profile (when checking out another user's profile).
+Route::post('/other-user-profile/send-friend-request', [PeopleController::class, 'sendFriendRequestFromUserProfile'])->name('send-friend-request');
+
+// Cancel friend request
+Route::post('/other-user-profile/cancel-friend-request', [PeopleController::class, 'cancelFriendRequestFromUserProfile'])->name('cancel-friend-request');
+
+// Unfriend user.
+Route::post('/other-user-profile/unfriend-user', [PeopleController::class, 'unfriendUser'])->name('unfriend-user');
