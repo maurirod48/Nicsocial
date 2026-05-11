@@ -14,3 +14,28 @@
     width: 700px;
     height: calc(100vh - 178px);
 }
+
+
+.option {
+    padding: 1rem;
+}
+
+.option:hover {
+    background-color: rgba(127, 127, 127, 0.718);
+}
+
+.option p {
+    font-size: 1.5rem;
+}
+
+.change-password-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arrow-icon {
+    height: 40px;
+    background-color: aliceblue;
+    border-radius: 50%;
+}
