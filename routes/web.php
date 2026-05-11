@@ -169,3 +169,14 @@ Route::post('/other-user-profile/unfriend-user', [PeopleController::class, 'unfr
 
 // Like a post.
 Route::post('/other-user-profile/like-post', [PostController::class, 'likePost']);
+
+
+//================
+// SETTINGS ROUTES
+//================
+
+// Send user to settings page
+Route::get('/settings', function () {
+    return view('home.settings-page');
+    }
+)->name('settings.section'); 

@@ -35,3 +35,7 @@ if (_('.other-profile-section-wrapper')) {
     import('../css/home-styling/other-user-profile.css');
     import('../js/home_js_files/other_profile_page.js');
 }
+
+if (_('.settings-section-wrapper')) {
+    import('../css/home-styling/settings.css');
+}

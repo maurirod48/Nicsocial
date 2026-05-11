@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#settings">
+                    <a href="{{ route('settings.section') }}">
                         <img src="{{ asset('images/website_images/setting.png') }}" alt="profile image" class="nav-bar-icon"
                         title="settings">
                     </a>

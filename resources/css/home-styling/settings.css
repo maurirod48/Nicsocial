@@ -1,0 +1,16 @@
+.body-main {
+    padding-bottom: 0;
+}
+
+.settings-section-wrapper {
+    display: flex;
+    justify-content: center;
+    border-top: solid 1px rgba(255, 255, 255, 0.56);
+    /* width: 100%; */
+}
+
+.settings-section-container {
+    border: solid 1px rgba(255, 255, 255, 0.56);
+    width: 700px;
+    height: calc(100vh - 178px);
+}

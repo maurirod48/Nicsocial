@@ -554,9 +554,11 @@ function whatUser(e) {
     // User ID which is inside variable postCard.
     const userId = postCard.querySelector('.user-id').value;
 
+    // function to redirect user.
     redirect2UserProfilePage(userId);
 }
 
+// Function to redirect user.
 function redirect2UserProfilePage(userId) {
     window.location.href = `/other-user-profile/${userId}`;
 }

@@ -9,14 +9,28 @@ function _(element) {
 // CODE FOR LIKE AND DISLIKE BUTTON.
 //==================================
 
+
+
+// Variable containing array of all post containers.
+const postContainers = document.querySelectorAll('.post-container');
+
+// Adding event listener to each post card.
+postContainers.forEach(postCon => {
+    postCon.addEventListener('click', (e) => {
+
+        // In case like button is clicked.
+        if (e.target.matches('.like-btn')) {
+            id4Like(e);
+        } else if(e.target.matches('.dislike-btn')) { // In case dislike button is clicked.
+            id4Dislike(e);
+        }
+    })
+})
+
 //////////////
 // LIKE BUTTON
 //////////////
 
-// Event listener for like button
-_('.like-btn').addEventListener('click', (e) => {
-    id4Like(e);
-})
 
 // Function to indentify which post user is trying to like.
 function id4Like(e) {
@@ -68,12 +82,6 @@ function likePost(postId) {
 /////////////////
 // DISLIKE BUTTON
 /////////////////
-
-
-// Event listener for like button
-_('.dislike-btn').addEventListener('click', (e) => {
-    id4Dislike(e);
-})
 
 
 // Function to indentify which post user is trying to dislike.
