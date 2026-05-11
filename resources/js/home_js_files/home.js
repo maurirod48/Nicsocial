@@ -528,3 +528,35 @@ function dislikePost(id, feed) {
     })
     .catch(err => console.error(err));
 }
+
+
+//========================================
+// CODE TO CHECK OUT OTHER USER'S PROFILE.
+//========================================
+// This is triggered when a user profile picture is clicked in the home feed.
+
+
+// Checking when user profile picture is clicked.
+_('.dynamic-feed-section').addEventListener('click', (e) => {
+    if (e.target.matches('.user-img')) {
+        console.log('user profile pic clicked');
+
+        // Function to identify which user profile they are trying to check out.
+        whatUser(e);
+    }
+})
+
+// Identify which user profile they are trying to check out.
+function whatUser(e) {
+    // Variable containing post card HTML element.
+    const postCard = e.target.closest('.post-card');
+
+    // User ID which is inside variable postCard.
+    const userId = postCard.querySelector('.user-id').value;
+
+    redirect2UserProfilePage(userId);
+}
+
+function redirect2UserProfilePage(userId) {
+    window.location.href = `/other-user-profile/${userId}`;
+}

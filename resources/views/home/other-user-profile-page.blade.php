@@ -117,6 +117,7 @@
                     {{-- post footer --}}
                     <div class="post-footer">
                         <div class="post-footer-reaction-btns-container">
+                            
                             {{-- like button --}}
                             @if ($post->likedByUser()->where('user_id', '=', auth()->user()->id)->exists())
                                 <img src="{{ asset('images/website_images/liked.png') }}" alt="like button" class="like-btn post-reaction-btn">

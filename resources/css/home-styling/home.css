@@ -253,6 +253,7 @@ body:has(#friends-only:checked) .friends-tab-bottom-line {
     width: 100px;
     height: 100px;
     border-radius: 5rem;
+    cursor: pointer;
 }
 
 .user-info-container {
