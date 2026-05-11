@@ -73,11 +73,15 @@
                 </div>
             </div>
         </div>
+
+
+
         <h1 style="margin-left:1rem;">Posts</h1>
         {{-- POSTS GO HERE --}}
         <div class="posts-container">
             @foreach ($posts as $post)
                 <div class="post-container">
+                    <input type="hidden" name="post_id" class="post-id" value="{{ $post->id }}">
                     {{-- post header --}}
                     <div class="post-header">
                         <div class="post-user-info">
@@ -122,11 +126,15 @@
 
                             {{-- dislike button --}}
                             @if ($post->dislikedByUser()->where('user_id', '=', auth()->user()->id)->exists())
-                                <img src="{{ asset('images/website_images/dislike.png') }}" alt="dislike button" class="like-btn post-reaction-btn">
+                                <img src="{{ asset('images/website_images/dislike.png') }}" alt="dislike button" class="dislike-btn post-reaction-btn">
                             @else
-                                <img src="{{ asset('images/default-images/dislike_btn.png') }}" alt="dislike button" class="like-btn post-reaction-btn">
+                                <img src="{{ asset('images/default-images/dislike_btn.png') }}" alt="dislike button" class="dislike-btn post-reaction-btn">
                             @endif
                         </div>
+                        <div class="post-stats-container">
+                            <p> likes {{ $post->likes }}</p>
+                            <p> dislikes {{$post->dislikes}}</p>
+                        </div>  
                     </div>
                 </div>
             @endforeach

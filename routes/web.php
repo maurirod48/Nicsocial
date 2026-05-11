@@ -166,3 +166,6 @@ Route::post('/other-user-profile/cancel-friend-request', [PeopleController::clas
 
 // Unfriend user.
 Route::post('/other-user-profile/unfriend-user', [PeopleController::class, 'unfriendUser'])->name('unfriend-user');
+
+// Like a post.
+Route::post('/other-user-profile/like-post', [PostController::class, 'likePost']);

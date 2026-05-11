@@ -29,7 +29,7 @@ class PostController extends Controller
             return $post;
         });
 
-        return response()->json(['success' => true, 'publicPosts' => $posts]);
+        return response()->json(['success' => true, 'publicPosts' => $mappedPosts]);
     }
 
     public function createPost(Request $request) {
@@ -134,7 +134,7 @@ class PostController extends Controller
         }
 
 
-        return response()->json(['post' => $post, 'success' => true, 'message' => 'you just liked this post']);
+        return response()->json(['post' => $post, 'success' => true]);
     }
 
     public function dislikePost(Post $post) {
@@ -279,7 +279,20 @@ class PostController extends Controller
                             ->get();
 
 
+        // Using map() to add a new attribute to each $post object. This new attr will let us know if the currently logged in
+        // user has liked or disliked $this post.
+        $mappedPosts = $friendsPosts->map(function ($post) {
+            // This will be true if current logged in user has liked this post.
+            $post->likedByYou = $post->likedByUser()->where('user_id', '=', auth()->user()->id)->exists();
+
+            // This will be true if current logged in user has disliked this post.
+            $post->dislikedByYou = $post->dislikedByUser()->where('user_id', '=', auth()->user()->id)->exists();
+
+            return $post;
+        });
+
+
         // Returning response to JS.
-        return response()->json(['friendsPosts' => $friendsPosts]);
+        return response()->json(['friendsPosts' => $mappedPosts]);
     }
 }

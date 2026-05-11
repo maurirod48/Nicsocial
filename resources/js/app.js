@@ -33,4 +33,5 @@ if (_('.people-section-container')) {
 
 if (_('.other-profile-section-wrapper')) {
     import('../css/home-styling/other-user-profile.css');
+    import('../js/home_js_files/other_profile_page.js');
 }

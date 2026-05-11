@@ -372,6 +372,7 @@ function displayFriendsPosts(posts) {
                         <img alt="like button" src="/images/website_images/${post.dislikedByYou ? 'dislike.png' : 'dislike_btn.png'}" class="post-dislike-btn public-post-btn">
                         <img alt="like button" src="/images/website_images/share_btn.png" class="post-share-btn public-post-btn">
                     </div>
+                    
                     <div class="post-stats-container">
                         <p> likes ${post.likes}</p>
                         <p> dislikes ${post.dislikes}</p>

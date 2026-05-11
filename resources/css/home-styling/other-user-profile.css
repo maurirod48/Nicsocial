@@ -271,4 +271,9 @@
     .join-date {
         font-size: .9rem;
     }
+
+    .post-reaction-btn {
+        height: 40px;
+        width: 40px;
+    }
 }
