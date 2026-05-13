@@ -190,3 +190,6 @@ Route::get('/settings/change-password', function () {
 Route::get('/settings/delete-account', function () {
     return view('home.delete-account-page');
 })->name('delete.account.page');
+
+// Delete user account.
+Route::post('/delete-account', [UserController::class, 'deleteAccount'])->name('delete.user.account');

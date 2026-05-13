@@ -153,6 +153,19 @@ class UserController extends Controller
 
         return back();
     }
+
+    // Delete user account!!!
+    public function deleteAccount() {
+        // User object.
+        $user = auth()->user();
+
+        // Deleting account.
+        $user->delete();
+
+        // Redirecting user to log in page.
+        return view('signin_login.login');
+
+    }
 }
 
 

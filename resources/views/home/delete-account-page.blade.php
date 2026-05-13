@@ -28,8 +28,13 @@
                     </div>
                     <div class="delete-dropdown-container">
                         <h3 style="margin:0; margin-bottom: .5rem;">Confirm action</h3>
-                        <button class="btn">Confirm</button>
-                        <button class="btn cancel-btn">Cancel</button>
+                        <div class="delete-dropdown-buttons-container">
+                            <form action="{{ route('delete.user.account') }}" method="POST">
+                                @csrf
+                                <button class="btn">Confirm</button>
+                            </form>
+                            <button class="btn cancel-btn">Cancel</button>
+                        </div>
                     </div>
                 </div>
             </div>
