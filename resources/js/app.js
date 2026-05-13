@@ -39,3 +39,8 @@ if (_('.other-profile-section-wrapper')) {
 if (_('.settings-section-wrapper')) {
     import('../css/home-styling/settings.css');
 }
+
+if (_('.delete-account-section-wrapper')) {
+    import('../css/home-styling/delete-account.css');
+    import('../js/home_js_files/delete-account.js');
+}
