@@ -44,3 +44,7 @@ if (_('.delete-account-section-wrapper')) {
     import('../css/home-styling/delete-account.css');
     import('../js/home_js_files/delete-account.js');
 }
+
+if (_('.change-password-section-wrapper')) {
+    import('../css/home-styling/change-password.css');
+}

@@ -96,6 +96,11 @@
     cursor: pointer;
 }
 
+.go-back-btn {
+    text-decoration: none;
+    color: white;
+}
+
 
 
 @media (max-width:900px) {
