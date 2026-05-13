@@ -16,8 +16,18 @@
 }
 
 
+.option-link {
+    color: aliceblue;
+    text-decoration: none;
+}
+
 .option {
-    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .5rem;
+    transition: 100ms ease-in-out all;
+    cursor: pointer;
 }
 
 .option:hover {
@@ -26,16 +36,57 @@
 
 .option p {
     font-size: 1.5rem;
+    border: none;
 }
 
-.change-password-option {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.option-start-icon {
+    height: 30px;
+    color: white;
 }
 
-.arrow-icon {
-    height: 40px;
-    background-color: aliceblue;
-    border-radius: 50%;
+.option-end-icon {
+    height: 35px;
+    color: aliceblue;
+}
+
+.option-icon-name-container {
+    display: flex; align-items: center; gap: .8rem; padding: 0;
+}
+
+
+
+@media (max-width:900px) {
+    .settings-section-container {
+        width: 600px;
+        /* height: calc(100vh - 178px); */
+    }
+}
+
+
+@media (max-width:640px) {
+    .settings-section-container {
+        width: 500px;
+        /* height: calc(100vh - 178px); */
+    }
+}
+
+@media (max-width:420px) {
+    .settings-section-container {
+        width: 290px;
+        /* height: calc(100vh - 178px); */
+    }
+
+    .option-icon-name-container p{
+        font-size: .9rem;
+    }
+
+    .option-start-icon {
+        height: 20px;
+        color: white;
+    }
+
+    .option-end-icon {
+        height: 25px;
+        color: aliceblue;
+    }
 }

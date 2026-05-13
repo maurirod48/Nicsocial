@@ -180,3 +180,13 @@ Route::get('/settings', function () {
     return view('home.settings-page');
     }
 )->name('settings.section'); 
+
+// Go to change password page.
+Route::get('/settings/change-password', function () {
+    return view('home.change-password-page');
+})->name('change.password.page');
+
+// Go to delete account page.
+Route::get('/settings/delete-account', function () {
+    return view('home.delete-account-page');
+})->name('delete.account.page');
