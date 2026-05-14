@@ -14,21 +14,6 @@
             <h1>Change Password</h1>
         </div>
 
-        {{-- LOGGED IN USER INFO --}}
-        <div class="user-info-container">
-            @if (auth()->user()->profile_pic_path == 'none' && auth()->user()->gender == 'male')
-                <img src="{{ asset('images/default-images/male-pic.jpg') }}" alt="user profile pic"
-                class="user-profile-pic">
-            @elseif (auth()->user()->profile_pic_path == 'none' && auth()->user()->gender == 'female')
-                <img src="{{ asset('images/default-images/female-pic.jpeg') }}" alt="user profile pic"
-                class="user-profile-pic">
-            @else
-                <img src="{{ Storage::disk('s3')->url('images/other_images/' . auth()->user()->profile_pic_path) }}" alt="user profile pic"
-                class="user-profile-pic">
-            @endif
-            <h2>{{ auth()->user()->name }}</h2>
-        </div>
-
         {{-- CHANGE PASSWORD FORM --}}
         <form action="">
             <div class="change-password-form-container">
