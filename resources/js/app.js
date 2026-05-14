@@ -40,11 +40,12 @@ if (_('.settings-section-wrapper')) {
     import('../css/home-styling/settings.css');
 }
 
-if (_('.delete-account-section-wrapper')) {
+if (_('.delete-account-section-wrapper') || _('.change-password-section-wrapper')) {
     import('../css/home-styling/delete-account.css');
-    import('../js/home_js_files/delete-account.js');
+    import('../js/home_js_files/settings.js');
 }
 
 if (_('.change-password-section-wrapper')) {
     import('../css/home-styling/change-password.css');
+    import('../js/home_js_files/settings.js');
 }

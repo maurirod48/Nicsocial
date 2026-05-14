@@ -167,8 +167,21 @@ class UserController extends Controller
 
     }
 
-    public function changePassword() {
-        return back()->with('message', 'This is exhalarating, get excited');
+    public function changePassword(Request $request) {
+
+        // Validating input.
+        $input = $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:4|string|confirmed',
+        ]);
+
+        // Authenticated user.
+        $user = auth()->user();
+
+        // Verify current password.
+        $status = Hash::check($input['current_password'], $user['password']);
+
+        return $status ? back()->with('message', 'correct password') : back()->with('message', 'wrong password');
     }
 }
 

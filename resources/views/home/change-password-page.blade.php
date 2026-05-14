@@ -38,6 +38,22 @@
                 </div>
             </div
         @endsession
+
+        @if ($errors->any())
+            <div class="errors-wrapper">
+                <div class="errors-container">
+                    <h1>Something went wrong</h1>
+                    @foreach ($errors->all() as $error)
+                        <h2>{{ $error }}</h2>
+                    @endforeach
+
+                    <div class="errors-ok-btn-wrapper">
+                        <button class="errors-ok-btn">Ok</button>
+                    </div>
+                </div>
+            </div>
+        @endif
+
     </div>
 </div>
 
