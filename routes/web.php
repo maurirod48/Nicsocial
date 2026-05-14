@@ -193,3 +193,6 @@ Route::get('/settings/delete-account', function () {
 
 // Delete user account.
 Route::post('/delete-account', [UserController::class, 'deleteAccount'])->name('delete.user.account');
+
+// Change password.
+Route::post('/change-password', [UserController::class, 'changePassword'])->name('change.password');

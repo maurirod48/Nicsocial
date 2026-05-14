@@ -166,6 +166,10 @@ class UserController extends Controller
         return view('signin_login.login');
 
     }
+
+    public function changePassword() {
+        return back()->with('message', 'This is exhalarating, get excited');
+    }
 }
 
 

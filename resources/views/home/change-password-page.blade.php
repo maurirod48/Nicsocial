@@ -15,12 +15,29 @@
         </div>
 
         {{-- CHANGE PASSWORD FORM --}}
-        <form action="">
+        <form action="{{ route('change.password') }}" method="POST">
+            @csrf
             <div class="change-password-form-container">
-                <label for="password">Password</label>
-                <input type="text" name="password" class="password" id="password">
+                <div>
+                    <input type="text" name="current_password" class="password-input" placeholder="Current password">
+                    <a href="" class="forgot-password-link"><p>Forgot password?</p></a>
+                </div>
+                <hr>
+                <input type="text" name="new_password" class="password-input new-password-input" placeholder="New password">
+                <input type="text" name="new_password_confirmation" class="password-input new-password-input" placeholder="Confirm password">
+                <hr style="margin: 1.5rem 0">
+                <div class="save-btn-container">
+                    <button class="save-new-password-btn">Save</button>
+                </div>
             </div>
         </form>
+        @session('message')
+            <div class="errors-wrapper">
+                <div class="errors-container">
+                    <h1>{{ session('message') }}</h1>
+                </div>
+            </div
+        @endsession
     </div>
 </div>
 
