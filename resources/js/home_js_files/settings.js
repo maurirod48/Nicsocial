@@ -37,5 +37,7 @@ const errorOkBtn = _('.errors-ok-btn');
 errorOkBtn.addEventListener('click', toggleErrorPopup);
 
 function toggleErrorPopup() {
-    console.log('FIFA WORLD CUP');
+    
+    const errorsPopupContainer = _('.errors-wrapper');
+    errorsPopupContainer.classList.add('hide');
 }

@@ -181,7 +181,15 @@ class UserController extends Controller
         // Verify current password.
         $status = Hash::check($input['current_password'], $user['password']);
 
-        return $status ? back()->with('message', 'correct password') : back()->with('message', 'wrong password');
+        if ($status == true) {
+            $user->forceFill([
+                'password' => $input['new_password']
+            ])->save();
+
+            return back()->with('message', 'Password has been changed');
+        } else {
+            return back()->with('message', 'Incorrect password');
+        }
     }
 }
 

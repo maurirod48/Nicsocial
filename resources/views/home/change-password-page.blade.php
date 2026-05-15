@@ -34,7 +34,10 @@
         @session('message')
             <div class="errors-wrapper">
                 <div class="errors-container">
-                    <h1>{{ session('message') }}</h1>
+                    <h3>{{ session('message') }}</h3>
+                    <div class="errors-ok-btn-wrapper">
+                        <button class="errors-ok-btn">Ok</button>
+                    </div>
                 </div>
             </div
         @endsession
