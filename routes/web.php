@@ -1,0 +1,195 @@
+<?php
+
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\PeopleController;
+use App\Http\Controllers\PostController;
+
+use App\Models\Product;
+
+// SIGNIN LOGIN ROUTES
+
+// This route sends user to login page.
+Route::get('/', function () {
+    return view('signin_login.login');
+})->name('login.page');
+
+
+// this route sends user to signin page.
+Route::get('/signin-page', function () {
+    return view('signin_login.signin');
+})->name('signin.page');
+
+
+// This route triggers the sign in process.
+Route::post('/user-signin', [UserController::class, 'signUp'])->name('user.signup');
+
+// This route triggers the log in process.
+Route::post('/user-login', [UserController::class,'logIn'])->name('user.login');
+
+//PASSWORD RESET ALGORITHM
+
+Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])->name('password.request');
+
+Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])->name('password.email');
+
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'create'])->name('password.reset');
+
+Route::post('/reset-password', [ResetPasswordController::class,'store'])->name('password.update');
+
+// =============
+// HOME ROUTES
+// ==============
+
+// Go to home page
+Route::get('/home-section', function () {
+    return view('home.home');
+})->name('home.section');
+
+// Go to people page.
+Route::get('/people-section', function () {
+    return view('home.people');
+})->name('people.section');
+
+// Go to profile page.
+Route::get('/profile-section', function () {
+    // current authenticated user.
+    $user = Auth()->user();
+
+    // All posts belonging to current authenticated user.
+    $currentUserPosts = $user->posts()->orderBy('created_at', 'desc')->paginate(10);
+
+    // redirecting user to profile page and passing all posts to the page to then display em.
+    return view('home.profile-page', ['posts' => $currentUserPosts]);
+})->name('profile.section');
+
+// This request will come from a JS fetch request to get all posts.
+Route::get('/get-public-posts', [PostController::class, 'getAllPosts'])->name('post.get');
+
+// Route to trigger logout.
+Route::post('/logout', [UserController::class, 'logout'])->name('user.logout');
+
+
+// ========================
+// PROFILE SECTION ROUTES 
+// ========================
+
+// This route is called by JS fetch request to get all posts that the current user has created.
+Route::get('/get-my-posts', [UserController::class, 'getPosts']);
+
+// This route is called when user submits "edit profile" form.
+Route::post('/edit-profile', [UserController::class, 'editProfile'])->name('profile.edit');
+
+// POST: this route is called when a user tries to create a post.
+Route::post('/create-post', [PostController::class, 'createPost'])->name('post.create');
+
+// This route is called when user tries to change their profile pic.
+Route::post('/change-profile-pic', [UserController::class, 'changeProfilePic'])->name('change.profile.pic');
+
+// Route to like post.
+Route::post('/profile-section/like-post', [PostController::class, 'likePost']);
+
+// Route to dislike post.
+Route::get('/dislike-post/{post}', [PostController::class, 'dislikePost']);
+
+// Route to delete post.
+Route::post('/delete-post', [PostController::class, 'deletePost']);
+
+// Route to get single post object.
+Route::post('/get-post-object/edit', [PostController::class, 'getPostObject']);
+
+//Route to edit post.
+Route::post('/edit-post', [PostController::class, 'editPost'])->name('post.edit');
+
+
+// ========================
+// PEOPLE SECTION ROUTES 
+// ========================
+
+Route::get('/people/users', [PeopleController::class, 'getPeople']);
+
+// Send friend request = Create record in friend_requests pivot table.
+Route::post('/people/friend-request', [PeopleController::class, 'friendRequest']);
+
+
+// Get all records in friend_requests table.
+Route::get('/people/get-friend-requests', [PeopleController::class, 'getAllFriendRequests']);
+
+// Get friend request status for a specific user.
+Route::get('/people/get-friend-request-status/{user}', [PeopleController::class, 'getFriendRequestStatusSpecificUser']);
+
+//Cancel friend request.
+Route::get('/people/cancel-friend-request/{user}', [PeopleController::class, 'cancelFriendRequest']);
+
+// Get pending received friend requests.
+Route::get('/people/get-received-friend-requests', [PeopleController::class, 'getReceivedFriendRequests']);
+
+// Check to see if a user has sent the logged in user a friend request.
+Route::get('/people/check-for-received-friend-request/{user}', [PeopleController::class, 'haveIReceivedaFriendRequestFromSpecificUser']);
+
+// Check to see if we are already friends with a user.
+Route::get('/people/friends-already/{user}', [PeopleController::class, 'areWeFriendsAlready']);
+
+// Delete/reject friend request.
+Route::post('/people/delete-friend-request', [PeopleController::class, 'deleteFriendRequest']);
+
+// Accept friend request.
+Route::post('people/accept-friend-request', [PeopleController::class, 'acceptFriendRequest']);
+
+// Get all my friends.
+Route::get('/people/get-my-friends', [PeopleController::class, 'getMyFriends']);
+
+// Delete friend.
+Route::delete('/people/delete-friend', [PeopleController::class, 'deleteFriend']);
+
+
+//==========================
+// OTHER USER PROFILE ROUTES
+//==========================
+
+// Route to checkout another user profile.
+Route::get('/other-user-profile/{user}', [PeopleController::class, 'checkoutOtherUser']);
+
+// Route to get posts posted by the friends of the currently logged in user.
+Route::get('/get-friends-posts', [PostController::class, 'getFriendsPosts']);
+
+// Send friend request from user profile (when checking out another user's profile).
+Route::post('/other-user-profile/send-friend-request', [PeopleController::class, 'sendFriendRequestFromUserProfile'])->name('send-friend-request');
+
+// Cancel friend request
+Route::post('/other-user-profile/cancel-friend-request', [PeopleController::class, 'cancelFriendRequestFromUserProfile'])->name('cancel-friend-request');
+
+// Unfriend user.
+Route::post('/other-user-profile/unfriend-user', [PeopleController::class, 'unfriendUser'])->name('unfriend-user');
+
+// Like a post.
+Route::post('/other-user-profile/like-post', [PostController::class, 'likePost']);
+
+
+//================
+// SETTINGS ROUTES
+//================
+
+// Send user to settings page
+Route::get('/settings', function () {
+    return view('home.settings-page');
+    }
+)->name('settings.section'); 
+
+// Go to change password page.
+Route::get('/settings/change-password', function () {
+    return view('home.change-password-page');
+})->name('change.password.page');
+
+// Go to delete account page.
+Route::get('/settings/delete-account', function () {
+    return view('home.delete-account-page');
+})->name('delete.account.page');
+
+// Delete user account.
+Route::post('/delete-account', [UserController::class, 'deleteAccount'])->name('delete.user.account');
+
+// Change password.
+Route::post('/change-password', [UserController::class, 'changePassword'])->name('change.password');

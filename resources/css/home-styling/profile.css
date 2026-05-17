@@ -1,0 +1,714 @@
+
+.error {
+    color: red;
+}
+
+
+.profile-card-wrapper {
+    /* background-color: blue; */
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.default-banner-image {
+    width: 100%;
+    height: 180px;
+}
+
+
+
+.profile-pic-container {
+    border-radius: 50%;
+    position: absolute;
+    top: 70px;
+    left: 50px;
+}
+
+.default-male-profile-pic, .default-female-profile-pic {
+    border-radius: 50%;
+    width: 230px;
+    height: 230px
+}
+
+.change-pic-btn {
+    background-color: rgb(0, 49, 211);
+    color: white;
+    padding: .5rem 1.2rem;
+    border-radius: .5rem;
+    font-size: 2rem;
+    cursor: pointer;
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+/* EDIT PROFILE PIC POPUP STYLING */
+.change-profile-pic-popup-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    display: none;
+    justify-content: center;
+    flex-direction: center;
+    align-items: center;
+
+    background-color: rgb(0, 0, 0, 0.6);
+
+}
+
+.change-profile-pic-popup-wrapper.show {
+    display: flex;
+}
+
+.change-profile-pic-popup-wrap {
+    background-color: black;
+    border: solid 1px white;
+    padding: 1.5rem 2.5rem;
+    border-radius: .5rem;
+
+    position: relative;
+}
+
+.preview-profile-pic {
+    max-height: 250px;
+    max-width: 250px;
+    border-radius: 50%;
+    padding: 1rem 0;
+}
+
+
+.change-pic-error-wrapper { /* This block here is for the popup inside the "change profile picture popup"*/
+    background-color: rgb(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-pic-error-wrapper.show {
+    display: flex;
+}
+
+.change-pic-error {
+    background-color: black;
+    border: white solid 1px;
+    border-radius: .5rem;
+    padding: 1rem 2rem
+}
+
+.change-pic-error p{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.change-pic-error button{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    padding: .5rem 1rem;
+    border: white solid 1px;
+    background-color: rgb(0, 49, 211);
+    cursor: pointer;
+}
+
+/* 
+EDIT PROFILE POPUP STYLING 
+*/
+
+.edit-profile-popup-wrapper {
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: rgb(0, 0, 0, 0.6);
+
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+    top: 0;
+    left: 0;
+}
+
+.edit-profile-popup-wrapper.show {
+    display: flex;
+}
+
+.edit-profile-popup-wrap {
+    padding: 2rem;
+    background-color: black;
+    border: solid 1px white;
+    border-radius: .5rem;
+
+    width: 500px;
+}
+
+.edit-profile-form-input-container {
+    margin: 1rem 0
+}
+.bio-textarea {
+    min-width: 55%;
+    min-height: 100px;
+    font-size: 1rem;
+    resize: none
+}
+
+#edit-gender {
+    width: 200px;
+    font-size: 1.5rem;
+}
+
+.edit-profile-label {
+    font-size: 1.5rem
+}
+
+.edit-profile-form-save-btn {
+    background-color: white;
+    color: black;
+    border-radius: 1.5rem;
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+}
+
+.edit-profile-form-save-btn:hover {
+    background-color: black;
+    outline: solid 1px white;
+    color: white;
+}
+
+.edit-profile-form-cancel-btn {
+    background-color: white;
+    color: black;
+    border-radius: 1.5rem;
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+}
+
+.edit-profile-form-cancel-btn:hover {
+    background-color: black;
+    outline: solid 1px white;
+    color: white;
+}
+
+.edit-profile-errors-popup-wrapper.show {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: rgb(0, 0, 0, 0.6);
+
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+    top: 0;
+    left: 0;
+}
+
+.edit-profile-errors-popup-wrap {
+    padding: 2rem;
+    background-color: black;
+    border: solid 1px white;
+    border-radius: .5rem;
+
+    width: 500px;
+}
+
+
+.edit-profile-errors-ok-btn {
+    background-color: black;
+    border: solid white 1px;   
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.edit-profile-errors-ok-btn:hover {
+    background-color: white;
+    color:black;
+}
+
+
+.edit-profile-errors-ok-btn-wrapper{
+    display: flex;
+    justify-content: center;
+}
+
+/* PROFILE CARD INFORMATION */
+.profile-card-information {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 2rem;
+    /* padding: 1rem; */
+}
+
+
+.edit-profile-btn {
+    float: right;
+    padding: .5rem 1.2rem;
+    margin: 1rem;
+    cursor: pointer;
+
+    background-color: black;
+    outline: white 1.5px solid;
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    border-radius: 2rem;
+
+}
+
+.edit-profile-btn:hover {
+    background-color: rgb(49, 49, 49);
+}
+
+.user-basic-info-wrapper {
+    margin-top: 3.5rem;
+    padding-left: 3rem;
+}
+
+.user-username {
+    font-size: 2.2rem;
+    font-weight: 600;
+}
+
+.user-email {
+    font-size: 1.5rem;
+}
+
+.user-bio {
+    margin: 1.5rem 0;
+}
+
+.join-date {
+    font-size: rgb(78, 78, 78);
+}
+
+.little-calendar-icon {
+    height: 40px;
+}
+
+/* POST SECTION */
+
+.posts-section {
+    padding: 1rem;
+}
+
+
+
+/* Post button/form style */
+.post-btn-wrapper {
+    padding: 1rem 4rem;
+}
+
+.post-btn {
+    background-color: white;
+    color: black;
+    border-radius: 1.5rem;
+    padding: .5rem 1.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+}
+
+
+.post-btn:hover {
+    background-color: black;
+    outline: solid 1px white;
+    color: white;
+}
+
+.post-cancel-btn {
+    background-color: white;
+    color: black;
+    border-radius: 1.5rem;
+    padding: .5rem 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+}
+
+.post-cancel-btn:hover {
+    background-color: black;
+    outline: solid 1px white;
+    color: white;
+}
+
+.post-form-popup-wrapper {
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, 0.6);
+
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
+
+}
+
+.post-form-popup-wrapper.show {
+    display: flex;
+}
+
+.post-form-popup-wrap {
+    background-color: black;
+    color: white;
+    border: white solid 1px;
+    border-radius: 1rem;
+    width: 500px;
+
+    padding: 2rem;
+}
+
+.post-form label, input {
+    font-size: 1.3rem;
+}
+
+.post-form textarea {
+    font-size: 1rem;
+}
+
+.post-form-field {
+    margin: 1rem 0;
+}
+
+#desc {
+    resize: none;
+    width: 200px;
+    height: 80px;
+}
+
+.upload-pic-img {
+    height: 50px;
+    cursor: pointer;
+}
+
+
+.current-selected-pic-container {
+    position:relative;
+}
+
+.preview-image-post {
+    max-width: 260px;
+    max-height: 260px
+}
+
+.remove-post-pic-btn {
+    display: none;
+}
+
+.remove-post-pic-btn.show {
+    display: flex;
+    position: absolute;
+    top: 0;
+
+    cursor: pointer;
+
+    background-color: white;
+    color: black;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: .1rem .5rem;
+    border-radius: 50%;
+}
+
+/* ///////////////////
+POST SECTION STYLING
+*/
+.posts-section {
+    border-top: solid 1px white;
+    padding: 0 12rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.post-container {
+    padding: 1rem;
+    border: solid 1px white;
+}
+
+.post-header {
+    margin-bottom: 1.5rem;
+}
+
+.post-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.post-username {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+
+.post-username {
+    font-size: 200;
+    font-size: 1.5rem;
+}
+
+.post-title {
+    font-size: 2rem;
+}
+
+.post-description {
+    padding: 1rem;
+}
+
+.post-image {
+    max-height: 380px;
+    max-width: 400px;
+
+    padding-bottom: 1.5rem;
+    padding-left: 1rem;
+}
+
+.like-btn-img, .dislike-btn-img, .share-btn-img {
+    border-radius: 50%;
+    height: 40px;
+    cursor: pointer;
+}
+
+.post-options-image {
+    height: 45px;
+    cursor: pointer;
+}
+
+.user-owns-this-post {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-options-container {
+    position: relative;
+}
+
+.post-options-dropdown-wrapper {
+    position: absolute;
+    right: 0px;
+    border: solid 1px white;
+    /* padding: 1rem; */
+    /* width: fit-content; */
+    border-radius: .5rem;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* gap: 1rem; */
+    width: 60px;
+    padding: 1rem;
+}
+
+.post-options-dropdown-wrapper.show {
+    display: flex;
+}
+
+.post-options-dropdown {
+    width: 100%;
+    
+}
+
+.post-options-dropdown span{
+    list-style: none;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    /* padding: 1rem; */
+
+
+    font-size: 1.2rem;
+}
+
+.post-options-dropdown span:hover {
+    background-color: gray;
+}
+
+
+/* DELETE POST POPUP STYLING */
+
+.popup-delete-post-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, 0.6);
+
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-delete-post-wrapper.show {
+    display: flex;
+}
+
+.popup-delete-post-wrap {
+    border: white solid 1px;
+    border-radius: 1rem;
+    padding: 1.5rem 2rem;
+    background-color: black;
+}
+
+.delete-post-yes-no-btn-wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.delete-post-yes-no-btn-wrapper button {
+    background-color: black;
+    border: solid white 1px;
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.delete-post-btn-yes:hover {
+    background-color: rgb(46, 45, 45);
+}
+
+
+/* EDIT POST STYLING */
+
+.edit-post-popup-wrapper {
+    display: none;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(0, 0, 0, 0.6);
+}
+
+.edit-post-popup-wrapper.show {
+    display: flex;
+}
+
+.edit-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    align-items: baseline;
+}
+
+.edit-post-popup {
+    background-color: black;
+    border: white 1px solid;
+    border-radius: .5rem;
+    padding: 1rem 2rem;
+}
+
+.edit-post-desc-input {
+    resize: none;
+}
+
+.edit-post-buttons-container {
+    display: flex;
+    gap: 1rem;
+}
+.edit-post-buttons-container button {
+    color: aliceblue;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    border: solid 1px white;
+    background-color: black;
+    cursor: pointer;
+}
+
+#update-pic-btn {
+    background-color: rgb(0, 49, 211);
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    /* margin: 1rem; */
+}
+
+.optional-img-input {
+    display: none;
+}
+
+.edit-post-img {
+    max-width: 350px;
+    max-height: 400px;
+}
+
+@media (max-width: 768px) {
+
+    .default-banner-image {
+        height: 130px;
+    }
+
+    .profile-pic-container {
+        top: 70px;
+        left: 15px;
+    }
+
+    .default-male-profile-pic, .default-female-profile-pic {
+        width: 120px;
+        height: 120px;
+    }
+
+    .change-pic-btn {
+        font-size: 1rem;
+        padding: .3rem .6rem;
+        margin-top: .9rem;
+    }
+
+    .user-basic-info-wrapper {
+        margin-top: 4rem;
+        padding-left: 1.5rem;
+    }
+
+    .post-btn-wrapper {
+        padding: 1rem 1.5rem;
+    }
+
+    .posts-section {
+        padding: 0 1rem;
+    }
+
+    .post-form-popup-wrap,
+    .edit-profile-popup-wrap,
+    .edit-profile-errors-popup-wrap {
+        width: 90%;
+        box-sizing: border-box;
+    }
+
+    #desc {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

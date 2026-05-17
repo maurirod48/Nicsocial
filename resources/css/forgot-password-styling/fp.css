@@ -1,0 +1,48 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+.reset-password-email-form-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reset-password-email-form-wrap {
+    max-width: 315px;
+}
+
+.reset-password-email-form-wrap input, label {
+    font-size: 1.5rem;
+}
+
+.reset-password-email-form-wrap input{
+    margin: 1rem 0;
+    padding: .2rem
+}
+
+.reset-password-email-form-wrap button {
+    background-color: rgb(42, 42, 146);
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    border: none;
+    font-size: 1.1rem;
+}
+
+.reset-password-email-form-wrap a {
+    background-color: rgb(42, 42, 146);
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    text-decoration: none;
+}
+
+.btn-cont{ 
+    display: flex;
+    justify-content: space-between;
+}
+
+

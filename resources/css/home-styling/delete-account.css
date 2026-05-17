@@ -1,0 +1,141 @@
+.body-main {
+    padding-bottom: 0;
+}
+
+
+.delete-account-section-wrapper {
+    display: flex;
+    justify-content: center;
+    border-top: solid 1px rgba(255, 255, 255, 0.56);
+    /* width: 100%; */
+}
+
+.delete-account-section-container {
+    border: solid 1px rgba(255, 255, 255, 0.56);
+    width: 700px;
+    height: calc(100vh - 178px);
+}
+
+
+.back-arrow-btn {
+    height: 30px;
+    cursor: pointer;
+    padding: .5rem;
+    transition:all ease-in-out 100ms
+}
+
+.back-arrow-btn:hover {
+    background-color: rgba(240, 248, 255, 0.19);
+    border-radius: 50%;
+}
+
+.delete-account-header {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: .5rem 1rem;
+}
+
+.user-info-container {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile-pic {
+    height: 80px;
+    border-radius: 50%;
+    margin-left: 1.2rem;
+}
+
+.text-info-container {
+    padding: 1.5rem;
+}
+
+.delete-btn-dropdown-container {
+    position: relative;
+}
+
+.delete-account-btn {
+    background-color: red;
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+}
+
+.delete-dropdown-container {
+    position: absolute;
+    top: 0;
+    visibility: hidden;
+    transition: all ease-in-out 200ms;
+    border: solid 1px rgba(255, 255, 255, 0.539);
+    padding: 1rem;
+    
+}
+
+.delete-dropdown-container.show {
+    visibility: visible;
+    transform: translateY(50px);
+}
+
+.delete-dropdown-buttons-container {
+    display: flex; gap: 1rem;
+}
+
+.btn {
+    background-color: rgb(107, 107, 107);
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+}
+
+.go-back-btn {
+    text-decoration: none;
+    color: white;
+}
+
+
+
+@media (max-width:900px) {
+    .delete-account-section-container {
+        width: 600px;
+        /* height: calc(100vh - 178px); */
+    }
+}
+
+@media (max-width:640px) {
+    .delete-account-section-container {
+        width: 500px;
+        /* height: calc(100vh - 178px); */
+    }
+}
+
+@media (max-width:420px) {
+    .delete-account-section-container {
+        width: 290px;
+        /* height: calc(100vh - 178px); */
+    }
+
+    .delete-account-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .delete-account-btn, .btn {
+        font-size: 1rem;
+    }
+
+    .back-arrow-btn {
+        height: 25px;
+    }
+
+    .user-profile-pic {
+        height: 60px;
+    }
+}
