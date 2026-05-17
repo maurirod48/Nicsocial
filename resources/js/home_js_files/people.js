@@ -870,7 +870,7 @@ function displayPaginationButtons(numberOfObjects, lastPage) {
         paginationButtonsWrapper.innerHTML = `
             <button class="pagination-btn pagination-previous">Previous</button>
             <p>Page ${OtherUsersCurrentPage} of ${lastPage}</p>
-            <button class="pagination-btn pagination-next">Next</button>
+            <button class="pagination-btn pagination-next">Next </button>
         `;
     } else {
         // Not enough results to paginate, hide the buttons entirely.
