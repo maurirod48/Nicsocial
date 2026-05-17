@@ -190,7 +190,7 @@ function getPeople(currentPage) {
     })
     .then(data => {
         people = data.people;
-        OtherUsersLastPage = data.lastPage
+        OtherUsersLastPage = data.lastPage;
         console.log(people);
         displayPaginationButtons(people.length, OtherUsersLastPage);
         displayPeople(people);
@@ -465,7 +465,7 @@ function sendFriendRequest(friendId) {
     })
     .then(data => {
         console.log('From fetch response:', data.id);
-        getPeople(currentPage);
+        getPeople(OtherUsersCurrentPage);
     })
     .catch(err => console.error(err))
 }
@@ -502,7 +502,7 @@ function cancelFriendRequest(userId) {
     .then(data => {
         if (data.success) {
             console.log('Friend request cancel');
-            getPeople(currentPage);
+            getPeople(OtherUsersCurrentPage);
         }
     })
 }
@@ -865,7 +865,7 @@ function displayPaginationButtons(numberOfObjects, lastPage) {
     // Pagination is shown if the current page has enough results to paginate, or if the user
     // has already navigated past page 1 (in which case the Previous button must remain visible).
     // Btw the 5 in the line below has to match the integer in paginate() in "getPeople" method inside PeopleController.
-    if (numberOfObjects > 5) {
+    if (numberOfObjects > 4 || OtherUsersCurrentPage > 1) {
 
         paginationButtonsWrapper.innerHTML = `
             <button class="pagination-btn pagination-previous">Previous</button>
