@@ -10,11 +10,11 @@ class PeopleController extends Controller
 {
     public function getPeople(Request $request) {
 
-        $people = User::where('id', '!=', auth()->user()->id)->get();
+        $people = User::where('id', '!=', auth()->user()->id)->paginate(5);
 
         // Here we use map() to add a new attribute called "profile_pic_s3_url". This new attribute contains the
         // s3 url which will then be used to display the user's profile pic. If the user has no profile pic, then this value is NULL
-        $sortedPeople = $people->map(function ($user) {
+        $mappedPeople = $people->map(function ($user) {
             if ($user->profile_pic_path == 'none') {
                 $user->profile_pic_s3_url = NULL;
             } else {
@@ -23,7 +23,7 @@ class PeopleController extends Controller
 
             return $user;
         });
-        return response()->json(['people' => $sortedPeople]);
+        return response()->json(['people' => $mappedPeople, 'lastPage' => $people->lastPage()]);
     }
 
     // Method to create record in friend_requests pivot table.

@@ -39,7 +39,7 @@ friendsRadio.addEventListener('change', function () {
 peopleRadio.addEventListener('change', function () {
     if (this.checked) {
         console.log('people');
-        getPeople();
+        getPeople(OtherUsersCurrentPage);
     }
 });
 
@@ -174,13 +174,13 @@ let friends; // friends only.
 
 
 // function to get all users except the one who's currently logged in (cuz why would we need to display that user in this section?).
-function getPeople() {
+function getPeople(currentPage) {
 
     // while users are retrived in the backend we want to show the loading GIF.
     const blueLoadingGIF = _('.loading-gif-container');
     blueLoadingGIF.classList.add('show');
 
-    fetch('/people/users')
+    fetch(`/people/users?page=${currentPage}`)
     .then(res => {
         if (!res.ok) {
             throw new Error('Error while trying to get all users:', res.status);
@@ -190,8 +190,9 @@ function getPeople() {
     })
     .then(data => {
         people = data.people;
+        OtherUsersLastPage = data.lastPage
         console.log(people);
-        displayPaginationButtons(people.length);
+        displayPaginationButtons(people.length, OtherUsersLastPage);
         displayPeople(people);
     })
     .catch(err => console.log(err));
@@ -464,7 +465,7 @@ function sendFriendRequest(friendId) {
     })
     .then(data => {
         console.log('From fetch response:', data.id);
-        getPeople();
+        getPeople(currentPage);
     })
     .catch(err => console.error(err))
 }
@@ -501,7 +502,7 @@ function cancelFriendRequest(userId) {
     .then(data => {
         if (data.success) {
             console.log('Friend request cancel');
-            getPeople();
+            getPeople(currentPage);
         }
     })
 }
@@ -534,6 +535,7 @@ function getReceivedFriendRequests() {
         if (data.success) {
             usersWhoHaveSentMeFriendRequest = data.response;
             console.log('People who have sent you friend requests:', usersWhoHaveSentMeFriendRequest);
+            displayPaginationButtons(usersWhoHaveSentMeFriendRequest.length);
             displayReceivedFriendRequests(usersWhoHaveSentMeFriendRequest);
         }
     })
@@ -849,21 +851,46 @@ function redirect2OtherUserProfile(e) {
 //====================
 
 //THIS VARIABLE HELPS WITH THE PAGINATION. IT HELPS KEEP TRACK OF WHICH SET OF USERS NEEDS TO BE RETRIEVED AND DISPLAYED.
-let currentPage = 1; 
+let OtherUsersCurrentPage = 1; 
+let OtherUsersLastPage;
 
+
+// HTML element where pagination buttons go when displayed.
 const paginationButtonsWrapper = _('.pagination-buttons-wrapper');
 
-function displayPaginationButtons(numberOfObjects) {
+// Display/hide pagination buttons.
+function displayPaginationButtons(numberOfObjects, lastPage) {
 
-    if (numberOfObjects > 2) {
-        console.log('PAGINATION BUTTONS');
+    // Shows or hides pagination controls based on whether there is more than one page of results.
+    // Pagination is shown if the current page has enough results to paginate, or if the user
+    // has already navigated past page 1 (in which case the Previous button must remain visible).
+    // Btw the 5 in the line below has to match the integer in paginate() in "getPeople" method inside PeopleController.
+    if (numberOfObjects > 5) {
 
         paginationButtonsWrapper.innerHTML = `
-            <button class="pagination-btn">Previous</button>
-            <button class="pagination-btn">Next</button>
+            <button class="pagination-btn pagination-previous">Previous</button>
+            <p>Page ${OtherUsersCurrentPage} of ${lastPage}</p>
+            <button class="pagination-btn pagination-next">Next</button>
         `;
     } else {
+        // Not enough results to paginate, hide the buttons entirely.
         paginationButtonsWrapper.innerHTML = "";
     }
     
 }
+
+//PAGINATION FOR "OTHER USERS" SECTION.
+
+// Event listeners for pagination buttons
+document.addEventListener('click', (e) => {
+    if (e.target.matches('.pagination-next')) {
+        console.log("NEXT");
+        OtherUsersCurrentPage += 1;
+        getPeople(OtherUsersCurrentPage);
+    }
+    else if (e.target.matches('.pagination-previous') && OtherUsersCurrentPage != 1) {
+        console.log("PREVIOUS");
+        OtherUsersCurrentPage -= 1;
+        getPeople(OtherUsersCurrentPage);
+    }
+});
