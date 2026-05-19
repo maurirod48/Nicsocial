@@ -19,12 +19,12 @@
             @csrf
             <div class="change-password-form-container">
                 <div>
-                    <input type="text" name="current_password" class="password-input" placeholder="Current password">
+                    <input type="password" name="current_password" class="password-input" placeholder="Current password">
                     <a href="" class="forgot-password-link"><p>Forgot password?</p></a>
                 </div>
                 <hr>
-                <input type="text" name="new_password" class="password-input new-password-input" placeholder="New password">
-                <input type="text" name="new_password_confirmation" class="password-input new-password-input" placeholder="Confirm password">
+                <input type="password" name="new_password" class="password-input new-password-input" placeholder="New password">
+                <input type="password" name="new_password_confirmation" class="password-input new-password-input" placeholder="Confirm password">
                 <hr style="margin: 1.5rem 0">
                 <div class="save-btn-container">
                     <button class="save-new-password-btn">Save</button>
