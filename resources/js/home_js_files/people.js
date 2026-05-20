@@ -1,5 +1,6 @@
 
 
+
 // console.log('people sectiooooonnnn!!');
 function _(element) {
     return document.querySelector(element);
@@ -7,6 +8,11 @@ function _(element) {
 
 // CSRF token.
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+// Keep track of the current page for displaying friends (pagination. The pagination code is further below).
+// This variable is here to avoid hoisting issues with the getMyFriends() function which needs this variable 
+// to be declared before it is called.
+let friendsCurrentPage = 1;
 
 // This part of the code calls a different function depending on which radio (friends/people) is currently checked.
 // It will either call the function that displays friends or the function that displays people.
@@ -31,14 +37,16 @@ if (friendsRadio.checked) {
 
 friendsRadio.addEventListener('change', function () {
     if (this.checked) {
-        console.log('friends');
+        currentFeed = 'friends';
+        console.log('current feed:', currentFeed);
         displayFriends(friends);
     }
 });
 
 peopleRadio.addEventListener('change', function () {
     if (this.checked) {
-        console.log('people');
+        currentFeed = 'people';
+        console.log('current feed:', currentFeed);
         getPeople(OtherUsersCurrentPage);
     }
 });
@@ -47,22 +55,26 @@ peopleRadio.addEventListener('change', function () {
 // DISPLAY FRIENDS CODE.
 /////////////////////////
 
+
+
 async function getMyFriends() {
 
     // while friends are retrived in the backend we want to show the loading GIF.
     const blueLoadingGIF = _('.loading-gif-container');
     blueLoadingGIF.classList.add('show');
 
+    // Fetch request to get friends as JSON.
     try {
-        const res = await fetch('/people/get-my-friends');
+        const res = await fetch(`/people/get-my-friends?page=${friendsCurrentPage}`);
 
         if (!res.ok) {
             throw new Error('Error when tryina get all friends:', res.status);
         }
 
         const data = await res.json();
-        
-        displayPaginationButtons(data.friends.length);
+
+        // Determine if displaying pagination buttons is necessary.
+        displayPaginationButtons(data.lastPage);
 
         return data.friends;
 
@@ -192,8 +204,7 @@ function getPeople(currentPage) {
         people = data.people;
         OtherUsersPaginationLastPage = data.lastPage;
         console.log('Other users:', people);
-        console.log('People length:', people.length);
-        displayPaginationButtons(people.length, OtherUsersPaginationLastPage);
+        displayPaginationButtons(OtherUsersPaginationLastPage);
         displayPeople(people);
     })
     .catch(err => console.log(err));
@@ -514,11 +525,14 @@ function cancelFriendRequest(userId) {
 
 let usersWhoHaveSentMeFriendRequest;
 
-document.querySelector('.requests-tab').addEventListener('click', getReceivedFriendRequests);
+requestsTab.addEventListener('click', getReceivedFriendRequests);
 
 // This function makes the variable "usersWhoHaveSentMeFriendRequest" be equal to all the friend requests 
 // that the logged in user has received for them to then be displayed.
 function getReceivedFriendRequests() {
+
+    currentFeed = 'friend-requests';
+    console.log('Current feed:', currentFeed);
 
     // while friend requests are retrived in the backend we want to show the loading GIF.
     const blueLoadingGIF = _('.loading-gif-container');
@@ -851,6 +865,15 @@ function redirect2OtherUserProfile(e) {
 // CODE FOR PAGINATION
 //====================
 
+
+// What feed is being viewed.
+let currentFeed = 'friends';
+
+// FRIENDS PAGINATION VARIABLES.
+
+let friendsLastPage;
+
+// OTHER USERS PAGINATION VARIABLES
 //THIS VARIABLE HELPS WITH THE PAGINATION. IT HELPS KEEP TRACK OF WHICH SET OF USERS NEEDS TO BE RETRIEVED AND DISPLAYED.
 let OtherUsersCurrentPage = 1; 
 let OtherUsersPaginationLastPage;
@@ -860,24 +883,48 @@ let OtherUsersPaginationLastPage;
 const paginationButtonsWrapper = _('.pagination-buttons-wrapper');
 
 // Display/hide pagination buttons.
-function displayPaginationButtons(numberOfObjects, lastPage) {
+function displayPaginationButtons(lastPage) {
 
-    OtherUsersPaginationLastPage = lastPage;
+    // Checking which feed is currently being displayed.
+    if (currentFeed == 'friends') {
+        friendsLastPage = lastPage;
 
-    // Shows or hides pagination controls based on whether there is more than one page of results.
-    // Pagination is shown if the current page has enough results to paginate, or if the user
-    // has already navigated past page 1 (in which case the Previous button must remain visible).
-    // Btw the 5 in the line below has to match the integer in paginate() in "getPeople" method inside PeopleController.
-    if (OtherUsersCurrentPage > 1 || lastPage > 1) {
+        // Shows or hides pagination controls based on whether there is more than one page of results.
+        // Pagination is shown if the current page has enough results to paginate, or if the user
+        // has already navigated past page 1 (in which case the Previous button must remain visible).
+        // Btw the 5 in the line below has to match the integer in paginate() in "getPeople" method inside PeopleController.
+        if (friendsCurrentPage > 1 || lastPage > 1) {
 
-        paginationButtonsWrapper.innerHTML = `
-            <button class="pagination-btn pagination-previous">Previous</button>
-            <p>Page ${OtherUsersCurrentPage} of ${lastPage}</p>
-            <button class="pagination-btn pagination-next">Next </button>
-        `;
-    } else {
-        // Not enough results to paginate, hide the buttons entirely.
-        paginationButtonsWrapper.innerHTML = "";
+            paginationButtonsWrapper.innerHTML = `
+                <button class="pagination-btn pagination-previous">Previous</button>
+                <p>Page ${friendsCurrentPage} of ${lastPage}</p>
+                <button class="pagination-btn pagination-next">Next </button>
+            `;
+        } else {
+            // Not enough results to paginate, hide the buttons entirely.
+            paginationButtonsWrapper.innerHTML = "";
+        }
+    }
+    else if (currentFeed == 'people') {
+
+
+        OtherUsersPaginationLastPage = lastPage;
+
+        // Shows or hides pagination controls based on whether there is more than one page of results.
+        // Pagination is shown if the current page has enough results to paginate, or if the user
+        // has already navigated past page 1 (in which case the Previous button must remain visible).
+        // Btw the 5 in the line below has to match the integer in paginate() in "getPeople" method inside PeopleController.
+        if (OtherUsersCurrentPage > 1 || lastPage > 1) {
+
+            paginationButtonsWrapper.innerHTML = `
+                <button class="pagination-btn pagination-previous">Previous</button>
+                <p>Page ${OtherUsersCurrentPage} of ${lastPage}</p>
+                <button class="pagination-btn pagination-next">Next </button>
+            `;
+        } else {
+            // Not enough results to paginate, hide the buttons entirely.
+            paginationButtonsWrapper.innerHTML = "";
+        }
     }
     
 }
@@ -886,14 +933,30 @@ function displayPaginationButtons(numberOfObjects, lastPage) {
 
 // Event listeners for pagination buttons
 document.addEventListener('click', (e) => {
-    if (e.target.matches('.pagination-next') && OtherUsersCurrentPage < OtherUsersPaginationLastPage) {
-        console.log("NEXT");
-        OtherUsersCurrentPage += 1;
-        getPeople(OtherUsersCurrentPage);
+    // Check to see which pagination button is being clicked.
+    if (e.target.matches('.pagination-next')) {
+        // Checking to see which
+        if (currentFeed == 'friends' && friendsCurrentPage < friendsLastPage) {
+            console.log("NEXT");
+            friendsCurrentPage += 1;
+            displayFriends();
+        } 
+        else if (currentFeed == 'people' && OtherUsersCurrentPage < OtherUsersPaginationLastPage) {
+            console.log("NEXT");
+            OtherUsersCurrentPage += 1;
+            getPeople(OtherUsersCurrentPage);
+        }
     }
-    else if (e.target.matches('.pagination-previous') && OtherUsersCurrentPage != 1) {
-        console.log("PREVIOUS");
-        OtherUsersCurrentPage -= 1;
-        getPeople(OtherUsersCurrentPage);
+    else if (e.target.matches('.pagination-previous')) {
+        if (currentFeed == 'friends' && friendsCurrentPage != 1) {
+            console.log("PREVIOUS");
+            friendsCurrentPage -= 1;
+            displayFriends();
+        }
+        else if (currentFeed == 'people' && OtherUsersCurrentPage != 1) {
+            console.log("PREVIOUS");
+            OtherUsersCurrentPage -= 1;
+            getPeople(OtherUsersCurrentPage);
+        }
     }
 });
