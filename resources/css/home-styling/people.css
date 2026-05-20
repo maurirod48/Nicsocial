@@ -40,6 +40,11 @@
     text-align: center;
 }
 
+.no-friends-message-container {
+    margin-top: 4rem;
+    text-align: center;
+}
+
 #people-radio, #friends-radio, #requests-radio {
     display: none;
 }
@@ -68,6 +73,11 @@ body:has(#requests-radio:checked) .blue-line-under-requests-tab {
     height: 20px;
     background-color: rgb(0, 153, 255);
     display: block;
+}
+
+.no-requests-message-container {
+    text-align: center;
+    margin-top: 3rem;
 }
 /* USER CARD */
 
@@ -316,5 +326,13 @@ body:has(#requests-radio:checked) .blue-line-under-requests-tab {
         font-size: 1rem;
         padding: .2rem .8rem;
         width: 90px;
+    }
+
+    .no-friends-message-container h2{
+        font-size: 1.3rem;
+    }
+
+    .no-requests-message-container h2 {
+        font-size: 1.3rem;
     }
 }

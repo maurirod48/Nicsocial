@@ -313,7 +313,10 @@ EDIT PROFILE POPUP STYLING
     padding: 1rem;
 }
 
-
+.no-posts-message-container {
+    text-align: center;
+    margin: 2rem;
+}
 
 /* Post button/form style */
 .post-btn-wrapper {

@@ -38,7 +38,6 @@ if (friendsRadio.checked) {
 friendsRadio.addEventListener('change', function () {
     if (this.checked) {
         currentFeed = 'friends';
-        console.log('current feed:', currentFeed);
         displayFriends(friends);
     }
 });
@@ -46,7 +45,6 @@ friendsRadio.addEventListener('change', function () {
 peopleRadio.addEventListener('change', function () {
     if (this.checked) {
         currentFeed = 'people';
-        console.log('current feed:', currentFeed);
         getPeople(OtherUsersCurrentPage);
     }
 });
@@ -151,6 +149,15 @@ async function displayFriends() {
     // Removing loading GIF once all friends have been displayed.
     const blueLoadingGIF = _('.loading-gif-container');
     blueLoadingGIF.classList.remove('show');
+
+
+    if (friends.length < 1) {
+        dynamicSection.innerHTML = `
+            <div class="no-friends-message-container">
+                <h2>Nothing to show here yet.</h2>
+            </div>
+        `;
+    }
 }
 
 // Code to get all friends requests (all users this currently logged in user has sent a friend request to). This will later be used to decide what button to display for a user (add friend/cancel request).
@@ -532,7 +539,6 @@ requestsTab.addEventListener('click', getReceivedFriendRequests);
 function getReceivedFriendRequests() {
 
     currentFeed = 'friend-requests';
-    console.log('Current feed:', currentFeed);
 
     // while friend requests are retrived in the backend we want to show the loading GIF.
     const blueLoadingGIF = _('.loading-gif-container');
@@ -550,7 +556,12 @@ function getReceivedFriendRequests() {
         if (data.success) {
             usersWhoHaveSentMeFriendRequest = data.response;
             console.log('People who have sent you friend requests:', usersWhoHaveSentMeFriendRequest);
-            displayPaginationButtons(usersWhoHaveSentMeFriendRequest.length);
+            console.log('LENGTH', usersWhoHaveSentMeFriendRequest.length);
+
+            // For pagination.
+            displayPaginationButtons(usersWhoHaveSentMeFriendRequest.length); 
+
+            // To display data.
             displayReceivedFriendRequests(usersWhoHaveSentMeFriendRequest);
         }
     })
@@ -624,6 +635,15 @@ function displayReceivedFriendRequests(data) {
     // while friends are retrived in the backend we want to show the loading GIF.
     const blueLoadingGIF = _('.loading-gif-container');
     blueLoadingGIF.classList.remove('show');
+
+    if (data.length < 1) {
+        console.log('NOTHING TO SHOW HERE YET');
+        dynamicSection.innerHTML = `
+            <div class="no-requests-message-container">
+                <h2>Nothing to show here yet.</h2>
+            </div>
+        `;
+    }
 }
 
 //////////////////////////////

@@ -136,6 +136,12 @@
                 @endforeach
 
                 {{ $posts->links() }}
+
+                @if (count($posts) < 1)
+                    <div class="no-posts-message-container">
+                        <h2>Nothing to show here yet.</h2>
+                    </div>
+                @endif
             </section>
 
             {{-- This popup will show up when user wants to create a post, therefor it is not displayed by  default --}}
