@@ -140,6 +140,12 @@
                 </div>
             @endforeach
             
+
+            @if (count($posts) < 1)
+                <div class="no-posts-message-container">
+                    <h2>Nothing to show here yet.</h2>
+                </div>
+            @endif
         </div>
         {{ $posts->links() }}
     </div>

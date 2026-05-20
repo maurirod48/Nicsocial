@@ -160,6 +160,10 @@
     gap: .5rem;
 }
 
+.no-posts-message-container {
+    text-align: center;
+    margin: 2rem;
+}
 
 @media (max-width:940px) {
     .other-profile-section-container {
