@@ -107,10 +107,10 @@ class PeopleController extends Controller
         return back();
     }
 
-    public function getReceivedFriendRequests() {
+    public function getReceivedFriendRequests(Request $request) {
         $loggedInUser = auth()->user();
 
-        $response = $loggedInUser->pendingReceivedFriendRequest()->get();
+        $response = $loggedInUser->pendingReceivedFriendRequest()->paginate(10);
 
         $mappedResponse = $response->map(function ($user) {
             if ($user->profile_pic_path == 'none') {
@@ -122,7 +122,7 @@ class PeopleController extends Controller
             return $user;
         });
 
-        return response()->json(['success' => true, 'response' => $mappedResponse]);
+        return response()->json(['success' => true, 'response' => $mappedResponse, 'lastPage' => $response->lastPage()]);
     }
 
     // this function is called when displaying people (all users) in the people section. This is useful to know which button to display for that user.

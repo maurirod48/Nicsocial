@@ -1,7 +1,7 @@
 
 
 
-// console.log('people sectiooooonnnn!!');
+// Short function to grab HTML elements by class name.
 function _(element) {
     return document.querySelector(element);
 }
@@ -38,7 +38,7 @@ if (friendsRadio.checked) {
 friendsRadio.addEventListener('change', function () {
     if (this.checked) {
         currentFeed = 'friends';
-        displayFriends(friends);
+        displayFriends();
     }
 });
 
@@ -450,7 +450,6 @@ async function displayPeople(people) {
 
 document.querySelector('.dynamic-section').addEventListener('click', e => {
     if (e.target.matches('.add-friend-btn')) {
-        console.log('add friend btn clicked');
 
         // Grabbing the user card div element.
         const userCard = e.target.closest('.user-card');
@@ -494,7 +493,6 @@ function sendFriendRequest(friendId) {
 
 document.querySelector('.dynamic-section').addEventListener('click', (e) => {
     if (e.target.matches('.cancel-friend-request-btn')) {
-        console.log('cancel');
         whichRequestToCancel(e);
     }
 })
@@ -508,7 +506,6 @@ function whichRequestToCancel(e) {
 }
 
 function cancelFriendRequest(userId) {
-    console.log(userId);
 
     fetch(`/people/cancel-friend-request/${userId}`)
     .then(res => {
@@ -520,7 +517,6 @@ function cancelFriendRequest(userId) {
     })
     .then(data => {
         if (data.success) {
-            console.log('Friend request cancel');
             getPeople(OtherUsersCurrentPage);
         }
     })
@@ -538,13 +534,14 @@ requestsTab.addEventListener('click', getReceivedFriendRequests);
 // that the logged in user has received for them to then be displayed.
 function getReceivedFriendRequests() {
 
+    // Updating currentFeed variable which keeps track of the current feed being displayed.
     currentFeed = 'friend-requests';
 
     // while friend requests are retrived in the backend we want to show the loading GIF.
     const blueLoadingGIF = _('.loading-gif-container');
     blueLoadingGIF.classList.add('show');
 
-    fetch('/people/get-received-friend-requests')
+    fetch(`/people/get-received-friend-requests?page=${friendRequestsCurrentPage}`)
     .then(res => {
         if (!res.ok) {
             throw new Error('Error while tryina get friend:', res.status);
@@ -556,10 +553,9 @@ function getReceivedFriendRequests() {
         if (data.success) {
             usersWhoHaveSentMeFriendRequest = data.response;
             console.log('People who have sent you friend requests:', usersWhoHaveSentMeFriendRequest);
-            console.log('LENGTH', usersWhoHaveSentMeFriendRequest.length);
 
-            // For pagination.
-            displayPaginationButtons(usersWhoHaveSentMeFriendRequest.length); 
+            // Calling pagination.
+            displayPaginationButtons(data.lastPage); 
 
             // To display data.
             displayReceivedFriendRequests(usersWhoHaveSentMeFriendRequest);
@@ -636,6 +632,7 @@ function displayReceivedFriendRequests(data) {
     const blueLoadingGIF = _('.loading-gif-container');
     blueLoadingGIF.classList.remove('show');
 
+    // Message for when no data is to be displayed in this feed.
     if (data.length < 1) {
         console.log('NOTHING TO SHOW HERE YET');
         dynamicSection.innerHTML = `
@@ -757,7 +754,8 @@ function acceptFriendRequest(userId) {
     .then(data => {
         if (data.success) {
             console.log('friend request accepted');
-            location.reload();
+            // Full reload without cookies so that the friends feed is shown after accepting a friend request.
+            location.reload(true);
         }
         
     })
@@ -886,17 +884,20 @@ function redirect2OtherUserProfile(e) {
 //====================
 
 
-// What feed is being viewed.
+// Variable to keep track of what feed is currently being viewed.
 let currentFeed = 'friends';
 
-// FRIENDS PAGINATION VARIABLES.
-
+// ** FRIENDS PAGINATION VARIABLES.
 let friendsLastPage;
 
-// OTHER USERS PAGINATION VARIABLES
+// ** OTHER USERS PAGINATION VARIABLES
 //THIS VARIABLE HELPS WITH THE PAGINATION. IT HELPS KEEP TRACK OF WHICH SET OF USERS NEEDS TO BE RETRIEVED AND DISPLAYED.
 let OtherUsersCurrentPage = 1; 
 let OtherUsersPaginationLastPage;
+
+// ** FRIEND REQUESTS PAGINATION VARIABLES.
+let friendRequestsCurrentPage = 1;
+let friendRequestsLastPage;
 
 
 // HTML element where pagination buttons go when displayed.
@@ -907,6 +908,8 @@ function displayPaginationButtons(lastPage) {
 
     // Checking which feed is currently being displayed.
     if (currentFeed == 'friends') {
+
+        // This variable is used to keep track of  the last page of the corresponding feed.
         friendsLastPage = lastPage;
 
         // Shows or hides pagination controls based on whether there is more than one page of results.
@@ -927,7 +930,7 @@ function displayPaginationButtons(lastPage) {
     }
     else if (currentFeed == 'people') {
 
-
+        // This variable is used to keep track of  the last page of the corresponding feed.
         OtherUsersPaginationLastPage = lastPage;
 
         // Shows or hides pagination controls based on whether there is more than one page of results.
@@ -945,6 +948,26 @@ function displayPaginationButtons(lastPage) {
             // Not enough results to paginate, hide the buttons entirely.
             paginationButtonsWrapper.innerHTML = "";
         }
+    } else if (currentFeed == 'friend-requests') {
+
+
+        // This variable is used to keep track of  the last page of the corresponding feed.
+        friendRequestsLastPage = lastPage;
+
+        // Shows or hides pagination controls based on whether there is more than one page of results.
+        // Pagination is shown if the current page has enough results to paginate, or if the user
+        // has already navigated past page 1 (in which case the Previous button must remain visible).
+        if (friendRequestsCurrentPage > 1 || lastPage > 1) {
+
+            paginationButtonsWrapper.innerHTML = `
+                <button class="pagination-btn pagination-previous">Previous</button>
+                <p>Page ${friendRequestsCurrentPage} of ${lastPage}</p>
+                <button class="pagination-btn pagination-next">Next </button>
+            `;
+        } else {
+            // Not enough results to paginate, hide the buttons entirely.
+            paginationButtonsWrapper.innerHTML = "";
+        }
     }
     
 }
@@ -954,31 +977,38 @@ function displayPaginationButtons(lastPage) {
 // Event listeners for pagination buttons
 document.addEventListener('click', (e) => {
 
-    // Check to see which pagination button is being clicked. 
+    // CHECKING TO SEE WHICH PAGINATION BUTTON IS BEING CLICKED.
+
+    // NEXT PAGE BUTTON.
     if (e.target.matches('.pagination-next')) {
         // Checking to see which feed is being currently displayed.
         // Variables that keep track of current page and last page change depending on the current feed.
         if (currentFeed == 'friends' && friendsCurrentPage < friendsLastPage) {
-            console.log("NEXT");
             friendsCurrentPage += 1;
             displayFriends();
         } 
         else if (currentFeed == 'people' && OtherUsersCurrentPage < OtherUsersPaginationLastPage) {
-            console.log("NEXT");
             OtherUsersCurrentPage += 1;
             getPeople(OtherUsersCurrentPage);
         }
+        else if (currentFeed == 'friend-requests' && friendRequestsCurrentPage < friendRequestsLastPage) {
+            friendRequestsCurrentPage += 1;
+            getReceivedFriendRequests();
+        }
     }
+    // PREVIOUS PAGE BUTTON.
     else if (e.target.matches('.pagination-previous')) {
         if (currentFeed == 'friends' && friendsCurrentPage != 1) {
-            console.log("PREVIOUS");
             friendsCurrentPage -= 1;
             displayFriends();
         }
         else if (currentFeed == 'people' && OtherUsersCurrentPage != 1) {
-            console.log("PREVIOUS");
             OtherUsersCurrentPage -= 1;
             getPeople(OtherUsersCurrentPage);
+        }
+        else if (currentFeed == 'friend-requests' && friendRequestsCurrentPage != 1) {
+            friendRequestsCurrentPage -= 1;
+            getReceivedFriendRequests();
         }
     }
 });
