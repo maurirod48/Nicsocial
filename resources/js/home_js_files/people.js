@@ -933,9 +933,11 @@ function displayPaginationButtons(lastPage) {
 
 // Event listeners for pagination buttons
 document.addEventListener('click', (e) => {
-    // Check to see which pagination button is being clicked.
+
+    // Check to see which pagination button is being clicked. 
     if (e.target.matches('.pagination-next')) {
-        // Checking to see which
+        // Checking to see which feed is being currently displayed.
+        // Variables that keep track of current page and last page change depending on the current feed.
         if (currentFeed == 'friends' && friendsCurrentPage < friendsLastPage) {
             console.log("NEXT");
             friendsCurrentPage += 1;
