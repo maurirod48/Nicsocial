@@ -190,9 +190,10 @@ function getPeople(currentPage) {
     })
     .then(data => {
         people = data.people;
-        OtherUsersLastPage = data.lastPage;
-        console.log(people);
-        displayPaginationButtons(people.length, OtherUsersLastPage);
+        OtherUsersPaginationLastPage = data.lastPage;
+        console.log('Other users:', people);
+        console.log('People length:', people.length);
+        displayPaginationButtons(people.length, OtherUsersPaginationLastPage);
         displayPeople(people);
     })
     .catch(err => console.log(err));
@@ -852,7 +853,7 @@ function redirect2OtherUserProfile(e) {
 
 //THIS VARIABLE HELPS WITH THE PAGINATION. IT HELPS KEEP TRACK OF WHICH SET OF USERS NEEDS TO BE RETRIEVED AND DISPLAYED.
 let OtherUsersCurrentPage = 1; 
-let OtherUsersLastPage;
+let OtherUsersPaginationLastPage;
 
 
 // HTML element where pagination buttons go when displayed.
@@ -861,11 +862,13 @@ const paginationButtonsWrapper = _('.pagination-buttons-wrapper');
 // Display/hide pagination buttons.
 function displayPaginationButtons(numberOfObjects, lastPage) {
 
+    OtherUsersPaginationLastPage = lastPage;
+
     // Shows or hides pagination controls based on whether there is more than one page of results.
     // Pagination is shown if the current page has enough results to paginate, or if the user
     // has already navigated past page 1 (in which case the Previous button must remain visible).
     // Btw the 5 in the line below has to match the integer in paginate() in "getPeople" method inside PeopleController.
-    if (numberOfObjects > 4 || OtherUsersCurrentPage > 1) {
+    if (OtherUsersCurrentPage > 1 || lastPage > 1) {
 
         paginationButtonsWrapper.innerHTML = `
             <button class="pagination-btn pagination-previous">Previous</button>
@@ -883,7 +886,7 @@ function displayPaginationButtons(numberOfObjects, lastPage) {
 
 // Event listeners for pagination buttons
 document.addEventListener('click', (e) => {
-    if (e.target.matches('.pagination-next')) {
+    if (e.target.matches('.pagination-next') && OtherUsersCurrentPage < OtherUsersPaginationLastPage) {
         console.log("NEXT");
         OtherUsersCurrentPage += 1;
         getPeople(OtherUsersCurrentPage);

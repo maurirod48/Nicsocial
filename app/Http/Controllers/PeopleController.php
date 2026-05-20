@@ -13,16 +13,14 @@ class PeopleController extends Controller
         // authenticated user.
         $authUser = auth()->user();
 
-        // Get all users who arent the authenticated user and using the paginate method to not grab all of them at once.
-        $people = User::where('id', '!=', auth()->user()->id)
-                ->paginate(5);
+        // List of IDs of the authUser's friends.
+        $friendsIDs = $authUser->friends()->pluck('friend');
 
-        // Filtering out users who already are my friends.
-        $nonFriendUsers = $people->filter(function ($user) use ($authUser) {
-            if ($authUser->friends()->where('friend', '!=', $user->id)) {
-                return $user;
-            }
-        });
+
+        // Get all users who arent the authenticated user and using the paginate method to not grab all of them at once.
+        $people = User::where('id', '!=', $authUser->id)
+                ->whereNotIn('id', $friendsIDs)
+                ->paginate(5);
 
         // Here we use map() to add a new attribute called "profile_pic_s3_url". This new attribute contains the
         // s3 url which will then be used to display the user's profile pic. If the user has no profile pic, then this value is NULL
@@ -35,6 +33,8 @@ class PeopleController extends Controller
 
             return $user;
         });
+
+        // Return JSON response.
         return response()->json(['people' => $mappedPeople, 'lastPage' => $people->lastPage()]);
     }
 
