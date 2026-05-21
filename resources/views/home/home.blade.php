@@ -21,8 +21,12 @@
         <div class="dynamic-feed-section">
             {{-- JS inserts posts here dynamically depending on the seletec tab --}}
         </div>
+
+        
+    </div>
+    {{-- PAGINATION BUTTONS GO HERE --}}
+    <div class="pagination-buttons-wrapper">
     </div>
 </div>
-
 
 @endsection

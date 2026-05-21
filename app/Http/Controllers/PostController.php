@@ -15,7 +15,7 @@ class PostController extends Controller
         $posts = Post::with('user')
                 ->where('user_id', '!=', Auth()->user()->id)
                 ->orderBy('created_at', 'desc')
-                ->get();
+                ->paginate(3);
 
         // Using map() to add a new attribute to each $post object. This new attr will let us know if the currently logged in
         // user has liked or disliked $this post.
@@ -29,7 +29,7 @@ class PostController extends Controller
             return $post;
         });
 
-        return response()->json(['success' => true, 'publicPosts' => $mappedPosts]);
+        return response()->json(['success' => true, 'publicPosts' => $mappedPosts, 'lastPage' => $posts->lastPage()]);
     }
 
     public function createPost(Request $request) {
@@ -276,7 +276,7 @@ class PostController extends Controller
         // This is thanks to a model relationship in the Post.php model.
         $friendsPosts = Post::with('user')->whereIn('user_id', $listOfUserIDs)
                             ->orderBy('created_at', 'desc')
-                            ->get();
+                            ->paginate(5);
 
 
         // Using map() to add a new attribute to each $post object. This new attr will let us know if the currently logged in
@@ -293,6 +293,6 @@ class PostController extends Controller
 
 
         // Returning response to JS.
-        return response()->json(['friendsPosts' => $mappedPosts]);
+        return response()->json(['friendsPosts' => $mappedPosts, 'lastPage' => $friendsPosts->lastPage()]);
     }
 }

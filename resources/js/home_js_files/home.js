@@ -7,7 +7,15 @@ function _(element) {
 // CSRF token for POST requests to Laravel.
 const csrfToken = _('meta[name="csrf-token"]').getAttribute('content');
 
+// VARIABLES TO KEEP TRACK OF PAGINATION.
 
+// keep track of current feed being displayed.
+let currentFeed = 'public';
+
+// Keep track of current page for home feed.
+let publicFeedCurrentPage = 1;
+// Keep track of current page for friends posts feed.
+let friendsFeedCurrentPage = 1;
 
 //////////////////////////////////////////
 // CODE TO GET POSTS AND THEN DISPLAY THEM
@@ -24,7 +32,7 @@ friendsFeedRadio.addEventListener('change', getFriendsOnlyPosts);
 
 // function to get all public posts.
 function getPublicPosts() {
-    fetch('/get-public-posts')
+    fetch(`/get-public-posts?page=${publicFeedCurrentPage}`)
     .then(res => {
         if (!res.ok) {
             throw new Error('Bad response when trying to get posts:', res.status);
@@ -36,6 +44,12 @@ function getPublicPosts() {
         if(data.success) {
             console.log(data.publicPosts);
             console.log('posts were returned');
+
+            // Updating current feed tracking variable.
+            currentFeed = 'public';
+
+            // Display pagination.
+            displayPaginationButtons(data.lastPage);
 
             // Calling function to display public posts.
             displayPublicPosts(data.publicPosts);
@@ -210,7 +224,7 @@ function displayPublicPosts(posts) {
 // Function to get posts that friends have posts.
 function getFriendsOnlyPosts() {
 
-    fetch('/get-friends-posts')
+    fetch(`/get-friends-posts?page=${friendsFeedCurrentPage}`)
     .then(res => {
         if (!res.ok) {
             throw new Error("Something went wrong when trying to get your friends' posts:", res.status);
@@ -220,6 +234,14 @@ function getFriendsOnlyPosts() {
     })
     .then(data => {
         console.log(data.friendsPosts);
+
+        // Updating current feed tracking variable.
+        currentFeed = 'friends';
+
+        // Pagination.
+        displayPaginationButtons(data.lastPage);
+        
+        // Displat friends posts.
         displayFriendsPosts(data.friendsPosts);
     })
     .catch(err => console.error(err))
@@ -561,4 +583,41 @@ function whatUser(e) {
 // Function to redirect user.
 function redirect2UserProfilePage(userId) {
     window.location.href = `/other-user-profile/${userId}`;
+}
+
+
+// PAGINATION CODE
+
+const paginationButtonsWrapper = _('.pagination-buttons-wrapper');
+
+function displayPaginationButtons(lastPage) {
+
+    // Checking if there are is than one page for pagination. If there is, then pagination buttons can be displayed.
+    if (lastPage > 1) {
+        if (currentFeed == 'public') {
+            console.log('current feed:', currentFeed);
+            console.log('Last page:', lastPage);
+
+            paginationButtonsWrapper.innerHTML = `
+                <button class="pagination-btn pagination-previous">Previous</button>
+                    <p>Page ${publicFeedCurrentPage} of ${lastPage}</p>
+                <button class="pagination-btn pagination-next">Next </button>
+            `;
+        }
+        else if (currentFeed == 'friends') {
+            console.log('current feed:', currentFeed);
+            console.log('Last page:', lastPage);
+
+            paginationButtonsWrapper.innerHTML = `
+                <button class="pagination-btn pagination-previous">Previous</button>
+                    <p>Page ${friendsFeedCurrentPage} of ${lastPage}</p>
+                <button class="pagination-btn pagination-next">Next </button>
+            `;
+        }
+    } else {
+        console.log('current feed:', currentFeed);
+        console.log('Last page:', lastPage);
+        paginationButtonsWrapper.innerHTML = "";
+    }
+    
 }
