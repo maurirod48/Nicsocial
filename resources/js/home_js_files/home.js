@@ -12,14 +12,16 @@ const csrfToken = _('meta[name="csrf-token"]').getAttribute('content');
 // keep track of current feed being displayed.
 let currentFeed = 'public';
 
-// Keep track of current page for home feed.
+// Keep track of current and last page for home feed.
 let publicFeedCurrentPage = 1;
-// Keep track of current page for friends posts feed.
+let publicFeedLastPage;
+// Keep track of current and last page for friends posts feed.
 let friendsFeedCurrentPage = 1;
+let friendsFeedLastPage;
 
-//////////////////////////////////////////
+//========================================
 // CODE TO GET POSTS AND THEN DISPLAY THEM
-//////////////////////////////////////////
+//========================================
 
 
 // Public feed radio.
@@ -42,9 +44,6 @@ function getPublicPosts() {
     })
     .then(data => {
         if(data.success) {
-            console.log(data.publicPosts);
-            console.log('posts were returned');
-
             // Updating current feed tracking variable.
             currentFeed = 'public';
 
@@ -415,14 +414,13 @@ function displayFriendsPosts(posts) {
 // NOTE!
 // The following functions basically give funcionality to all the buttons that can be found inside a post: like, share, etc.
 
-//////////////////
-// LIKE BUTTON ///
-//////////////////
+//============
+// LIKE BUTTON
+//============
 
 
 document.querySelector('.dynamic-feed-section').addEventListener('click', (e) => {
     if (e.target.matches('.post-like-btn')) {
-        console.log('1000 billion points');
         likeWhatPost(e);
     }
 });
@@ -491,9 +489,9 @@ function likePost(postId, feed) {
 };
 
 
-/////////////////////
-// DISLIKE BUTTON ///
-/////////////////////
+//===============
+// DISLIKE BUTTON
+//===============
 
 _('.dynamic-feed-section').addEventListener('click', (e) => {
     if (e.target.matches('.post-dislike-btn')) {
@@ -508,7 +506,6 @@ function findPostToDislikeID(e) {
     const post = e.target.closest('.post-card');
 
     const postId = post.querySelector('.post-id').value;
-    console.log('dislike button was clicked, post ID:', postId);
 
     // This part here helps indetify if the post they are reacting to is inside the public or friends feed.
     let feed;
@@ -523,7 +520,6 @@ function findPostToDislikeID(e) {
 }
 
 function dislikePost(id, feed) {
-    console.log('initiating process to send fetch request over to Laravel, ID:', id);
 
     fetch(`/dislike-post/${id}`,{
         method: 'GET',
@@ -585,8 +581,9 @@ function redirect2UserProfilePage(userId) {
     window.location.href = `/other-user-profile/${userId}`;
 }
 
-
+//================
 // PAGINATION CODE
+//================
 
 const paginationButtonsWrapper = _('.pagination-buttons-wrapper');
 
@@ -595,9 +592,10 @@ function displayPaginationButtons(lastPage) {
     // Checking if there are is than one page for pagination. If there is, then pagination buttons can be displayed.
     if (lastPage > 1) {
         if (currentFeed == 'public') {
-            console.log('current feed:', currentFeed);
-            console.log('Last page:', lastPage);
+            // Updating last page for public feed.
+            publicFeedLastPage = lastPage;
 
+            // Inserting buttons into pagination buttons container HTML element.
             paginationButtonsWrapper.innerHTML = `
                 <button class="pagination-btn pagination-previous">Previous</button>
                     <p>Page ${publicFeedCurrentPage} of ${lastPage}</p>
@@ -605,9 +603,10 @@ function displayPaginationButtons(lastPage) {
             `;
         }
         else if (currentFeed == 'friends') {
-            console.log('current feed:', currentFeed);
-            console.log('Last page:', lastPage);
+            // Updating last page for public feed.
+            friendsFeedLastPage = lastPage;
 
+            // Inserting buttons into pagination buttons container HTML element.
             paginationButtonsWrapper.innerHTML = `
                 <button class="pagination-btn pagination-previous">Previous</button>
                     <p>Page ${friendsFeedCurrentPage} of ${lastPage}</p>
@@ -619,5 +618,38 @@ function displayPaginationButtons(lastPage) {
         console.log('Last page:', lastPage);
         paginationButtonsWrapper.innerHTML = "";
     }
-    
 }
+
+// ** PAGINATION BUTTONS
+paginationButtonsWrapper.addEventListener('click', (e) => {
+    // checking which pagination button was clicked.
+    if (e.target.matches('.pagination-previous')) {
+        // **PREVIOUS BUTTON FUNCTIONALITY FOR PUBLIC FEED.
+
+        // Verifying current feed and making sure there is a "next page" for display.
+        if (currentFeed == 'public' && publicFeedCurrentPage > 1) {
+            publicFeedCurrentPage -= 1;
+            // Getting all public posts and displaying them.
+            getPublicPosts();
+        }
+        // **PREVIOUS BUTTON FUNCTIONALITY FOR FRIENDS FEED.
+        else if (currentFeed == 'friends' && friendsFeedCurrentPage > 1) {
+            friendsFeedCurrentPage -= 1;
+            getFriendsOnlyPosts();
+        }
+    } else if (e.target.matches('.pagination-next')) {
+        // **NEXT BUTTON FUNCTIONALITY FOR PUBLIC FEED.
+
+        // Verifying current feed and making sure there is a "next page" for display.
+        if (currentFeed == 'public' && publicFeedCurrentPage < publicFeedLastPage) {
+            publicFeedCurrentPage += 1;
+            // Getting all public posts and displaying them.
+            getPublicPosts();
+        }
+        // **PREVIOUS BUTTON FUNCTIONALITY FOR PUBLIC FEED.
+        else if (currentFeed == 'friends' && friendsFeedCurrentPage < friendsFeedLastPage) {
+            friendsFeedCurrentPage += 1;
+            getFriendsOnlyPosts();
+        }
+    }
+});
