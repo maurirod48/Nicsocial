@@ -70,6 +70,36 @@
     cursor: pointer;
 }
 
+.delete-friend-request-btn {
+    padding: .5rem 1rem;
+    border: none;
+    background-color: rgb(154, 12, 4);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+.delete-friend-request-btn:hover {
+    background-color: rgb(64, 10, 10);
+}
+
+.accept-friend-request-btn {
+    padding: .5rem 1rem;
+    border: none;
+    background-color: rgb(27, 4, 154);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+
+.accept-friend-request-btn:hover {
+    background-color: rgb(16, 10, 64);
+}
+
 .unfriend-btn {
     padding: .5rem 1rem;
     border: none;
@@ -235,7 +265,7 @@
 }
 
 /* PHONE VIEW */
-@media (max-width:400px) {
+@media (max-width:440px) {
     .other-profile-section-container {
         width: 300px;
     }
@@ -289,5 +319,20 @@
     .post-footer {
         /* display: flex; */
         align-items: center;
+    }
+
+    .accept-delete-btns-container {
+        display: flex; flex-direction: column;
+        gap: .5rem;
+    }
+
+    .accept-friend-request-btn {
+        padding: .3rem .8rem;
+        font-size: .7rem;
+    } 
+
+    .delete-friend-request-btn {
+        padding: .3rem .8rem;
+        font-size: .7rem;
     }
 }

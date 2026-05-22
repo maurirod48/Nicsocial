@@ -134,9 +134,12 @@ Route::get('/people/friends-already/{user}', [PeopleController::class, 'areWeFri
 
 // Delete/reject friend request.
 Route::post('/people/delete-friend-request', [PeopleController::class, 'deleteFriendRequest']);
+Route::post('/other-user-profile/delete-friend-request', [PeopleController::class, 'deleteFriendRequestFromUserProfilePage'])->name('delete.friend.request');
 
 // Accept friend request.
-Route::post('people/accept-friend-request', [PeopleController::class, 'acceptFriendRequest']);
+Route::post('people/accept-friend-request', [PeopleController::class, 'acceptFriendRequest']); // From people section.
+// From other user profile page.
+Route::post('other-user-profile/accept-friend-request', [PeopleController::class, 'acceptFriendRequestFromUserProfileSection'])->name('accept.friend.request');
 
 // Get all my friends.
 Route::get('/people/get-my-friends', [PeopleController::class, 'getMyFriends']);

@@ -152,6 +152,19 @@ class PeopleController extends Controller
         return response()->json(['success' => true]);
     }
 
+    public function deleteFriendRequestFromUserProfilePage(Request $request) {
+        // User who sent friend request.
+        $otherUser = User::findOrFail($request->user_id);
+
+        // Authenticated user.
+        $authUser = auth()->user();
+
+        // Deleting request record from database.
+        $otherUser->pendingSentFriendRequests()->detach($authUser->id);
+
+        return back();
+    }
+
     public function acceptFriendRequest(Request $request) {
         $json = $request->json()->all();
 
@@ -169,6 +182,23 @@ class PeopleController extends Controller
         $loggedInUser->pendingReceivedFriendRequest()->detach($userId);
 
         return response()->json(['success' => true]);
+    }
+
+    public function acceptFriendRequestFromUserProfileSection(Request $request) {
+        // User that received friend request.
+        $otherUser = User::findOrFail($request->user_id);
+
+        // Authenticated user.
+        $authUser = auth()->user();
+
+        // creating 2 way friend relationship.
+        $authUser->friends()->attach($otherUser->id);
+        $otherUser->friends()->attach($authUser->id);
+
+        // Delete friend request frm table;
+        $otherUser->pendingSentFriendRequests()->detach($authUser->id);
+
+        return back();
     }
 
     public function areWeFriendsAlready(User $user) {

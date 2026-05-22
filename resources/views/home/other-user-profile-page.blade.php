@@ -39,6 +39,19 @@
                         <input type="hidden" name="user_id" class="user-id" value="{{ $user->id }}">
                         <button class="cancel-friend-request-btn">Cancel request</button>
                     </form>
+                @elseif (auth()->user()->pendingReceivedFriendRequest()->where('sender_id', $user->id)->exists())
+                    <div class="accept-delete-btns-container">
+                        <form action="{{ route('accept.friend.request') }}" method="POST">
+                            <input type="hidden" name="user_id" class="user-id" value="{{ $user->id }}">
+                            @csrf
+                            <button class="accept-friend-request-btn">Accept request</button>
+                        </form>
+                        <form action="{{ route('delete.friend.request') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="user_id" class="user-id" value="{{ $user->id }}">
+                            <button class="delete-friend-request-btn">delete request</button>
+                        </form>
+                    </div>
                 @else
                     <form action="{{ route('send-friend-request') }}" method="POST">
                         @csrf
