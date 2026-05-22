@@ -298,7 +298,7 @@ async function displayPeople(people) {
     dynamicSection.innerHTML = '';
 
     // get all friend requests instances.
-    friendRequests = await getFriendRequestInstances();
+    // friendRequests = await getFriendRequestInstances();
     console.log('friend requests array data:', friendRequests);
 
     // creating user card for each user.
