@@ -159,7 +159,7 @@
 
                             <div class="post-form-field">
                                 <label for="desc">Description</label> <br>
-                                <textarea name="description" id="desc">Enter a description</textarea>
+                                <textarea name="description" id="desc" placeholder="Enter a description"></textarea>
                             </div>
 
                             <div class="post-form-field">
@@ -167,7 +167,7 @@
                                     <img src="{{ asset('images/website_images/upload_pic_icon.png') }}" alt="upload pic icon" class="upload-pic-img">
                                 </label>
 
-                                <input type="file" name="postPic" id="upload-img" style="display: none;">
+                                <input type="file" name="postMediaFile" id="upload-img" style="display: none;">
 
                                 {{-- <p class="check-btn">check</p> --}}
                             </div>

@@ -400,8 +400,8 @@ EDIT PROFILE POPUP STYLING
 }
 
 #desc {
-    resize: none;
-    width: 200px;
+    resize: vertical;
+    width: 275px;
     height: 80px;
 }
 
@@ -479,6 +479,25 @@ POST SECTION STYLING
 .post-title {
     font-size: 2rem;
 }
+
+#title {
+    outline: whitesmoke 1px solid;
+    padding: .5rem;
+    border-radius: .3rem
+}
+#title:focus {
+    outline: rgb(36, 63, 236) 1px solid;
+}
+
+#desc {
+    outline: whitesmoke 1px solid;
+    padding: .5rem;
+    border-radius: .3rem
+}
+#desc:focus {
+    outline: rgb(36, 63, 236) 1px solid;
+}
+
 
 .post-description {
     padding: 1rem;

@@ -32,8 +32,8 @@ class PostController extends Controller
         return response()->json(['success' => true, 'publicPosts' => $mappedPosts, 'lastPage' => $posts->lastPage()]);
     }
 
+    // Code to insert post into posts table
     public function createPost(Request $request) {
-        // Code to insert post into posts table.
 
         // Validating data received.
         $input = $request->validate([
@@ -41,16 +41,15 @@ class PostController extends Controller
             'description' => 'required',
         ]);
 
-
         // I forgot to set a default value for these columns in the "posts" table so I defined them here.
         $input['likes'] = 0;
         $input['dislikes'] = 0;
         $input['times_shared'] = 0;
         $input['user_id'] = Auth()->user()->id;
 
-        if ($request->postPic) {
+        if ($request->postMediaFile) {
             // getting file/image name.
-            $img = $request->file('postPic');
+            $img = $request->file('postMediaFile');
             $imgName = $img->getClientOriginalName();
 
             $input['image'] = $imgName;

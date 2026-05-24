@@ -299,7 +299,7 @@ async function displayPeople(people) {
 
     // get all friend requests instances.
     // friendRequests = await getFriendRequestInstances();
-    console.log('friend requests array data:', friendRequests);
+    // console.log('friend requests array data:', friendRequests);
 
     // creating user card for each user.
     for (const user of people) {
@@ -330,7 +330,6 @@ async function displayPeople(people) {
                             <button class="accept-friend-request-btn">confirm</button>
                             <button class="delete-friend-request-btn">delete</button>
                         </div>
-                        
                     `;
                 } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
                     userCard.innerHTML = `
