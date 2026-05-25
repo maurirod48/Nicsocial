@@ -449,11 +449,16 @@ POST SECTION STYLING
 
     display: flex;
     flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    
 }
 
 .post-container {
     padding: 1rem;
     border: solid 1px white;
+    width: 700px;
 }
 
 .post-header {
@@ -510,6 +515,11 @@ POST SECTION STYLING
 
     padding-bottom: 1.5rem;
     padding-left: 1rem;
+}
+
+.post-video {
+    height: 300px;
+    width: 100%;
 }
 
 .like-btn-img, .dislike-btn-img, .share-btn-img {
@@ -724,6 +734,10 @@ POST SECTION STYLING
         padding: 1rem 1.5rem;
     }
 
+    .post-container {
+        width: 600px;
+    }
+
     .posts-section {
         padding: 0 1rem;
     }
@@ -738,5 +752,16 @@ POST SECTION STYLING
     #desc {
         width: 100%;
         box-sizing: border-box;
+    }
+}
+
+@media (max-width: 420px) {
+    .post-container {
+        width: 350px;
+    }
+
+    .post-image {
+        max-width: 320px;
+        padding-left: 0;
     }
 }
