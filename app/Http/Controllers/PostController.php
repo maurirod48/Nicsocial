@@ -49,19 +49,26 @@ class PostController extends Controller
 
         if ($request->postMediaFile) {
             // getting file/image name.
-            $img = $request->file('postMediaFile');
-            $imgName = $img->getClientOriginalName();
+            $mediaFile = $request->file('postMediaFile');
+            $mediaFileName = $mediaFile->getClientOriginalName();
+            $mediaFileMIME = $mediaFile->getMimeType();
 
-            $input['image'] = $imgName;
+            $input['file_name'] = $mediaFileName;
+            $input['file_type'] = $mediaFileMIME;
 
-            $path = $img->storeAs('images/post_images', $imgName, 's3');
-
+            // Uploading media file to AWS S3 bucket.
+            if (str_contains($mediaFileMIME, 'image/')) {
+                $mediaFile->storeAs('images/post_images', $mediaFileName, 's3');
+            } else if (str_contains($mediaFileMIME, 'video/')) {
+                $mediaFile->storeAs('videos/post_videos', $mediaFileName, 's3');
+            }
+            
         }
 
         // Inserting new post into "posts" table.
         $post = Post::create($input);
 
-        // creating record to pivot table so there's a link between the post and the author.
+        // Creating record to pivot table so there's a link between the post and the author.
         $user = auth()->user();
         $user->posts()->attach($post->id);
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Post extends Model
 {
     // fillable
-    protected $fillable = ['id', 'title', 'description', 'image', 'likes', 'dislikes', 'times_shared', 'user_id', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'title', 'description', 'file_name', 'file_type', 'likes', 'dislikes', 'times_shared', 'user_id', 'created_at', 'updated_at'];
 
     // relationship with users (using pivot table).
     public function users() {

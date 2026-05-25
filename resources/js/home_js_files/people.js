@@ -211,7 +211,9 @@ function getPeople(currentPage) {
         people = data.people;
         OtherUsersPaginationLastPage = data.lastPage;
         console.log('Other users:', people);
+        // Pagination buttons.
         displayPaginationButtons(OtherUsersPaginationLastPage);
+        // Display retrieved users.
         displayPeople(people);
     })
     .catch(err => console.log(err));

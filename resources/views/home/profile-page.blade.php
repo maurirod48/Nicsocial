@@ -104,8 +104,13 @@
 
                         <p class="post-description">{{ $post->description}}</p>
 
-                        @if ($post->image)
-                            <img src="{{ Storage::disk('s3')->url('images/post_images/' . $post->image) }}" alt="post image" class="post-image">
+                        @if ($post->file_name)
+                            @if (str_contains($post->file_type, 'image/') or $post->file_type == NULL)
+                                <img src="{{ Storage::disk('s3')->url('images/post_images/' . $post->file_name) }}" alt="post image" class="post-image">
+                            @elseif (str_contains($post->file_type, 'video/'))
+                                <video src="{{ Storage::disk('s3')->url('videos/post_videos/' . $post->file_name) }}" alt="video"></video>
+                            @endif
+                            
                         @endif
 
                         <div class="post-footer">
@@ -147,7 +152,7 @@
             {{-- This popup will show up when user wants to create a post, therefor it is not displayed by  default --}}
             <div class="post-form-popup-wrapper">
                 <div class="post-form-popup-wrap">
-                    <h1 style="margin: 0;">Create Post</h1>
+                    <h1 style="margin: 0; font-size: 1.5rem;">Create Post</h1>
                     <form action="{{route('post.create')}}" method="POST" enctype="multipart/form-data">                        
                         @csrf
                         {{-- post form --}}
@@ -163,6 +168,7 @@
                             </div>
 
                             <div class="post-form-field">
+                                {{-- UPLOAD IMAGE ICON --}}
                                 <label for="upload-img">
                                     <img src="{{ asset('images/website_images/upload_pic_icon.png') }}" alt="upload pic icon" class="upload-pic-img">
                                 </label>
