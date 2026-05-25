@@ -108,7 +108,7 @@
                             @if (str_contains($post->file_type, 'image/') or $post->file_type == NULL)
                                 <img src="{{ Storage::disk('s3')->url('images/post_images/' . $post->file_name) }}" alt="post image" class="post-image">
                             @elseif (str_contains($post->file_type, 'video/'))
-                                <video src="{{ Storage::disk('s3')->url('videos/post_videos/' . $post->file_name) }}" alt="video"></video>
+                                <video src="{{ Storage::disk('s3')->url('videos/post_videos/' . $post->file_name) }}" controls></video>
                             @endif
                             
                         @endif
