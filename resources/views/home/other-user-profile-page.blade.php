@@ -122,9 +122,14 @@
                             <p class="post-description">{{ $post->description }}</p>
                         </div>
 
-                        @if($post->image)
-                            <img src="{{ Storage::disk('s3')->url('images/post_images/' . $post->image) }}" alt="post image"
-                            class="post-img">
+                        @if($post->file_name)
+                            @if (str_contains($post->file_type, 'image/') || $post->file_type == NULL)
+                                <img src="{{ Storage::disk('s3')->url('images/post_images/' . $post->file_name) }}" alt="post image"
+                                class="post-img">
+                            
+                            @else
+                                <video src="{{ Storage::disk('s3')->url('videos/post_videos/' . $post->file_name) }}" controls></video>
+                            @endif
                         @endif
                     </div>
                     {{-- post footer --}}
