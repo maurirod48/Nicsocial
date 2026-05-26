@@ -128,7 +128,8 @@
                                 class="post-img">
                             
                             @else
-                                <video src="{{ Storage::disk('s3')->url('videos/post_videos/' . $post->file_name) }}" controls></video>
+                                <video src="{{ Storage::disk('s3')->url('videos/post_videos/' . $post->file_name) }}" controls
+                                class="post-video"></video>
                             @endif
                         @endif
                     </div>

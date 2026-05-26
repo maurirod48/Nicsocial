@@ -184,6 +184,11 @@
     margin: 1rem 0;
 }
 
+.post-video {
+    max-height: 500px;
+    width: 100%;
+}
+
 .post-footer {
     padding: 1rem;
 }
