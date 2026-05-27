@@ -107,7 +107,9 @@ function displayPublicPosts(posts) {
                         </p>
                     </div>
 
-                    <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.file_name}" class="post-img" alt="post-image">
+                    ${post.file_type && post.file_type.includes('image/') ? '<img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/' + post.file_name + ' " class="post-img" alt="post-image"></img>' 
+                    : post.file_type && post.file_type.includes('video/') ? '<video src="https://nicsocial-images.s3.us-east-2.amazonaws.com/videos/post_videos/' +  post.file_name + '" class="post-video" controls></video>' : ''}
+
                 </div>
 
                 <div class="post-footer">
@@ -155,7 +157,6 @@ function displayPublicPosts(posts) {
 
                         ${post.file_type && post.file_type.includes('image/') ? '<img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/' + post.file_name + ' " class="post-img" alt="post-image"></img>' 
                         : post.file_type && post.file_type.includes('video/') ? '<video src="https://nicsocial-images.s3.us-east-2.amazonaws.com/videos/post_videos/' +  post.file_name + '" class="post-video" controls></video>' : ''}
-    
                     </div>
 
                     <div class="post-footer">
@@ -295,7 +296,8 @@ function displayFriendsPosts(posts) {
                         </p>
                     </div>
 
-                    <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.file_name}" class="post-img" alt="post-image">
+                    ${post.file_type && post.file_type.includes('image/') ? '<img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/' + post.file_name + ' " class="post-img" alt="post-image"></img>' 
+                    : post.file_type && post.file_type.includes('video/') ? '<video src="https://nicsocial-images.s3.us-east-2.amazonaws.com/videos/post_videos/' +  post.file_name + '" class="post-video" controls></video>' : ''}
                 </div>
 
                 <div class="post-footer">
@@ -341,7 +343,8 @@ function displayFriendsPosts(posts) {
                             </p>
                         </div>
 
-                        <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.file_name}" class="post-img" alt="post-image">
+                        ${post.file_type && post.file_type.includes('image/') ? '<img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/' + post.file_name + ' " class="post-img" alt="post-image"></img>' 
+                    : post.file_type && post.file_type.includes('video/') ? '<video src="https://nicsocial-images.s3.us-east-2.amazonaws.com/videos/post_videos/' +  post.file_name + '" class="post-video" controls></video>' : ''}
                     </div>
 
                     <div class="post-footer">
