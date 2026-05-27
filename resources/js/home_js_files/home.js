@@ -67,12 +67,14 @@ function displayPublicPosts(posts) {
     const feed = _('.dynamic-feed-section');
     feed.innerHTML = '';
 
+    // Iterating thru every post object to create a new HTML element for each one.
     posts.forEach(post => {
+        console.log(post);
         const postCard = document.createElement('div');
         postCard.classList = 'post-card';
 
         // Checking to if post has an image.
-        if (post.image) {
+        if (post.file_name) {
 
             // Checking to see if user has a profile pic.
 
@@ -105,7 +107,7 @@ function displayPublicPosts(posts) {
                         </p>
                     </div>
 
-                    <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.image}" class="post-img" alt="post-image">
+                    <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.file_name}" class="post-img" alt="post-image">
                 </div>
 
                 <div class="post-footer">
@@ -151,7 +153,9 @@ function displayPublicPosts(posts) {
                             </p>
                         </div>
 
-                        <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.image}" class="post-img" alt="post-image">
+                        ${post.file_type && post.file_type.includes('image/') ? '<img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/' + post.file_name + ' " class="post-img" alt="post-image"></img>' 
+                        : post.file_type && post.file_type.includes('video/') ? '<video src="https://nicsocial-images.s3.us-east-2.amazonaws.com/videos/post_videos/' +  post.file_name + '" class="post-video" controls></video>' : ''}
+    
                     </div>
 
                     <div class="post-footer">
@@ -169,7 +173,7 @@ function displayPublicPosts(posts) {
                     
                 `;
             }
-        } else if (!postCard.image) {
+        } else if (!postCard.file_name) {
 
                 postCard.innerHTML = `
                     <input type="hidden" value=${post.id} class="post-id">
@@ -258,7 +262,7 @@ function displayFriendsPosts(posts) {
         postCard.classList = 'post-card friend-post';
 
         // Checking to if post has an image.
-        if (post.image) {
+        if (post.file_name) {
 
             // Checking to see if user has a profile pic.
 
@@ -291,7 +295,7 @@ function displayFriendsPosts(posts) {
                         </p>
                     </div>
 
-                    <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.image}" class="post-img" alt="post-image">
+                    <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.file_name}" class="post-img" alt="post-image">
                 </div>
 
                 <div class="post-footer">
@@ -337,7 +341,7 @@ function displayFriendsPosts(posts) {
                             </p>
                         </div>
 
-                        <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.image}" class="post-img" alt="post-image">
+                        <img src="https://nicsocial-images.s3.us-east-2.amazonaws.com/images/post_images/${post.file_name}" class="post-img" alt="post-image">
                     </div>
 
                     <div class="post-footer">
@@ -355,7 +359,7 @@ function displayFriendsPosts(posts) {
                     
                 `;
             }
-        } else if (!postCard.image) {
+        } else if (!postCard.file_name) {
 
                 postCard.innerHTML = `
                     <input type="hidden" value=${post.id} class="post-id">
