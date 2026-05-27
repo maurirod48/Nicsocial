@@ -53,7 +53,7 @@
 
             <div class="most-errors-wrapper">
                 @error('new-pic')
-                    <p>{{ $message }}</p>
+                    <p class="error-message" style="margin-left: 1rem; color: red; font-size: 1.5rem; font-weight: 500;">{{ $message }}</p>
                 @enderror
             </div>
 
@@ -243,19 +243,20 @@
     {{-- Popup for then user wants to change profile picture --}}
     <div class="change-profile-pic-popup-wrapper">
         <div class="change-profile-pic-popup-wrap">
-            <h1 style="color:rgb(33, 94, 228)">Edit profile picture</h1>
+            <h1 style="color:rgb(33, 94, 228); font-size: 1.5rem; font-weight: 600; margin-bottom:1rem;">Edit profile picture</h1>
             
             <form action="{{ route('change.profile.pic') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="upload-profile-pic-form-wrapper">
-                    <label>Upload picture here</label>
+                    <label class="upload-pic-label-btn" for="new-profile-pic">Upload new picture</label>
                     <br>
-                    <input type="file" name="new-pic" id="new-profile-pic" class="new-pic">
+                    <input type="file" name="new-pic" id="new-profile-pic" class="new-pic" hidden>
                 </div>
                 <div class="new-profile-pic-preview-container">
+                    {{-- The source of the image here will be embedded using JS. --}}
                     <img src="" class="preview-profile-pic">
                 </div>
-                <button type="submit">Update</button>
+                <button type="submit" class="change-pic-update-btn">Update</button>
                 <button class="change-pic-cancel-btn" type="button">cancel</button>
                 
             </form>

@@ -241,6 +241,30 @@ EDIT PROFILE POPUP STYLING
     cursor: pointer;
 }
 
+.upload-pic-label-btn {
+    background-color: rgb(36, 63, 236);
+    color: white;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+.change-pic-update-btn {
+    background-color: rgb(23, 42, 166);
+    color: white;
+    padding: .3rem .8rem;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
+.change-pic-cancel-btn {
+    background-color: rgb(141, 12, 12);
+    color: white;
+    padding: .3rem .8rem;
+    border-radius: .5rem;
+    cursor: pointer;
+}
+
 .edit-profile-errors-ok-btn:hover {
     background-color: white;
     color:black;

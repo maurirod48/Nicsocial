@@ -114,6 +114,13 @@ class UserController extends Controller
     }
 
     public function changeProfilePic(Request $request) {
+
+        $input = $request->validate([
+            'new-pic' => 'required'
+        ],
+        [
+            "new-pic.required" => "No picture was selected"
+        ]);
   
         // File object.
         $img = $request->file('new-pic');
