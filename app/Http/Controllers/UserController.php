@@ -115,6 +115,7 @@ class UserController extends Controller
 
     public function changeProfilePic(Request $request) {
 
+        // Validating a picture was selected.
         $input = $request->validate([
             'new-pic' => 'required'
         ],
