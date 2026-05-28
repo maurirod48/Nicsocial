@@ -279,7 +279,6 @@ async function displayPeople(people) {
     // creating user card for each user.
     for (const user of people) {
 
-        const alreadyFriends = await AreWeFriendsAlready(user.id);
 
         const userCard = document.createElement('div');
         userCard.classList = 'user-card';
