@@ -262,29 +262,6 @@ async function receivedFriendRequest(userId) {
     }
 }
 
-// function to check if Im already friends with a user. This is helpful because if this return true, then we dont display that user in this section.
-async function AreWeFriendsAlready(userId) {
-    try {
-        const res = await fetch(`/people/friends-already/${userId}`);
-
-        if (!res.ok) {
-            throw new Error('Error when trying to check for user friend relationship:', res.status);
-        }
-
-        const data = await res.json();
-
-        if (data.success) {
-            return true;
-        } else {
-            return false;
-        }
-
-    } catch(err) {
-        console.error(err)
-    }
-}
-
-
 
 async function displayPeople(people) {
 
@@ -299,140 +276,132 @@ async function displayPeople(people) {
     // clearing dynamic view.
     dynamicSection.innerHTML = '';
 
-    // get all friend requests instances.
-    // friendRequests = await getFriendRequestInstances();
-    // console.log('friend requests array data:', friendRequests);
-
     // creating user card for each user.
     for (const user of people) {
 
         const alreadyFriends = await AreWeFriendsAlready(user.id);
 
-        if (!alreadyFriends) {
-            const userCard = document.createElement('div');
-            userCard.classList = 'user-card';
+        const userCard = document.createElement('div');
+        userCard.classList = 'user-card';
 
-            // This variable here will be true or false and will let us know if the currently logged in 
-            // user has already sent a friend request to the user that it is to be displayed.
-            const friendRequestStatus = await checkingSentForFriendRequest(user.id);
+        // This variable here will be true or false and will let us know if the currently logged in 
+        // user has already sent a friend request to the user that it is to be displayed.
+        const friendRequestStatus = await checkingSentForFriendRequest(user.id);
 
-            // This variable will be true if the user to displayed had already sent us a friend request, cuz if thats the case, then the only option we have is to accept or reject.
-            const haveIreceivedFriendRequestFromThisUser = await receivedFriendRequest(user.id);
+        // This variable will be true if the user to displayed had already sent us a friend request, cuz if thats the case, then the only option we have is to accept or reject.
+        const haveIreceivedFriendRequestFromThisUser = await receivedFriendRequest(user.id);
 
-            if (haveIreceivedFriendRequestFromThisUser) {
-                if (user.profile_pic_path != 'none') {
-                    userCard.innerHTML = `
-                        <div style="display:flex; gap:1rem; align-items:center;">
-                            <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="${user.profile_pic_s3_url}" class="user-profile-pic" data-mssg="first-block">
-                            <h1>${user.name}</h1>
-                        </div>
+        if (haveIreceivedFriendRequestFromThisUser) {
+            if (user.profile_pic_path != 'none') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="${user.profile_pic_s3_url}" class="user-profile-pic" data-mssg="first-block">
+                        <h1>${user.name}</h1>
+                    </div>
 
-                        <div>
-                            <button class="accept-friend-request-btn">confirm</button>
-                            <button class="delete-friend-request-btn">delete</button>
-                        </div>
-                    `;
-                } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
-                    userCard.innerHTML = `
-                        <div style="display:flex; gap:1rem; align-items:center;">
-                            <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default-images/male-pic.jpg" class="user-profile-pic">
-                            <h1>${user.name}</h1>
-                        </div>
+                    <div>
+                        <button class="accept-friend-request-btn">confirm</button>
+                        <button class="delete-friend-request-btn">delete</button>
+                    </div>
+                `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/images/default-images/male-pic.jpg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                    </div>
 
-                        <div>
-                            <button class="accept-friend-request-btn">confirm</button>
-                            <button class="delete-friend-request-btn">delete</button>
-                        </div>
-                    `;
-                } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
-                    userCard.innerHTML = `
-                        <div style="display:flex; gap:1rem; align-items:center;">
-                            <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default-images/female-pic.jpeg" class="user-profile-pic">
-                            <h1>${user.name}</h1>
-                        </div>
+                    <div>
+                        <button class="accept-friend-request-btn">confirm</button>
+                        <button class="delete-friend-request-btn">delete</button>
+                    </div>
+                `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/images/default-images/female-pic.jpeg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                    </div>
 
-                        <div>
-                            <button class="accept-friend-request-btn">confirm</button>
-                            <button class="delete-friend-request-btn">delete</button>
-                        </div>
-                    `;
-                }
+                    <div>
+                        <button class="accept-friend-request-btn">confirm</button>
+                        <button class="delete-friend-request-btn">delete</button>
+                    </div>
+                `;
             }
-            else if (friendRequestStatus) {
-                if (user.profile_pic_path != 'none') {
-                    userCard.innerHTML = `
-                        <div style="display:flex; gap:1rem; align-items:center;">
-                            <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="${user.profile_pic_s3_url}" class="user-profile-pic" data-mssg="first-block">
-                            <h1>${user.name}</h1>
-                        </div>
+        }
+        else if (friendRequestStatus) {
+            if (user.profile_pic_path != 'none') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="${user.profile_pic_s3_url}" class="user-profile-pic" data-mssg="first-block">
+                        <h1>${user.name}</h1>
+                    </div>
 
-                        <button class="cancel-friend-request-btn">cancel request</button>
-                    `;
-                } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
-                    userCard.innerHTML = `
-                        <div style="display:flex; gap:1rem; align-items:center;">
-                            <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default-images/male-pic.jpg" class="user-profile-pic">
-                            <h1>${user.name}</h1>
-                        </div>
+                    <button class="cancel-friend-request-btn">cancel request</button>
+                `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/images/default-images/male-pic.jpg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                    </div>
 
-                        <button class="cancel-friend-request-btn">cancel request</button>
-                    `;
-                } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
-                    userCard.innerHTML = `
-                        <div style="display:flex; gap:1rem; align-items:center;">
-                            <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default-images/female-pic.jpeg" class="user-profile-pic">
-                            <h1>${user.name}</h1>
-                        </div>
+                    <button class="cancel-friend-request-btn">cancel request</button>
+                `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/images/default-images/female-pic.jpeg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                    </div>
 
-                        <button class="cancel-friend-request-btn">cancel request</button>
-                    `;
-                }
-            } 
-            else {
-                if (user.profile_pic_path != 'none') {
-                    userCard.innerHTML = `
-                        <div style="display:flex; gap:1rem; align-items:center;">
-                            <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="${user.profile_pic_s3_url}" class="user-profile-pic" data-mssg="first-block">
-                            <h1>${user.name}</h1>
-                        </div>
-
-                        <button class="add-friend-btn">Add friend</button>
-                    `;
-                } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
-                    userCard.innerHTML = `
-                        <div style="display:flex; gap:1rem; align-items:center;">
-                            <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default-images/male-pic.jpg" class="user-profile-pic">
-                            <h1>${user.name}</h1>
-                        </div>
-
-                        <button class="add-friend-btn">Add friend</button>
-                    `;
-                } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
-                    userCard.innerHTML = `
-                        <div style="display:flex; gap:1rem; align-items:center;">
-                            <input type="hidden" class="user-id" value="${user.id}">
-                            <img src="/images/default-images/female-pic.jpeg" class="user-profile-pic">
-                            <h1>${user.name}</h1>
-                        </div>
-
-                        <button class="add-friend-btn">Add friend</button>
-                    `;
-                }
+                    <button class="cancel-friend-request-btn">cancel request</button>
+                `;
             }
-            
-            // adding user card to dynamic section.
-            dynamicSection.appendChild(userCard);
-
-        // here    
         } 
+        else {
+            if (user.profile_pic_path != 'none') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="${user.profile_pic_s3_url}" class="user-profile-pic" data-mssg="first-block">
+                        <h1>${user.name}</h1>
+                    </div>
+
+                    <button class="add-friend-btn">Add friend</button>
+                `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'male') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/images/default-images/male-pic.jpg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                    </div>
+
+                    <button class="add-friend-btn">Add friend</button>
+                `;
+            } else if (user.profile_pic_path == 'none' && user.gender == 'female') {
+                userCard.innerHTML = `
+                    <div style="display:flex; gap:1rem; align-items:center;">
+                        <input type="hidden" class="user-id" value="${user.id}">
+                        <img src="/images/default-images/female-pic.jpeg" class="user-profile-pic">
+                        <h1>${user.name}</h1>
+                    </div>
+
+                    <button class="add-friend-btn">Add friend</button>
+                `;
+            }
+        }
+        
+        // adding user card to dynamic section.
+        dynamicSection.appendChild(userCard);
 
         
     }
